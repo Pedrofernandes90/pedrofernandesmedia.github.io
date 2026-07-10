@@ -1,0 +1,263 @@
+/* =====================================================
+   PALETA DE CORES — mude aqui para personalizar todo o site
+   ===================================================== */
+:root {
+  --paper: #F6F4EF;      /* fundo, cor de papel */
+  --ink: #1B2430;        /* texto principal, azul-tinta bem escuro */
+  --ink-soft: #4A5568;   /* texto secundário */
+  --brass: #C89B3C;      /* cor de destaque (dourado/latão) */
+  --dusty-blue: #3D5A80; /* segunda cor de destaque */
+  --line: #DDD7C9;       /* linhas divisórias */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+em {
+  font-style: italic;
+  color: var(--brass);
+}
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+section {
+  padding: 6rem 8vw;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===================== CABEÇALHO ===================== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 8vw;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+}
+
+nav a {
+  margin-left: 2rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+}
+
+nav a:hover { color: var(--brass); }
+
+/* ===================== HERO ===================== */
+.hero {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
+.hero-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dusty-blue);
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  line-height: 1.08;
+  font-weight: 500;
+  max-width: 14ch;
+}
+
+.hero-sub {
+  margin-top: 2rem;
+  max-width: 42ch;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.hero-cta {
+  display: inline-block;
+  margin-top: 2.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-cta:hover {
+  color: var(--brass);
+  border-color: var(--brass);
+}
+
+/* ===================== TÍTULOS DE SEÇÃO ===================== */
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 3rem;
+}
+
+/* ===================== TRABALHOS ===================== */
+.work-card {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--line);
+  transition: background 0.25s ease;
+}
+
+.work-card:last-child { border-bottom: 1px solid var(--line); }
+
+.work-card:hover { background: rgba(200, 155, 60, 0.06); }
+
+.work-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  color: var(--brass);
+}
+
+.work-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.work-info p {
+  color: var(--ink-soft);
+  max-width: 50ch;
+  font-size: 0.95rem;
+}
+
+.work-tags {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.work-tags span {
+  font-size: 0.75rem;
+  color: var(--dusty-blue);
+  border: 1px solid var(--dusty-blue);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+}
+
+.work-link {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+}
+
+.work-card:hover .work-link { color: var(--brass); }
+
+/* ===================== SOBRE ===================== */
+.about {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-photo {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dusty-blue), var(--brass));
+}
+
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.about-text p {
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+  max-width: 60ch;
+}
+
+/* ===================== CONTATO ===================== */
+.contact {
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 7rem;
+}
+
+.contact p {
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+
+.contact-email {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 4px;
+}
+
+.contact-email:hover { color: var(--brass); border-color: var(--brass); }
+
+.socials {
+  margin-top: 3rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.socials a {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.socials a:hover { color: var(--brass); }
+
+/* ===================== RODAPÉ ===================== */
+.footer {
+  text-align: center;
+  padding: 3rem 8vw;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+/* ===================== RESPONSIVO (celular) ===================== */
+@media (max-width: 700px) {
+  section { padding: 4rem 6vw; }
+  .topbar { padding: 1.5rem 6vw; flex-direction: column; gap: 1rem; }
+  nav a { margin: 0 0.8rem; }
+  .work-card {
+    grid-template-columns: 40px 1fr;
+  }
+  .work-link { grid-column: 1 / -1; }
+  .about {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .about-photo { margin: 0 auto; }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
