@@ -1,79 +1,189 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seu Nome — Portfólio</title>
-<meta name="description" content="Portfólio pessoal de Seu Nome.">
+<title>Pedro Fernandes — Fotografia & Vídeo</title>
+<meta name="description" content="Pedro Fernandes — fotografia e vídeo de lifestyle, viagem, casamentos e desporto.">
 
-<!-- Fontes: uma serifada com personalidade para títulos, e uma sem-serifa limpa para o texto -->
+<!-- Fontes: serifada expressiva para títulos, condensada para rótulos/etiquetas, sem-serifa para o corpo do texto -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,500;1,9..144,600&family=Barlow+Condensed:wght@500;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- ===================================================== -->
-<!-- CABEÇALHO / MENU -->
+<!-- CABEÇALHO -->
 <!-- ===================================================== -->
 <header class="topbar">
-  <span class="brand">SEU NOME</span>
+  <span class="brand">PEDRO FERNANDES</span>
   <nav>
     <a href="#trabalhos">Trabalhos</a>
+    <a href="#categorias">Portefólio</a>
     <a href="#sobre">Sobre</a>
-    <a href="#contato">Contato</a>
+    <a href="#contacto">Contacto</a>
   </nav>
 </header>
 
 <!-- ===================================================== -->
-<!-- HERO — primeira coisa que a pessoa vê -->
+<!-- HERO — vídeo de fundo em ecrã inteiro -->
+<!-- Troca "assets/hero.mp4" por um vídeo teu (recomendo um clip de 10-20s, sem som, em loop) -->
 <!-- ===================================================== -->
 <section class="hero">
-  <p class="hero-eyebrow">Portfólio — edição 2026</p>
-  <h1 class="hero-title">Eu crio coisas<br>que <em>funcionam</em><br>e <em>fazem sentido</em>.</h1>
-  <p class="hero-sub">
-    Sou Seu Nome, [sua profissão / área — ex: designer, desenvolvedor, fotógrafo].
-    Aqui você encontra uma seleção dos meus trabalhos mais recentes.
-  </p>
-  <a href="#trabalhos" class="hero-cta">Ver trabalhos ↓</a>
+  <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-veil"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Fotografia &amp; Vídeo — Lifestyle · Viagem · Casamentos · Desporto</p>
+    <h1 class="hero-title">Cada instante<br>tem <em>um único</em><br>fotograma.</h1>
+    <p class="hero-sub">
+      Sou o Pedro. Passo a vida entre estradas, cerimónias e bancadas —
+      a apanhar o momento que não se repete.
+    </p>
+    <a href="#trabalhos" class="hero-cta">Ver trabalhos ↓</a>
+  </div>
+
+  <span class="hero-frame-tl"></span>
+  <span class="hero-frame-tr"></span>
+  <span class="hero-frame-bl"></span>
+  <span class="hero-frame-br"></span>
 </section>
 
 <!-- ===================================================== -->
-<!-- TRABALHOS — lista tipo "fichário", cada item é numerado -->
+<!-- TRABALHOS SELECIONADOS — numerados como fotogramas de rolo -->
 <!-- ===================================================== -->
 <section id="trabalhos" class="works">
-  <h2 class="section-title">Trabalhos selecionados</h2>
-
-  <div class="work-card">
-    <span class="work-num">01</span>
-    <div class="work-info">
-      <h3>Nome do Projeto Um</h3>
-      <p>Uma frase curta contando do que se trata este projeto e qual problema ele resolve.</p>
-      <div class="work-tags"><span>Categoria</span><span>Ano</span></div>
-    </div>
-    <a href="#" class="work-link">Ver projeto →</a>
+  <div class="section-head">
+    <h2 class="section-title">Trabalhos selecionados</h2>
+    <p class="section-note">Rolo 001 — 5 fotogramas</p>
   </div>
 
-  <div class="work-card">
-    <span class="work-num">02</span>
-    <div class="work-info">
-      <h3>Nome do Projeto Dois</h3>
-      <p>Uma frase curta contando do que se trata este projeto e qual problema ele resolve.</p>
-      <div class="work-tags"><span>Categoria</span><span>Ano</span></div>
-    </div>
-    <a href="#" class="work-link">Ver projeto →</a>
+  <div class="work-grid">
+
+    <article class="work-card" data-tag="viagem">
+      <span class="work-frame">Fr. 04</span>
+      <div class="work-thumb">
+        <!-- Substitui por: <img src="assets/trabalhos/vida-em-transito.jpg" alt="Vida em Trânsito"> -->
+      </div>
+      <div class="work-info">
+        <h3>Vida em Trânsito</h3>
+        <p>Uma série sobre viver fora da mala — estradas, fronteiras e o quarto que muda todas as semanas.</p>
+        <div class="work-tags"><span>Viagem</span><span>2026</span></div>
+      </div>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+    </article>
+
+    <article class="work-card" data-tag="casamento">
+      <span class="work-frame">Fr. 11</span>
+      <div class="work-thumb">
+        <!-- Substitui por: <img src="assets/trabalhos/sim-aceito.jpg" alt="Sim, Aceito"> -->
+      </div>
+      <div class="work-info">
+        <h3>Sim, Aceito</h3>
+        <p>Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do "sim", o primeiro abraço.</p>
+        <div class="work-tags"><span>Casamento</span><span>2025</span></div>
+      </div>
+      <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+    </article>
+
+    <article class="work-card" data-tag="desporto">
+      <span class="work-frame">Fr. 17</span>
+      <div class="work-thumb">
+        <!-- Substitui por: <img src="assets/trabalhos/ultimo-lance.jpg" alt="Último Lance"> -->
+      </div>
+      <div class="work-info">
+        <h3>Último Lance</h3>
+        <p>Os segundos finais de um jogo decisivo — tensão, suor e a explosão do apito final.</p>
+        <div class="work-tags"><span>Desporto</span><span>2025</span></div>
+      </div>
+      <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+    </article>
+
+    <article class="work-card" data-tag="lifestyle">
+      <span class="work-frame">Fr. 22</span>
+      <div class="work-thumb">
+        <!-- Substitui por: <img src="assets/trabalhos/manha-devagar.jpg" alt="Manhã Devagar"> -->
+      </div>
+      <div class="work-info">
+        <h3>Manhã Devagar</h3>
+        <p>Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.</p>
+        <div class="work-tags"><span>Lifestyle</span><span>2026</span></div>
+      </div>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+    </article>
+
+    <article class="work-card" data-tag="viagem">
+      <span class="work-frame">Fr. 29</span>
+      <div class="work-thumb">
+        <!-- Substitui por: <img src="assets/trabalhos/ao-nascer-do-dia.jpg" alt="Ao Nascer do Dia"> -->
+      </div>
+      <div class="work-info">
+        <h3>Ao Nascer do Dia</h3>
+        <p>Uma viagem de carrinha pela costa — madrugadas, paragens improvisadas e o oceano como constante.</p>
+        <div class="work-tags"><span>Viagem</span><span>2025</span></div>
+      </div>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- PORTEFÓLIO POR CATEGORIA — abas com galeria + link Instagram -->
+<!-- ===================================================== -->
+<section id="categorias" class="categories">
+  <div class="section-head">
+    <h2 class="section-title">Portefólio por categoria</h2>
+    <p class="section-note">Três rolos, três olhares</p>
   </div>
 
-  <div class="work-card">
-    <span class="work-num">03</span>
-    <div class="work-info">
-      <h3>Nome do Projeto Três</h3>
-      <p>Uma frase curta contando do que se trata este projeto e qual problema ele resolve.</p>
-      <div class="work-tags"><span>Categoria</span><span>Ano</span></div>
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="lifestyle" role="tab" aria-selected="true">Lifestyle &amp; Viagem</button>
+    <button class="tab-btn" data-tab="casamentos" role="tab" aria-selected="false">Casamentos</button>
+    <button class="tab-btn" data-tab="desporto" role="tab" aria-selected="false">Desporto</button>
+  </div>
+
+  <div class="tab-panel active" id="panel-lifestyle">
+    <p class="panel-lead">Estradas, fronteiras e dias comuns — a conta onde documento a vida nómada. Substitui as 6 miniaturas abaixo pelas tuas fotos/vídeos (pasta <code>assets/lifestyle/</code>).</p>
+    <div class="gallery">
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
     </div>
-    <a href="#" class="work-link">Ver projeto →</a>
+    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="panel-cta">Ver galeria completa em @pedro_nomadic →</a>
+  </div>
+
+  <div class="tab-panel" id="panel-casamentos">
+    <p class="panel-lead">Cerimónias reais, sem poses forçadas — a conta dedicada aos casamentos. Substitui as miniaturas pela pasta <code>assets/casamentos/</code>.</p>
+    <div class="gallery">
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+    </div>
+    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="panel-cta">Ver galeria completa em @promiseweddingsco →</a>
+  </div>
+
+  <div class="tab-panel" id="panel-desporto">
+    <p class="panel-lead">Ação, ritmo e adrenalina — a conta de desporto. Substitui as miniaturas pela pasta <code>assets/desporto/</code>.</p>
+    <div class="gallery">
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+    </div>
+    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="panel-cta">Ver galeria completa em @vyraxmedia →</a>
   </div>
 </section>
 
@@ -82,38 +192,42 @@
 <!-- ===================================================== -->
 <section id="sobre" class="about">
   <div class="about-photo">
-    <!-- Troque a cor abaixo por sua foto: <img src="minha-foto.jpg" alt="Seu Nome"> -->
+    <!-- Troca por: <img src="assets/pedro.jpg" alt="Pedro Fernandes"> -->
   </div>
   <div class="about-text">
     <h2 class="section-title">Sobre mim</h2>
     <p>
-      Escreva aqui um parágrafo contando sua trajetória: onde estudou, no que trabalha
-      hoje, o que te motiva no seu ofício e o que você busca nos próximos projetos.
+      Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que,
+      no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa
+      estrada, num altar, num campo, ou numa manhã qualquer em casa.
     </p>
     <p>
-      Pode adicionar um segundo parágrafo com detalhes mais pessoais — hobbies,
-      curiosidades, ou o que te diferencia como profissional.
+      Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo,
+      e é essa procura que me leva de viagens de mochila às costas a casamentos ao
+      ar livre e a bancadas cheias de gente a gritar por um golo.
     </p>
   </div>
 </section>
 
 <!-- ===================================================== -->
-<!-- CONTATO -->
+<!-- CONTACTO -->
 <!-- ===================================================== -->
-<section id="contato" class="contact">
-  <h2 class="section-title">Vamos conversar</h2>
-  <p>Tem um projeto em mente? Me manda uma mensagem.</p>
-  <a href="mailto:seuemail@exemplo.com" class="contact-email">seuemail@exemplo.com</a>
+<section id="contacto" class="contact">
+  <h2 class="section-title">Vamos falar</h2>
+  <p>Tens um projeto em mente? Conta-me a tua ideia.</p>
+  <a href="mailto:pedrosilvasp458@gmail.com" class="contact-email">pedrosilvasp458@gmail.com</a>
+
   <div class="socials">
-    <a href="#">LinkedIn</a>
-    <a href="#">Instagram</a>
-    <a href="#">GitHub</a>
+    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener">@pedro_nomadic</a>
+    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener">@vyraxmedia</a>
+    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener">@promiseweddingsco</a>
   </div>
 </section>
 
 <footer class="footer">
-  <p>© 2026 Seu Nome. Feito com carinho.</p>
+  <p>© 2026 Pedro Fernandes. Feito fotograma a fotograma.</p>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
