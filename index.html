@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pedro Fernandes — Fotografia & Vídeo</title>
-<meta name="description" content="Pedro Fernandes — fotografia e vídeo de lifestyle, viagem, casamentos e desporto.">
+<title data-i18n="meta.title">Pedro Fernandes — Fotografia & Vídeo</title>
+<meta name="description" content="Pedro Fernandes — fotografia e vídeo de lifestyle, viagem, casamentos e desporto." data-i18n-attr="content" data-i18n="meta.description">
 
 <!-- Fontes: serifada expressiva para títulos, condensada para rótulos/etiquetas, sem-serifa para o corpo do texto -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,46 +20,56 @@
 <header class="topbar">
   <span class="brand">PEDRO FERNANDES</span>
   <nav>
-    <a href="#trabalhos">Trabalhos</a>
-    <a href="#categorias">Portefólio</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#contacto">Contacto</a>
+    <a href="#trabalhos" data-i18n="nav.work">Trabalhos</a>
+    <a href="#categorias" data-i18n="nav.portfolio">Portefólio</a>
+    <a href="#sobre" data-i18n="nav.about">Sobre</a>
+    <a href="#orcamento" data-i18n="nav.quote">Orçamento</a>
+    <a href="#contacto" data-i18n="nav.contact">Contacto</a>
   </nav>
+  <button id="lang-toggle" class="lang-toggle" aria-label="Change language">
+    <span class="lang-opt active" data-lang="pt">PT</span>/<span class="lang-opt" data-lang="en">EN</span>
+  </button>
 </header>
 
 <!-- ===================================================== -->
-<!-- HERO — vídeo de fundo em ecrã inteiro -->
-<!-- Troca "assets/hero.mp4" por um vídeo teu (recomendo um clip de 10-20s, sem som, em loop) -->
+<!-- HERO — câmara 3D que se desconstrói/reconstrói com o scroll -->
+<!-- "hero-scroll" dá espaço de scroll extra; "hero" fica fixo (sticky) enquanto isso acontece -->
+<!-- Troca "assets/hero.mp4" por um vídeo teu, se quiseres um fundo em vídeo além da câmara 3D -->
 <!-- ===================================================== -->
-<section class="hero">
-  <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
-    <source src="assets/hero.mp4" type="video/mp4">
-  </video>
-  <div class="hero-veil"></div>
+<div class="hero-scroll">
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+      <source src="assets/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-veil"></div>
 
-  <div class="hero-content">
-    <p class="hero-eyebrow">Fotografia &amp; Vídeo — Lifestyle · Viagem · Casamentos · Desporto</p>
-    <h1 class="hero-title">Cada instante<br>tem <em>um único</em><br>fotograma.</h1>
-    <p class="hero-sub">
-      Sou o Pedro. Passo a vida entre estradas, cerimónias e bancadas,
-      a apanhar o momento que não se repete.
-    </p>
-    <a href="#trabalhos" class="hero-cta">Ver trabalhos ↓</a>
-  </div>
+    <!-- Canvas onde a câmara 3D é desenhada — ver camera-3d.js -->
+    <canvas id="camera-3d-canvas" class="hero-canvas" aria-hidden="true"></canvas>
 
-  <span class="hero-frame-tl"></span>
-  <span class="hero-frame-tr"></span>
-  <span class="hero-frame-bl"></span>
-  <span class="hero-frame-br"></span>
-</section>
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-i18n="hero.eyebrow">Fotografia &amp; Vídeo — Lifestyle · Viagem · Casamentos · Desporto</p>
+      <h1 class="hero-title" data-i18n-html="hero.title">Cada instante<br>tem <em>um único</em><br>fotograma.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">
+        Sou o Pedro. Passo a vida entre estradas, cerimónias e bancadas —
+        a apanhar o momento que não se repete.
+      </p>
+      <a href="#trabalhos" class="hero-cta" data-i18n="hero.cta">Ver trabalhos ↓</a>
+    </div>
+
+    <span class="hero-frame-tl"></span>
+    <span class="hero-frame-tr"></span>
+    <span class="hero-frame-bl"></span>
+    <span class="hero-frame-br"></span>
+  </section>
+</div>
 
 <!-- ===================================================== -->
 <!-- TRABALHOS SELECIONADOS — numerados como fotogramas de rolo -->
 <!-- ===================================================== -->
 <section id="trabalhos" class="works">
   <div class="section-head">
-    <h2 class="section-title">Trabalhos selecionados</h2>
-    <p class="section-note">Rolo 001 — 5 fotogramas</p>
+    <h2 class="section-title" data-i18n="works.title">Trabalhos selecionados</h2>
+    <p class="section-note" data-i18n="works.note">Rolo 001 — 5 fotogramas</p>
   </div>
 
   <div class="work-grid">
@@ -67,14 +77,14 @@
     <article class="work-card" data-tag="viagem">
       <span class="work-frame">Fr. 04</span>
       <div class="work-thumb">
-        <img src="assets/trabalhos/vidaemtransito.jpeg" alt="Vida em Trânsito">
+        <!-- Substitui por: <img src="assets/trabalhos/vida-em-transito.jpg" alt="Vida em Trânsito"> -->
       </div>
       <div class="work-info">
-        <h3>Vida em Trânsito</h3>
-        <p>Uma série sobre viver fora da mala — estradas, fronteiras e o quarto que muda todas as semanas.</p>
-        <div class="work-tags"><span>Viagem</span><span>2026</span></div>
+        <h3 data-i18n="work.1.title">Vida em Trânsito</h3>
+        <p data-i18n="work.1.desc">Uma série sobre viver fora da mala — estradas, fronteiras e o quarto que muda todas as semanas.</p>
+        <div class="work-tags"><span data-i18n="tag.viagem">Viagem</span><span>2026</span></div>
       </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
     <article class="work-card" data-tag="casamento">
@@ -83,50 +93,50 @@
         <!-- Substitui por: <img src="assets/trabalhos/sim-aceito.jpg" alt="Sim, Aceito"> -->
       </div>
       <div class="work-info">
-        <h3>Sim, Aceito</h3>
-        <p>Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do "sim", o primeiro abraço.</p>
-        <div class="work-tags"><span>Casamento</span><span>2025</span></div>
+        <h3 data-i18n="work.2.title">Sim, Aceito</h3>
+        <p data-i18n="work.2.desc">Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do "sim", o primeiro abraço.</p>
+        <div class="work-tags"><span data-i18n="tag.casamento">Casamento</span><span>2025</span></div>
       </div>
-      <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
     <article class="work-card" data-tag="desporto">
       <span class="work-frame">Fr. 17</span>
       <div class="work-thumb">
-        <img src="assets/trabalhos/ultimolance.jpeg" alt="Último Lance">
+        <!-- Substitui por: <img src="assets/trabalhos/ultimo-lance.jpg" alt="Último Lance"> -->
       </div>
       <div class="work-info">
-        <h3>Último Lance</h3>
-        <p>Os segundos finais de um round decisivo — tensão, suor e a explosão do apito final.</p>
-        <div class="work-tags"><span>Desporto</span><span>2025</span></div>
+        <h3 data-i18n="work.3.title">Último Lance</h3>
+        <p data-i18n="work.3.desc">Os segundos finais de um jogo decisivo — tensão, suor e a explosão do apito final.</p>
+        <div class="work-tags"><span data-i18n="tag.desporto">Desporto</span><span>2025</span></div>
       </div>
-      <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
     <article class="work-card" data-tag="lifestyle">
       <span class="work-frame">Fr. 22</span>
       <div class="work-thumb">
-        <img src="assets/trabalhos/slowliving.jpeg" alt="Slow Living">
+        <!-- Substitui por: <img src="assets/trabalhos/manha-devagar.jpg" alt="Manhã Devagar"> -->
       </div>
       <div class="work-info">
-        <h3>Slow Living</h3>
-        <p>Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.</p>
-        <div class="work-tags"><span>Lifestyle</span><span>2026</span></div>
+        <h3 data-i18n="work.4.title">Manhã Devagar</h3>
+        <p data-i18n="work.4.desc">Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.</p>
+        <div class="work-tags"><span data-i18n="tag.lifestyle">Lifestyle</span><span>2026</span></div>
       </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
     <article class="work-card" data-tag="viagem">
       <span class="work-frame">Fr. 29</span>
       <div class="work-thumb">
-        <img src="assets/trabalhos/fimdodia.jpeg" alt="Ao Fim do Dia">
+        <!-- Substitui por: <img src="assets/trabalhos/ao-nascer-do-dia.jpg" alt="Ao Nascer do Dia"> -->
       </div>
       <div class="work-info">
-        <h3>Ao Fim do Dia</h3>
-        <p>Um momento inusitado depois de um dia de exploração — pôr do sol, paragens improvisadas e a natureza como constante.</p>
-        <div class="work-tags"><span>Viagem</span><span>2025</span></div>
+        <h3 data-i18n="work.5.title">Ao Nascer do Dia</h3>
+        <p data-i18n="work.5.desc">Uma viagem de carrinha pela costa — madrugadas, paragens improvisadas e o oceano como constante.</p>
+        <div class="work-tags"><span data-i18n="tag.viagem">Viagem</span><span>2025</span></div>
       </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
   </div>
@@ -137,18 +147,18 @@
 <!-- ===================================================== -->
 <section id="categorias" class="categories">
   <div class="section-head">
-    <h2 class="section-title">Portefólio por categoria</h2>
-    <p class="section-note">Três rolos, três olhares</p>
+    <h2 class="section-title" data-i18n="categories.title">Portefólio por categoria</h2>
+    <p class="section-note" data-i18n="categories.note">Três rolos, três olhares</p>
   </div>
 
   <div class="tabs" role="tablist">
-    <button class="tab-btn active" data-tab="lifestyle" role="tab" aria-selected="true">Lifestyle &amp; Viagem</button>
-    <button class="tab-btn" data-tab="casamentos" role="tab" aria-selected="false">Casamentos</button>
-    <button class="tab-btn" data-tab="desporto" role="tab" aria-selected="false">Desporto</button>
+    <button class="tab-btn active" data-tab="lifestyle" role="tab" aria-selected="true" data-i18n="tab.lifestyle">Lifestyle &amp; Viagem</button>
+    <button class="tab-btn" data-tab="casamentos" role="tab" aria-selected="false" data-i18n="tab.casamentos">Casamentos</button>
+    <button class="tab-btn" data-tab="desporto" role="tab" aria-selected="false" data-i18n="tab.desporto">Desporto</button>
   </div>
 
   <div class="tab-panel active" id="panel-lifestyle">
-    <p class="panel-lead">Estradas, fronteiras e dias comuns — a conta onde documento a vida nómada. Substitui as 6 miniaturas abaixo pelas tuas fotos/vídeos (pasta <code>assets/lifestyle/</code>).</p>
+    <p class="panel-lead" data-i18n-html="panel.lifestyle.lead">Estradas, fronteiras e dias comuns — a conta onde documento a vida nómada. Substitui as 6 miniaturas abaixo pelas tuas fotos/vídeos (pasta <code>assets/lifestyle/</code>).</p>
     <div class="gallery">
       <div class="gallery-item"></div>
       <div class="gallery-item"></div>
@@ -157,11 +167,11 @@
       <div class="gallery-item"></div>
       <div class="gallery-item"></div>
     </div>
-    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="panel-cta">Ver galeria completa em @pedro_nomadic →</a>
+    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="panel-cta" data-i18n="panel.lifestyle.cta">Ver galeria completa em @pedro_nomadic →</a>
   </div>
 
   <div class="tab-panel" id="panel-casamentos">
-    <p class="panel-lead">Cerimónias reais, sem poses forçadas — a conta dedicada aos casamentos. Substitui as miniaturas pela pasta <code>assets/casamentos/</code>.</p>
+    <p class="panel-lead" data-i18n-html="panel.casamentos.lead">Cerimónias reais, sem poses forçadas — a conta dedicada aos casamentos. Substitui as miniaturas pela pasta <code>assets/casamentos/</code>.</p>
     <div class="gallery">
       <div class="gallery-item"></div>
       <div class="gallery-item"></div>
@@ -170,11 +180,11 @@
       <div class="gallery-item"></div>
       <div class="gallery-item"></div>
     </div>
-    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="panel-cta">Ver galeria completa em @promiseweddingsco →</a>
+    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="panel-cta" data-i18n="panel.casamentos.cta">Ver galeria completa em @promiseweddingsco →</a>
   </div>
 
   <div class="tab-panel" id="panel-desporto">
-    <p class="panel-lead">Ação, ritmo e adrenalina — a conta de desporto. Substitui as miniaturas pela pasta <code>assets/desporto/</code>.</p>
+    <p class="panel-lead" data-i18n-html="panel.desporto.lead">Ação, ritmo e adrenalina — a conta de desporto. Substitui as miniaturas pela pasta <code>assets/desporto/</code>.</p>
     <div class="gallery">
       <div class="gallery-item"></div>
       <div class="gallery-item"></div>
@@ -183,7 +193,7 @@
       <div class="gallery-item"></div>
       <div class="gallery-item"></div>
     </div>
-    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="panel-cta">Ver galeria completa em @vyraxmedia →</a>
+    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="panel-cta" data-i18n="panel.desporto.cta">Ver galeria completa em @vyraxmedia →</a>
   </div>
 </section>
 
@@ -195,26 +205,95 @@
     <!-- Troca por: <img src="assets/pedro.jpg" alt="Pedro Fernandes"> -->
   </div>
   <div class="about-text">
-    <h2 class="section-title">Sobre mim</h2>
-    <p>
+    <h2 class="section-title" data-i18n="about.title">Sobre mim</h2>
+    <p data-i18n="about.p1">
       Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que,
-      no fundo, são só um: pessoas em momentos que não voltam a acontecer: numa
+      no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa
       estrada, num altar, num campo, ou numa manhã qualquer em casa.
     </p>
-    <p>
+    <p data-i18n="about.p2">
       Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo,
       e é essa procura que me leva de viagens de mochila às costas a casamentos ao
-      ar livre e a bancadas cheias de gente a gritar por um resultado.
+      ar livre e a bancadas cheias de gente a gritar por um golo.
     </p>
   </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- PEDIDO DE ORÇAMENTO -->
+<!-- IMPORTANTE: substitui YOUR_FORM_ID pelo teu ID do Formspree (ver COMO-EDITAR.md) -->
+<!-- ===================================================== -->
+<section id="orcamento" class="quote">
+  <div class="section-head">
+    <h2 class="section-title" data-i18n="quote.title">Pedido de orçamento</h2>
+    <p class="section-note" data-i18n="quote.note">Resposta em 48 horas</p>
+  </div>
+
+  <p class="quote-lead" data-i18n="quote.lead">Conta-me os detalhes do teu projeto e envio-te uma proposta personalizada por email.</p>
+
+  <form id="quote-form" class="quote-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <div class="form-row">
+      <div class="form-field">
+        <label for="q-name" data-i18n="quote.name">Nome completo</label>
+        <input type="text" id="q-name" name="name" required>
+      </div>
+      <div class="form-field">
+        <label for="q-email" data-i18n="quote.email">Email</label>
+        <input type="email" id="q-email" name="email" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="q-phone" data-i18n="quote.phone">Telefone (opcional)</label>
+        <input type="tel" id="q-phone" name="phone">
+      </div>
+      <div class="form-field">
+        <label for="q-type" data-i18n="quote.type">Tipo de projeto</label>
+        <select id="q-type" name="project_type">
+          <option data-i18n="tag.lifestyle">Lifestyle</option>
+          <option data-i18n="tag.viagem">Viagem</option>
+          <option data-i18n="tag.casamento">Casamento</option>
+          <option data-i18n="tag.desporto">Desporto</option>
+          <option data-i18n="quote.other">Outro</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="q-date" data-i18n="quote.date">Data prevista do evento (opcional)</label>
+        <input type="date" id="q-date" name="event_date">
+      </div>
+      <div class="form-field">
+        <label for="q-budget" data-i18n="quote.budget">Orçamento estimado</label>
+        <select id="q-budget" name="budget">
+          <option>&lt; 250€</option>
+          <option>250€ – 500€</option>
+          <option>500€ – 1000€</option>
+          <option>1000€ +</option>
+          <option data-i18n="quote.notsure">Ainda não sei</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-field form-field-full">
+      <label for="q-message" data-i18n="quote.message">Conta-me sobre o projeto</label>
+      <textarea id="q-message" name="message" rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="quote-submit" data-i18n="quote.submit">Enviar pedido</button>
+
+    <p class="quote-status" id="quote-status" role="status"></p>
+  </form>
 </section>
 
 <!-- ===================================================== -->
 <!-- CONTACTO -->
 <!-- ===================================================== -->
 <section id="contacto" class="contact">
-  <h2 class="section-title">Vamos falar</h2>
-  <p>Tens um projeto em mente? Conta-me a tua ideia.</p>
+  <h2 class="section-title" data-i18n="contact.title">Vamos falar</h2>
+  <p data-i18n="contact.sub">Tens um projeto em mente? Conta-me a tua ideia.</p>
   <a href="mailto:pedrosilvasp458@gmail.com" class="contact-email">pedrosilvasp458@gmail.com</a>
 
   <div class="socials">
@@ -225,9 +304,13 @@
 </section>
 
 <footer class="footer">
-  <p>© 2026 Pedro Fernandes. Feito fotograma a fotograma.</p>
+  <p data-i18n="footer.text">© 2026 Pedro Fernandes. Feito fotograma a fotograma.</p>
 </footer>
 
+<script src="i18n.js"></script>
 <script src="script.js"></script>
+<!-- Three.js: motor 3D usado para desenhar e animar a câmara no hero -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="camera-3d.js"></script>
 </body>
 </html>
