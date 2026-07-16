@@ -63,129 +63,128 @@
 </div>
 
 <!-- ===================================================== -->
-<!-- PORTEFÓLIO — grelha única, filtrável por categoria -->
-<!-- Os 5 cartões "feature" (maiores, com texto) são os trabalhos em destaque.
-     Os cartões pequenos são espaço para mais fotos/vídeos de cada conta.
-     Para adicionar mais, copia um bloco ".portfolio-thumb" e muda a pasta/imagem. -->
+<!-- PORTEFÓLIO — carrossel único com swipe, cor muda por categoria -->
+<!-- Para adicionar um slide: copia um bloco <figure class="slide"> dentro
+     do .swipe-track da categoria certa e mete a tua imagem lá dentro. -->
 <!-- ===================================================== -->
-<section id="trabalhos" class="portfolio">
+<section id="trabalhos" class="portfolio" data-active="lifestyle">
   <div class="section-head">
     <h2 class="section-title" data-i18n="portfolio.title">Portefólio</h2>
-    <p class="section-note" data-i18n="portfolio.note">Filtra por categoria</p>
+    <p class="section-note" data-i18n="portfolio.note">Desliza para explorar</p>
   </div>
 
-  <div class="filters" role="tablist">
-    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" data-i18n="filter.all">Todos</button>
-    <button class="filter-btn" data-filter="lifestyle" role="tab" aria-selected="false" data-i18n="tab.lifestyle">Lifestyle &amp; Viagem</button>
-    <button class="filter-btn" data-filter="casamento" role="tab" aria-selected="false" data-i18n="tab.casamentos">Casamentos</button>
-    <button class="filter-btn" data-filter="desporto" role="tab" aria-selected="false" data-i18n="tab.desporto">Desporto</button>
+  <div class="cat-pills" role="tablist">
+    <button class="cat-pill active" data-cat="lifestyle" role="tab" aria-selected="true" data-i18n="tab.lifestyle">Lifestyle &amp; Viagem</button>
+    <button class="cat-pill" data-cat="casamentos" role="tab" aria-selected="false" data-i18n="tab.casamentos">Casamentos</button>
+    <button class="cat-pill" data-cat="desporto" role="tab" aria-selected="false" data-i18n="tab.desporto">Desporto</button>
+    <button class="cat-pill" data-cat="imobiliaria" role="tab" aria-selected="false" data-i18n="tab.imobiliaria">Imobiliária</button>
   </div>
 
-  <div class="portfolio-grid">
+  <div class="swiper">
+    <button class="swipe-arrow swipe-prev" aria-label="Anterior">←</button>
 
-    <!-- ---- 5 trabalhos em destaque ---- -->
-    <article class="portfolio-card is-feature" data-group="lifestyle" data-tag="viagem">
-      <span class="portfolio-frame">Fr. 04</span>
-      <div class="portfolio-thumb">
-        <!-- Substitui por: <img src="assets/trabalhos/vida-em-transito.jpg" alt="Vida em Trânsito"> -->
-      </div>
-      <div class="portfolio-info">
-        <h3 data-i18n="work.1.title">Vida em Trânsito</h3>
-        <p data-i18n="work.1.desc">Uma série sobre viver fora da mala — estradas, fronteiras e o quarto que muda todas as semanas.</p>
-        <div class="portfolio-tags"><span data-i18n="tag.viagem">Viagem</span><span>2026</span></div>
-      </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
-    </article>
+    <div class="swipe-viewport">
 
-    <article class="portfolio-card is-feature" data-group="casamento" data-tag="casamento">
-      <span class="portfolio-frame">Fr. 11</span>
-      <div class="portfolio-thumb">
-        <!-- Substitui por: <img src="assets/trabalhos/sim-aceito.jpg" alt="Sim, Aceito"> -->
+      <!-- ======== LIFESTYLE & VIAGEM ======== -->
+      <div class="swipe-track active" data-cat="lifestyle">
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/lifestyle/foto1.jpg" alt=""> --></div>
+          <figcaption>
+            <h3 data-i18n="work.1.title">Vida em Trânsito</h3>
+            <p data-i18n="work.1.desc">Uma série sobre viver fora da mala — estradas, fronteiras e o quarto que muda todas as semanas.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/lifestyle/foto2.jpg" alt=""> --></div>
+          <figcaption>
+            <h3 data-i18n="work.4.title">Manhã Devagar</h3>
+            <p data-i18n="work.4.desc">Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/lifestyle/foto3.jpg" alt=""> --></div>
+          <figcaption>
+            <h3 data-i18n="work.5.title">Ao Nascer do Dia</h3>
+            <p data-i18n="work.5.desc">Uma viagem de carrinha pela costa — madrugadas, paragens improvisadas e o oceano como constante.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/lifestyle/foto4.jpg" alt=""> --></div>
+        </figure>
       </div>
-      <div class="portfolio-info">
-        <h3 data-i18n="work.2.title">Sim, Aceito</h3>
-        <p data-i18n="work.2.desc">Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do "sim", o primeiro abraço.</p>
-        <div class="portfolio-tags"><span data-i18n="tag.casamento">Casamento</span><span>2025</span></div>
-      </div>
-      <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
-    </article>
 
-    <article class="portfolio-card is-feature" data-group="desporto" data-tag="desporto">
-      <span class="portfolio-frame">Fr. 17</span>
-      <div class="portfolio-thumb">
-        <!-- Substitui por: <img src="assets/trabalhos/ultimo-lance.jpg" alt="Último Lance"> -->
+      <!-- ======== CASAMENTOS ======== -->
+      <div class="swipe-track" data-cat="casamentos">
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/casamentos/foto1.jpg" alt=""> --></div>
+          <figcaption>
+            <h3 data-i18n="work.2.title">Sim, Aceito</h3>
+            <p data-i18n="work.2.desc">Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do "sim", o primeiro abraço.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/casamentos/foto2.jpg" alt=""> --></div>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/casamentos/foto3.jpg" alt=""> --></div>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/casamentos/foto4.jpg" alt=""> --></div>
+        </figure>
       </div>
-      <div class="portfolio-info">
-        <h3 data-i18n="work.3.title">Último Lance</h3>
-        <p data-i18n="work.3.desc">Os segundos finais de um jogo decisivo — tensão, suor e a explosão do apito final.</p>
-        <div class="portfolio-tags"><span data-i18n="tag.desporto">Desporto</span><span>2025</span></div>
-      </div>
-      <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
-    </article>
 
-    <article class="portfolio-card is-feature" data-group="lifestyle" data-tag="lifestyle">
-      <span class="portfolio-frame">Fr. 22</span>
-      <div class="portfolio-thumb">
-        <!-- Substitui por: <img src="assets/trabalhos/manha-devagar.jpg" alt="Manhã Devagar"> -->
+      <!-- ======== DESPORTO ======== -->
+      <div class="swipe-track" data-cat="desporto">
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/desporto/foto1.jpg" alt=""> --></div>
+          <figcaption>
+            <h3 data-i18n="work.3.title">Último Lance</h3>
+            <p data-i18n="work.3.desc">Os segundos finais de um jogo decisivo — tensão, suor e a explosão do apito final.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/desporto/foto2.jpg" alt=""> --></div>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/desporto/foto3.jpg" alt=""> --></div>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/desporto/foto4.jpg" alt=""> --></div>
+        </figure>
       </div>
-      <div class="portfolio-info">
-        <h3 data-i18n="work.4.title">Manhã Devagar</h3>
-        <p data-i18n="work.4.desc">Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.</p>
-        <div class="portfolio-tags"><span data-i18n="tag.lifestyle">Lifestyle</span><span>2026</span></div>
+
+      <!-- ======== IMOBILIÁRIA ======== -->
+      <div class="swipe-track" data-cat="imobiliaria">
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/imobiliaria/foto1.jpg" alt=""> --></div>
+          <figcaption>
+            <h3 data-i18n="work.6.title">Espaços que Vendem</h3>
+            <p data-i18n="work.6.desc">Fotografia de imóveis pensada para destacar luz, amplitude e detalhe — imagens que aceleram a venda.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/imobiliaria/foto2.jpg" alt=""> --></div>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/imobiliaria/foto3.jpg" alt=""> --></div>
+        </figure>
+        <figure class="slide">
+          <div class="slide-media"><!-- <img src="assets/imobiliaria/foto4.jpg" alt=""> --></div>
+        </figure>
       </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
-    </article>
 
-    <article class="portfolio-card is-feature" data-group="lifestyle" data-tag="viagem">
-      <span class="portfolio-frame">Fr. 29</span>
-      <div class="portfolio-thumb">
-        <!-- Substitui por: <img src="assets/trabalhos/ao-nascer-do-dia.jpg" alt="Ao Nascer do Dia"> -->
-      </div>
-      <div class="portfolio-info">
-        <h3 data-i18n="work.5.title">Ao Nascer do Dia</h3>
-        <p data-i18n="work.5.desc">Uma viagem de carrinha pela costa — madrugadas, paragens improvisadas e o oceano como constante.</p>
-        <div class="portfolio-tags"><span data-i18n="tag.viagem">Viagem</span><span>2025</span></div>
-      </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
-    </article>
-
-    <!-- ---- Espaço extra para mais fotos/vídeos (aparecem/desaparecem com o filtro) ---- -->
-    <div class="portfolio-thumb-card" data-group="lifestyle">
-      <div class="portfolio-thumb"><!-- assets/lifestyle/foto1.jpg --></div>
-    </div>
-    <div class="portfolio-thumb-card" data-group="lifestyle">
-      <div class="portfolio-thumb"><!-- assets/lifestyle/foto2.jpg --></div>
-    </div>
-    <div class="portfolio-thumb-card" data-group="lifestyle">
-      <div class="portfolio-thumb"><!-- assets/lifestyle/foto3.jpg --></div>
-    </div>
-
-    <div class="portfolio-thumb-card" data-group="casamento">
-      <div class="portfolio-thumb"><!-- assets/casamentos/foto1.jpg --></div>
-    </div>
-    <div class="portfolio-thumb-card" data-group="casamento">
-      <div class="portfolio-thumb"><!-- assets/casamentos/foto2.jpg --></div>
-    </div>
-    <div class="portfolio-thumb-card" data-group="casamento">
-      <div class="portfolio-thumb"><!-- assets/casamentos/foto3.jpg --></div>
-    </div>
-
-    <div class="portfolio-thumb-card" data-group="desporto">
-      <div class="portfolio-thumb"><!-- assets/desporto/foto1.jpg --></div>
-    </div>
-    <div class="portfolio-thumb-card" data-group="desporto">
-      <div class="portfolio-thumb"><!-- assets/desporto/foto2.jpg --></div>
-    </div>
-    <div class="portfolio-thumb-card" data-group="desporto">
-      <div class="portfolio-thumb"><!-- assets/desporto/foto3.jpg --></div>
     </div>
 
+    <button class="swipe-arrow swipe-next" aria-label="Seguinte">→</button>
   </div>
 
-  <div class="portfolio-social">
-    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener">@pedro_nomadic</a>
-    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener">@promiseweddingsco</a>
-    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener">@vyraxmedia</a>
+  <div class="swipe-dots" role="tablist"></div>
+
+  <div class="portfolio-cta">
+    <a class="cat-link" data-cat="lifestyle" href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener">@pedro_nomadic →</a>
+    <a class="cat-link" data-cat="casamentos" href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" hidden>@promiseweddingsco →</a>
+    <a class="cat-link" data-cat="desporto" href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" hidden>@vyraxmedia →</a>
+    <a class="cat-link" data-cat="imobiliaria" href="#orcamento" hidden data-i18n="cta.quote">Pedir orçamento →</a>
   </div>
 </section>
 
@@ -201,12 +200,12 @@
     <p data-i18n="about.p1">
       Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que,
       no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa
-      estrada, num altar, num tatami, ou numa manhã qualquer em casa.
+      estrada, num altar, num campo, ou numa manhã qualquer em casa.
     </p>
     <p data-i18n="about.p2">
       Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo,
       e é essa procura que me leva de viagens de mochila às costas a casamentos ao
-      ar livre e a bancadas cheias de gente a gritar por uma finalização.
+      ar livre e a bancadas cheias de gente a gritar por um golo.
     </p>
   </div>
 </section>
@@ -247,6 +246,7 @@
           <option data-i18n="tag.viagem">Viagem</option>
           <option data-i18n="tag.casamento">Casamento</option>
           <option data-i18n="tag.desporto">Desporto</option>
+          <option data-i18n="tab.imobiliaria">Imobiliária</option>
           <option data-i18n="quote.other">Outro</option>
         </select>
       </div>
