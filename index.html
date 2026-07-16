@@ -6,10 +6,10 @@
 <title data-i18n="meta.title">Pedro Fernandes — Fotografia & Vídeo</title>
 <meta name="description" content="Pedro Fernandes — fotografia e vídeo de lifestyle, viagem, casamentos e desporto." data-i18n-attr="content" data-i18n="meta.description">
 
-<!-- Fontes: serifada expressiva para títulos, condensada para rótulos/etiquetas, sem-serifa para o corpo do texto -->
+<!-- Fontes: display expressiva para títulos, monoespaçada técnica para etiquetas/números, sem-serifa limpa para o corpo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,500;1,9..144,600&family=Barlow+Condensed:wght@500;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,8 +20,7 @@
 <header class="topbar">
   <span class="brand">PEDRO FERNANDES</span>
   <nav>
-    <a href="#trabalhos" data-i18n="nav.work">Trabalhos</a>
-    <a href="#categorias" data-i18n="nav.portfolio">Portefólio</a>
+    <a href="#trabalhos" data-i18n="nav.portfolio">Portefólio</a>
     <a href="#sobre" data-i18n="nav.about">Sobre</a>
     <a href="#orcamento" data-i18n="nav.quote">Orçamento</a>
     <a href="#contacto" data-i18n="nav.contact">Contacto</a>
@@ -50,7 +49,8 @@
       <p class="hero-eyebrow" data-i18n="hero.eyebrow">Fotografia &amp; Vídeo — Lifestyle · Viagem · Casamentos · Desporto</p>
       <h1 class="hero-title" data-i18n-html="hero.title">Cada instante<br>tem <em>um único</em><br>fotograma.</h1>
       <p class="hero-sub" data-i18n="hero.sub">
-        Criar. Contar. Impactar..
+        Sou o Pedro. Passo a vida entre estradas, cerimónias e bancadas —
+        a apanhar o momento que não se repete.
       </p>
       <a href="#trabalhos" class="hero-cta" data-i18n="hero.cta">Ver trabalhos ↓</a>
     </div>
@@ -63,136 +63,129 @@
 </div>
 
 <!-- ===================================================== -->
-<!-- TRABALHOS SELECIONADOS — numerados como fotogramas de rolo -->
+<!-- PORTEFÓLIO — grelha única, filtrável por categoria -->
+<!-- Os 5 cartões "feature" (maiores, com texto) são os trabalhos em destaque.
+     Os cartões pequenos são espaço para mais fotos/vídeos de cada conta.
+     Para adicionar mais, copia um bloco ".portfolio-thumb" e muda a pasta/imagem. -->
 <!-- ===================================================== -->
-<section id="trabalhos" class="works">
+<section id="trabalhos" class="portfolio">
   <div class="section-head">
-    <h2 class="section-title" data-i18n="works.title">Trabalhos selecionados</h2>
-    <p class="section-note" data-i18n="works.note">Rolo 001 — 5 fotogramas</p>
+    <h2 class="section-title" data-i18n="portfolio.title">Portefólio</h2>
+    <p class="section-note" data-i18n="portfolio.note">Filtra por categoria</p>
   </div>
 
-  <div class="work-grid">
+  <div class="filters" role="tablist">
+    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" data-i18n="filter.all">Todos</button>
+    <button class="filter-btn" data-filter="lifestyle" role="tab" aria-selected="false" data-i18n="tab.lifestyle">Lifestyle &amp; Viagem</button>
+    <button class="filter-btn" data-filter="casamento" role="tab" aria-selected="false" data-i18n="tab.casamentos">Casamentos</button>
+    <button class="filter-btn" data-filter="desporto" role="tab" aria-selected="false" data-i18n="tab.desporto">Desporto</button>
+  </div>
 
-    <article class="work-card" data-tag="viagem">
-      <span class="work-frame">Fr. 04</span>
-      <div class="work-thumb">
+  <div class="portfolio-grid">
+
+    <!-- ---- 5 trabalhos em destaque ---- -->
+    <article class="portfolio-card is-feature" data-group="lifestyle" data-tag="viagem">
+      <span class="portfolio-frame">Fr. 04</span>
+      <div class="portfolio-thumb">
         <!-- Substitui por: <img src="assets/trabalhos/vida-em-transito.jpg" alt="Vida em Trânsito"> -->
       </div>
-      <div class="work-info">
+      <div class="portfolio-info">
         <h3 data-i18n="work.1.title">Vida em Trânsito</h3>
         <p data-i18n="work.1.desc">Uma série sobre viver fora da mala — estradas, fronteiras e o quarto que muda todas as semanas.</p>
-        <div class="work-tags"><span data-i18n="tag.viagem">Viagem</span><span>2026</span></div>
+        <div class="portfolio-tags"><span data-i18n="tag.viagem">Viagem</span><span>2026</span></div>
       </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
-    <article class="work-card" data-tag="casamento">
-      <span class="work-frame">Fr. 11</span>
-      <div class="work-thumb">
+    <article class="portfolio-card is-feature" data-group="casamento" data-tag="casamento">
+      <span class="portfolio-frame">Fr. 11</span>
+      <div class="portfolio-thumb">
         <!-- Substitui por: <img src="assets/trabalhos/sim-aceito.jpg" alt="Sim, Aceito"> -->
       </div>
-      <div class="work-info">
+      <div class="portfolio-info">
         <h3 data-i18n="work.2.title">Sim, Aceito</h3>
         <p data-i18n="work.2.desc">Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do "sim", o primeiro abraço.</p>
-        <div class="work-tags"><span data-i18n="tag.casamento">Casamento</span><span>2025</span></div>
+        <div class="portfolio-tags"><span data-i18n="tag.casamento">Casamento</span><span>2025</span></div>
       </div>
-      <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
-    <article class="work-card" data-tag="desporto">
-      <span class="work-frame">Fr. 17</span>
-      <div class="work-thumb">
+    <article class="portfolio-card is-feature" data-group="desporto" data-tag="desporto">
+      <span class="portfolio-frame">Fr. 17</span>
+      <div class="portfolio-thumb">
         <!-- Substitui por: <img src="assets/trabalhos/ultimo-lance.jpg" alt="Último Lance"> -->
       </div>
-      <div class="work-info">
+      <div class="portfolio-info">
         <h3 data-i18n="work.3.title">Último Lance</h3>
         <p data-i18n="work.3.desc">Os segundos finais de um jogo decisivo — tensão, suor e a explosão do apito final.</p>
-        <div class="work-tags"><span data-i18n="tag.desporto">Desporto</span><span>2025</span></div>
+        <div class="portfolio-tags"><span data-i18n="tag.desporto">Desporto</span><span>2025</span></div>
       </div>
-      <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
-    <article class="work-card" data-tag="lifestyle">
-      <span class="work-frame">Fr. 22</span>
-      <div class="work-thumb">
+    <article class="portfolio-card is-feature" data-group="lifestyle" data-tag="lifestyle">
+      <span class="portfolio-frame">Fr. 22</span>
+      <div class="portfolio-thumb">
         <!-- Substitui por: <img src="assets/trabalhos/manha-devagar.jpg" alt="Manhã Devagar"> -->
       </div>
-      <div class="work-info">
+      <div class="portfolio-info">
         <h3 data-i18n="work.4.title">Manhã Devagar</h3>
         <p data-i18n="work.4.desc">Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.</p>
-        <div class="work-tags"><span data-i18n="tag.lifestyle">Lifestyle</span><span>2026</span></div>
+        <div class="portfolio-tags"><span data-i18n="tag.lifestyle">Lifestyle</span><span>2026</span></div>
       </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
-    <article class="work-card" data-tag="viagem">
-      <span class="work-frame">Fr. 29</span>
-      <div class="work-thumb">
+    <article class="portfolio-card is-feature" data-group="lifestyle" data-tag="viagem">
+      <span class="portfolio-frame">Fr. 29</span>
+      <div class="portfolio-thumb">
         <!-- Substitui por: <img src="assets/trabalhos/ao-nascer-do-dia.jpg" alt="Ao Nascer do Dia"> -->
       </div>
-      <div class="work-info">
+      <div class="portfolio-info">
         <h3 data-i18n="work.5.title">Ao Nascer do Dia</h3>
         <p data-i18n="work.5.desc">Uma viagem de carrinha pela costa — madrugadas, paragens improvisadas e o oceano como constante.</p>
-        <div class="work-tags"><span data-i18n="tag.viagem">Viagem</span><span>2025</span></div>
+        <div class="portfolio-tags"><span data-i18n="tag.viagem">Viagem</span><span>2025</span></div>
       </div>
-      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="work-link" data-i18n="cta.instagram">Ver no Instagram →</a>
+      <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="portfolio-link" data-i18n="cta.instagram">Ver no Instagram →</a>
     </article>
 
-  </div>
-</section>
-
-<!-- ===================================================== -->
-<!-- PORTEFÓLIO POR CATEGORIA — abas com galeria + link Instagram -->
-<!-- ===================================================== -->
-<section id="categorias" class="categories">
-  <div class="section-head">
-    <h2 class="section-title" data-i18n="categories.title">Portefólio por categoria</h2>
-    <p class="section-note" data-i18n="categories.note">Três rolos, três olhares</p>
-  </div>
-
-  <div class="tabs" role="tablist">
-    <button class="tab-btn active" data-tab="lifestyle" role="tab" aria-selected="true" data-i18n="tab.lifestyle">Lifestyle &amp; Viagem</button>
-    <button class="tab-btn" data-tab="casamentos" role="tab" aria-selected="false" data-i18n="tab.casamentos">Casamentos</button>
-    <button class="tab-btn" data-tab="desporto" role="tab" aria-selected="false" data-i18n="tab.desporto">Desporto</button>
-  </div>
-
-  <div class="tab-panel active" id="panel-lifestyle">
-    <p class="panel-lead" data-i18n-html="panel.lifestyle.lead">Estradas, fronteiras e dias comuns — a conta onde documento a vida nómada. Substitui as 6 miniaturas abaixo pelas tuas fotos/vídeos (pasta <code>assets/lifestyle/</code>).</p>
-    <div class="gallery">
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
+    <!-- ---- Espaço extra para mais fotos/vídeos (aparecem/desaparecem com o filtro) ---- -->
+    <div class="portfolio-thumb-card" data-group="lifestyle">
+      <div class="portfolio-thumb"><!-- assets/lifestyle/foto1.jpg --></div>
     </div>
-    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener" class="panel-cta" data-i18n="panel.lifestyle.cta">Ver galeria completa em @pedro_nomadic →</a>
+    <div class="portfolio-thumb-card" data-group="lifestyle">
+      <div class="portfolio-thumb"><!-- assets/lifestyle/foto2.jpg --></div>
+    </div>
+    <div class="portfolio-thumb-card" data-group="lifestyle">
+      <div class="portfolio-thumb"><!-- assets/lifestyle/foto3.jpg --></div>
+    </div>
+
+    <div class="portfolio-thumb-card" data-group="casamento">
+      <div class="portfolio-thumb"><!-- assets/casamentos/foto1.jpg --></div>
+    </div>
+    <div class="portfolio-thumb-card" data-group="casamento">
+      <div class="portfolio-thumb"><!-- assets/casamentos/foto2.jpg --></div>
+    </div>
+    <div class="portfolio-thumb-card" data-group="casamento">
+      <div class="portfolio-thumb"><!-- assets/casamentos/foto3.jpg --></div>
+    </div>
+
+    <div class="portfolio-thumb-card" data-group="desporto">
+      <div class="portfolio-thumb"><!-- assets/desporto/foto1.jpg --></div>
+    </div>
+    <div class="portfolio-thumb-card" data-group="desporto">
+      <div class="portfolio-thumb"><!-- assets/desporto/foto2.jpg --></div>
+    </div>
+    <div class="portfolio-thumb-card" data-group="desporto">
+      <div class="portfolio-thumb"><!-- assets/desporto/foto3.jpg --></div>
+    </div>
+
   </div>
 
-  <div class="tab-panel" id="panel-casamentos">
-    <p class="panel-lead" data-i18n-html="panel.casamentos.lead">Cerimónias reais, sem poses forçadas — a conta dedicada aos casamentos. Substitui as miniaturas pela pasta <code>assets/casamentos/</code>.</p>
-    <div class="gallery">
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-    </div>
-    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" class="panel-cta" data-i18n="panel.casamentos.cta">Ver galeria completa em @promiseweddingsco →</a>
-  </div>
-
-  <div class="tab-panel" id="panel-desporto">
-    <p class="panel-lead" data-i18n-html="panel.desporto.lead">Ação, ritmo e adrenalina — a conta de desporto. Substitui as miniaturas pela pasta <code>assets/desporto/</code>.</p>
-    <div class="gallery">
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-      <div class="gallery-item"></div>
-    </div>
-    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" class="panel-cta" data-i18n="panel.desporto.cta">Ver galeria completa em @vyraxmedia →</a>
+  <div class="portfolio-social">
+    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener">@pedro_nomadic</a>
+    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener">@promiseweddingsco</a>
+    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener">@vyraxmedia</a>
   </div>
 </section>
 
@@ -208,13 +201,12 @@
     <p data-i18n="about.p1">
       Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que,
       no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa
-      estrada, num altar, num tatami, ou numa manhã qualquer em casa.
+      estrada, num altar, num campo, ou numa manhã qualquer em casa.
     </p>
     <p data-i18n="about.p2">
-      Gosto de trabalhar consoante as necessidades de cada cliente, 
-      esperar pelo instante certo a montá-lo,
-      e é essa procura que me leva a viagens de mochila às costas a casamentos únicos 
-      e tatamis com plateias ao rubro a gritar por uma finalização. 
+      Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo,
+      e é essa procura que me leva de viagens de mochila às costas a casamentos ao
+      ar livre e a bancadas cheias de gente a gritar por um golo.
     </p>
   </div>
 </section>
@@ -309,8 +301,15 @@
 
 <script src="i18n.js"></script>
 <script src="script.js"></script>
-<!-- Three.js: motor 3D usado para desenhar e animar a câmara no hero -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="camera-3d.js"></script>
+<!-- Three.js (motor 3D) — versão moderna via módulos ES, necessária para carregar modelos .glb realistas -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="camera-3d.js"></script>
 </body>
 </html>
