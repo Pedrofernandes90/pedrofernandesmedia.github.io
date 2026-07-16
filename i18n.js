@@ -7,46 +7,49 @@
 const translations = {
   pt: {
     "meta.title": "Pedro Fernandes — Fotografia & Vídeo",
-    "meta.description": "Pedro Fernandes — fotografia e vídeo de Imobiliária, viagem, casamentos e desporto.",
+    "meta.description": "Pedro Fernandes — fotografia e vídeo de lifestyle, viagem, casamentos e desporto.",
 
     "nav.portfolio": "Portefólio",
     "nav.about": "Sobre",
     "nav.quote": "Orçamento",
     "nav.contact": "Contacto",
 
-    "hero.eyebrow": "Fotografia & Vídeo — Imobiliária · Viagem · Casamentos · Desporto",
+    "hero.eyebrow": "Fotografia & Vídeo — Lifestyle · Viagem · Casamentos · Desporto",
     "hero.title": "Cada instante<br>tem <em>um único</em><br>fotograma.",
-    "hero.sub": "Sou o Pedro. Passo a vida entre viagens, cerimónias e tatamis — a apanhar o momento que não se repete.",
+    "hero.sub": "Sou o Pedro. Passo a vida entre estradas, cerimónias e bancadas — a apanhar o momento que não se repete.",
     "hero.cta": "Ver trabalhos ↓",
 
     "portfolio.title": "Portefólio",
-    "portfolio.note": "Filtra por categoria",
-    "filter.all": "Todos",
+    "portfolio.note": "Desliza para explorar",
 
     "work.1.title": "Vida em Trânsito",
     "work.1.desc": "Uma série sobre viver fora da mala — estradas, fronteiras e o quarto que muda todas as semanas.",
     "work.2.title": "Sim, Aceito",
     "work.2.desc": "Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do \"sim\", o primeiro abraço.",
     "work.3.title": "Último Lance",
-    "work.3.desc": "Os segundos finais num tatami — tensão, suor e explosão.",
+    "work.3.desc": "Os segundos finais de um jogo decisivo — tensão, suor e a explosão do apito final.",
     "work.4.title": "Manhã Devagar",
     "work.4.desc": "Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.",
     "work.5.title": "Ao Nascer do Dia",
-    "work.5.desc": "Uma viagem por trilhos fascinantes no coração do gerês.",
+    "work.5.desc": "Uma viagem de carrinha pela costa — madrugadas, paragens improvisadas e o oceano como constante.",
+    "work.6.title": "Espaços que Vendem",
+    "work.6.desc": "Fotografia de imóveis pensada para destacar luz, amplitude e detalhe — imagens que aceleram a venda.",
 
-    "tag.lifestyle": "Imobiliária",
-    "tag.viagem": "Viagem",  
+    "tag.lifestyle": "Lifestyle",
+    "tag.viagem": "Viagem",
     "tag.casamento": "Casamento",
     "tag.desporto": "Desporto",
     "cta.instagram": "Ver no Instagram →",
+    "cta.quote": "Pedir orçamento →",
 
     "tab.lifestyle": "Lifestyle & Viagem",
     "tab.casamentos": "Casamentos",
     "tab.desporto": "Desporto",
+    "tab.imobiliaria": "Imobiliária",
 
     "about.title": "Sobre mim",
-    "about.p1": "Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que, no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa estrada, num altar, num tatami, ou numa manhã qualquer em casa.",
-    "about.p2": "Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo, e é essa procura que me leva de viagens de mochila às costas a casamentos ao ar livre e a bancadas cheias de gente a gritar por uma finalização.",
+    "about.p1": "Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que, no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa estrada, num altar, num campo, ou numa manhã qualquer em casa.",
+    "about.p2": "Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo, e é essa procura que me leva de viagens de mochila às costas a casamentos ao ar livre e a bancadas cheias de gente a gritar por um golo.",
 
     "quote.title": "Pedido de orçamento",
     "quote.note": "Resposta em 48 horas",
@@ -86,8 +89,7 @@ const translations = {
     "hero.cta": "See the work ↓",
 
     "portfolio.title": "Portfolio",
-    "portfolio.note": "Filter by category",
-    "filter.all": "All",
+    "portfolio.note": "Swipe to explore",
 
     "work.1.title": "Life in Transit",
     "work.1.desc": "A series about living out of a bag — roads, borders, and a bedroom that changes every week.",
@@ -99,16 +101,20 @@ const translations = {
     "work.4.desc": "Portraits of routine — coffee, window light, and the small rituals nobody shows on the feed.",
     "work.5.title": "At Daybreak",
     "work.5.desc": "A van trip along the coast — early mornings, unplanned stops, and the ocean as a constant.",
+    "work.6.title": "Spaces that Sell",
+    "work.6.desc": "Real estate photography built to highlight light, space and detail — images that speed up the sale.",
 
     "tag.lifestyle": "Lifestyle",
     "tag.viagem": "Travel",
     "tag.casamento": "Wedding",
     "tag.desporto": "Sport",
     "cta.instagram": "See on Instagram →",
+    "cta.quote": "Get a quote →",
 
     "tab.lifestyle": "Lifestyle & Travel",
     "tab.casamentos": "Weddings",
     "tab.desporto": "Sport",
+    "tab.imobiliaria": "Real Estate",
 
     "about.title": "About me",
     "about.p1": "My name is Pedro da Silva Fernandes. I split my work between four worlds that are really just one: people in moments that won't happen again — on a road, at an altar, on a field, or on an ordinary morning at home.",
