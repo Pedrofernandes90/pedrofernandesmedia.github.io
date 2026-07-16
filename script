@@ -1,11 +1,11 @@
-// Controla as abas da secção "Portefólio por categoria"
+// Controla os filtros da secção "Portefólio" (mostra/esconde cartões por categoria)
 document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.tab-btn');
-  const panels = document.querySelectorAll('.tab-panel');
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('[data-group]');
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
+      const filter = btn.dataset.filter;
 
       buttons.forEach(b => {
         b.classList.remove('active');
@@ -14,8 +14,62 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
       btn.setAttribute('aria-selected', 'true');
 
-      panels.forEach(p => p.classList.remove('active'));
-      document.getElementById(`panel-${target}`).classList.add('active');
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.group === filter;
+        card.style.display = show ? '' : 'none';
+      });
     });
+  });
+});
+
+// Envio do formulário de pedido de orçamento (usa o Formspree, sem recarregar a página)
+// IMPORTANTE: para isto funcionar, tens de substituir "YOUR_FORM_ID" no index.html
+// pelo ID do teu formulário Formspree — instruções no COMO-EDITAR.md
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('quote-form');
+  const status = document.getElementById('quote-status');
+  if (!form) return;
+
+  const lang = () => localStorage.getItem('site-lang') || 'pt';
+  const msg = {
+    sending: { pt: 'A enviar...', en: 'Sending...' },
+    success: { pt: 'Pedido enviado! Vou responder-te por email em breve.', en: "Request sent! I'll get back to you by email soon." },
+    error: { pt: 'Algo correu mal. Tenta novamente ou escreve para pedrosilvasp458@gmail.com.', en: 'Something went wrong. Please try again or email pedrosilvasp458@gmail.com.' },
+    notConfigured: { pt: 'O formulário ainda não está ligado ao teu email — segue o COMO-EDITAR.md para o ativar.', en: 'The form is not connected to your email yet — follow COMO-EDITAR.md to activate it.' }
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (form.action.includes('YOUR_FORM_ID')) {
+      status.textContent = msg.notConfigured[lang()];
+      status.classList.add('is-error');
+      return;
+    }
+
+    const submitBtn = form.querySelector('.quote-submit');
+    submitBtn.disabled = true;
+    status.classList.remove('is-error');
+    status.textContent = msg.sending[lang()];
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        status.textContent = msg.success[lang()];
+        form.reset();
+      } else {
+        throw new Error('Formspree error');
+      }
+    } catch (err) {
+      status.textContent = msg.error[lang()];
+      status.classList.add('is-error');
+    } finally {
+      submitBtn.disabled = false;
+    }
   });
 });
