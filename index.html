@@ -301,15 +301,8 @@
 
 <script src="i18n.js"></script>
 <script src="script.js"></script>
-<!-- Three.js (motor 3D) — versão moderna via módulos ES, necessária para carregar modelos .glb realistas -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-<script type="module" src="camera-3d.js"></script>
+<!-- Three.js: motor 3D usado para desenhar e animar a câmara no hero -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="camera-3d.js"></script>
 </body>
 </html>
