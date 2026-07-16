@@ -7,16 +7,16 @@
 const translations = {
   pt: {
     "meta.title": "Pedro Fernandes — Fotografia & Vídeo",
-    "meta.description": "Pedro Fernandes — fotografia e vídeo de lifestyle, viagem, casamentos e desporto.",
+    "meta.description": "Pedro Fernandes — fotografia e vídeo de Imobiliária, viagem, casamentos e desporto.",
 
     "nav.portfolio": "Portefólio",
     "nav.about": "Sobre",
     "nav.quote": "Orçamento",
     "nav.contact": "Contacto",
 
-    "hero.eyebrow": "Fotografia & Vídeo — Lifestyle · Viagem · Casamentos · Desporto",
+    "hero.eyebrow": "Fotografia & Vídeo — Imobiliária · Viagem · Casamentos · Desporto",
     "hero.title": "Cada instante<br>tem <em>um único</em><br>fotograma.",
-    "hero.sub": "Sou o Pedro. Passo a vida entre estradas, cerimónias e bancadas — a apanhar o momento que não se repete.",
+    "hero.sub": "Sou o Pedro. Passo a vida entre viagens, cerimónias e tatamis — a apanhar o momento que não se repete.",
     "hero.cta": "Ver trabalhos ↓",
 
     "portfolio.title": "Portefólio",
@@ -28,14 +28,14 @@ const translations = {
     "work.2.title": "Sim, Aceito",
     "work.2.desc": "Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do \"sim\", o primeiro abraço.",
     "work.3.title": "Último Lance",
-    "work.3.desc": "Os segundos finais de um jogo decisivo — tensão, suor e a explosão do apito final.",
+    "work.3.desc": "Os segundos finais num tatami — tensão, suor e explosão.",
     "work.4.title": "Manhã Devagar",
     "work.4.desc": "Retratos de rotina — café, luz de janela, e os pequenos rituais que ninguém mostra no feed.",
     "work.5.title": "Ao Nascer do Dia",
-    "work.5.desc": "Uma viagem de carrinha pela costa — madrugadas, paragens improvisadas e o oceano como constante.",
+    "work.5.desc": "Uma viagem por trilhos fascinantes no coração do gerês.",
 
-    "tag.lifestyle": "Lifestyle",
-    "tag.viagem": "Viagem",
+    "tag.lifestyle": "Imobiliária",
+    "tag.viagem": "Viagem",  
     "tag.casamento": "Casamento",
     "tag.desporto": "Desporto",
     "cta.instagram": "Ver no Instagram →",
@@ -45,8 +45,8 @@ const translations = {
     "tab.desporto": "Desporto",
 
     "about.title": "Sobre mim",
-    "about.p1": "Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que, no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa estrada, num altar, num campo, ou numa manhã qualquer em casa.",
-    "about.p2": "Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo, e é essa procura que me leva de viagens de mochila às costas a casamentos ao ar livre e a bancadas cheias de gente a gritar por um golo.",
+    "about.p1": "Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que, no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa estrada, num altar, num tatami, ou numa manhã qualquer em casa.",
+    "about.p2": "Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo, e é essa procura que me leva de viagens de mochila às costas a casamentos ao ar livre e a bancadas cheias de gente a gritar por uma finalização.",
 
     "quote.title": "Pedido de orçamento",
     "quote.note": "Resposta em 48 horas",
