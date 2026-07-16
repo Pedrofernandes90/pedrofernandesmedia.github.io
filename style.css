@@ -12,9 +12,9 @@
   --tag-casamento: #d8b4a6;
   --tag-desporto: #5c86a8;
 
-  --display: 'Fraunces', serif;
-  --label: 'Barlow Condensed', sans-serif;
-  --body: 'Work Sans', sans-serif;
+  --display: 'Bricolage Grotesque', sans-serif;
+  --label: 'Space Mono', monospace;
+  --body: 'Inter', sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -29,7 +29,7 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3 { font-family: var(--display); margin: 0; font-weight: 500; }
+h1, h2, h3 { font-family: var(--display); margin: 0; font-weight: 600; letter-spacing: -0.01em; }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
 
@@ -223,89 +223,19 @@ section { padding: 110px 5%; }
 }
 
 /* =====================================================
-   TRABALHOS SELECIONADOS
+   PORTEFÓLIO — grelha única com filtros por categoria
    ===================================================== */
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2px;
-  background: var(--line);
-}
-
-.work-card {
-  position: relative;
-  background: var(--ink);
-  padding: 26px 24px 28px;
-  display: flex;
-  flex-direction: column;
-  min-height: 300px;
-}
-
-.work-frame {
-  font-family: var(--label);
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  color: var(--gold);
-}
-
-.work-thumb {
-  margin: 16px 0;
-  height: 150px;
-  border-radius: 2px;
-  background: linear-gradient(135deg, #241d18, #35281f);
-  border: 1px dashed rgba(241,236,228,0.25);
-}
-
-.work-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
-
-.work-info h3 { font-size: 21px; margin-bottom: 8px; }
-.work-info p { font-size: 14.5px; opacity: 0.78; }
-
-.work-tags {
-  display: flex;
-  gap: 10px;
-  margin-top: 14px;
-  font-family: var(--label);
-  letter-spacing: 0.05em;
-  font-size: 13px;
-}
-
-.work-tags span {
-  border: 1px solid var(--line);
-  padding: 3px 10px;
-  border-radius: 100px;
-  opacity: 0.85;
-}
-
-.work-card[data-tag="viagem"] .work-tags span:first-child { border-color: var(--tag-lifestyle); color: var(--tag-lifestyle); }
-.work-card[data-tag="lifestyle"] .work-tags span:first-child { border-color: var(--tag-lifestyle); color: var(--tag-lifestyle); }
-.work-card[data-tag="casamento"] .work-tags span:first-child { border-color: var(--tag-casamento); color: var(--tag-casamento); }
-.work-card[data-tag="desporto"] .work-tags span:first-child { border-color: var(--tag-desporto); color: var(--tag-desporto); }
-
-.work-link {
-  margin-top: auto;
-  padding-top: 18px;
-  font-family: var(--label);
-  font-size: 14.5px;
-  letter-spacing: 0.05em;
-  color: var(--flare);
-}
-.work-link:hover { text-decoration: underline; }
-
-/* =====================================================
-   CATEGORIAS / ABAS
-   ===================================================== */
-.tabs {
+.filters {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 36px;
+  margin-bottom: 40px;
 }
 
-.tab-btn {
+.filter-btn {
   font-family: var(--label);
-  letter-spacing: 0.05em;
-  font-size: 15.5px;
+  letter-spacing: 0.02em;
+  font-size: 14.5px;
   background: transparent;
   color: var(--paper);
   border: 1px solid var(--line);
@@ -315,53 +245,109 @@ section { padding: 110px 5%; }
   opacity: 0.7;
   transition: all 0.2s;
 }
-
-.tab-btn:hover { opacity: 1; }
-
-.tab-btn.active {
+.filter-btn:hover { opacity: 1; }
+.filter-btn.active {
   background: var(--paper);
   color: var(--ink);
   border-color: var(--paper);
   opacity: 1;
 }
 
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-
-.panel-lead {
-  max-width: 640px;
-  opacity: 0.78;
-  font-size: 15px;
-  margin-bottom: 28px;
-}
-.panel-lead code {
-  background: rgba(241,236,228,0.08);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 13.5px;
-}
-
-.gallery {
+.portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 10px;
-  margin-bottom: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 2px;
+  background: var(--line);
 }
 
-.gallery-item {
-  aspect-ratio: 4 / 5;
-  background: linear-gradient(135deg, #241d18, #35281f);
-  border: 1px dashed rgba(241,236,228,0.2);
-  border-radius: 2px;
+/* Cartões em destaque (os 5 trabalhos com título/descrição) ocupam 2 colunas em ecrãs largos */
+.portfolio-card {
+  position: relative;
+  background: var(--ink);
+  padding: 26px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+.portfolio-card.is-feature { grid-column: span 2; }
+
+@media (max-width: 720px) {
+  .portfolio-card.is-feature { grid-column: span 1; }
 }
 
-.panel-cta {
+.portfolio-frame {
   font-family: var(--label);
-  font-size: 15px;
-  letter-spacing: 0.05em;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+}
+
+.portfolio-thumb {
+  margin: 16px 0;
+  height: 150px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #241d18, #35281f);
+  border: 1px dashed rgba(241,236,228,0.25);
+}
+.portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
+
+.portfolio-info h3 { font-size: 21px; margin-bottom: 8px; }
+.portfolio-info p { font-size: 14.5px; opacity: 0.78; font-family: var(--body); }
+
+.portfolio-tags {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  font-family: var(--label);
+  letter-spacing: 0.02em;
+  font-size: 12.5px;
+}
+.portfolio-tags span {
+  border: 1px solid var(--line);
+  padding: 3px 10px;
+  border-radius: 100px;
+  opacity: 0.85;
+}
+
+.portfolio-card[data-tag="viagem"] .portfolio-tags span:first-child { border-color: var(--tag-lifestyle); color: var(--tag-lifestyle); }
+.portfolio-card[data-tag="lifestyle"] .portfolio-tags span:first-child { border-color: var(--tag-lifestyle); color: var(--tag-lifestyle); }
+.portfolio-card[data-tag="casamento"] .portfolio-tags span:first-child { border-color: var(--tag-casamento); color: var(--tag-casamento); }
+.portfolio-card[data-tag="desporto"] .portfolio-tags span:first-child { border-color: var(--tag-desporto); color: var(--tag-desporto); }
+
+.portfolio-link {
+  margin-top: auto;
+  padding-top: 18px;
+  font-family: var(--label);
+  font-size: 14px;
+  letter-spacing: 0.02em;
   color: var(--flare);
 }
-.panel-cta:hover { text-decoration: underline; }
+.portfolio-link:hover { text-decoration: underline; }
+
+/* Cartões pequenos: só imagem, espaço extra para mais fotos/vídeos */
+.portfolio-thumb-card {
+  background: var(--ink);
+  padding: 10px;
+  display: flex;
+}
+.portfolio-thumb-card .portfolio-thumb {
+  margin: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+}
+
+.portfolio-social {
+  margin-top: 40px;
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+  font-family: var(--label);
+  font-size: 14.5px;
+  letter-spacing: 0.02em;
+}
+.portfolio-social a { opacity: 0.75; border-bottom: 1px solid transparent; padding-bottom: 3px; }
+.portfolio-social a:hover { opacity: 1; border-color: var(--paper); }
 
 /* =====================================================
    SOBRE
