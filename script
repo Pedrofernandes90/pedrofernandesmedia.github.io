@@ -1,25 +1,106 @@
-// Controla os filtros da secção "Portefólio" (mostra/esconde cartões por categoria)
+// =====================================================
+// PORTEFÓLIO — carrossel com swipe e categorias coloridas
+// =====================================================
 document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('[data-group]');
+  const section = document.querySelector('.portfolio');
+  if (!section) return;
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
+  const pills = section.querySelectorAll('.cat-pill');
+  const tracks = section.querySelectorAll('.swipe-track');
+  const viewport = section.querySelector('.swipe-viewport');
+  const prevBtn = section.querySelector('.swipe-prev');
+  const nextBtn = section.querySelector('.swipe-next');
+  const dotsBox = section.querySelector('.swipe-dots');
+  const catLinks = section.querySelectorAll('.cat-link');
 
-      buttons.forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
+  let activeTrack = section.querySelector('.swipe-track.active');
+  let index = 0;
 
-      cards.forEach(card => {
-        const show = filter === 'all' || card.dataset.group === filter;
-        card.style.display = show ? '' : 'none';
-      });
+  const slideCount = () => activeTrack.children.length;
+
+  function goTo(i) {
+    index = Math.max(0, Math.min(i, slideCount() - 1));
+    activeTrack.style.transform = `translateX(-${index * 100}%)`;
+    updateControls();
+  }
+
+  function updateControls() {
+    if (prevBtn) prevBtn.disabled = index === 0;
+    if (nextBtn) nextBtn.disabled = index === slideCount() - 1;
+    dotsBox.querySelectorAll('.swipe-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === index);
     });
+  }
+
+  function buildDots() {
+    dotsBox.innerHTML = '';
+    for (let i = 0; i < slideCount(); i++) {
+      const dot = document.createElement('button');
+      dot.className = 'swipe-dot';
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsBox.appendChild(dot);
+    }
+  }
+
+  function switchCategory(cat) {
+    section.dataset.active = cat; // muda a cor via CSS
+
+    pills.forEach(p => {
+      const on = p.dataset.cat === cat;
+      p.classList.toggle('active', on);
+      p.setAttribute('aria-selected', on);
+    });
+
+    tracks.forEach(t => {
+      const on = t.dataset.cat === cat;
+      t.classList.toggle('active', on);
+      if (on) activeTrack = t;
+    });
+
+    catLinks.forEach(l => { l.hidden = l.dataset.cat !== cat; });
+
+    activeTrack.style.transition = 'none';
+    buildDots();
+    goTo(0);
+    requestAnimationFrame(() => { activeTrack.style.transition = ''; });
+  }
+
+  pills.forEach(p => p.addEventListener('click', () => switchCategory(p.dataset.cat)));
+
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(index - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(index + 1));
+
+  // ---------- Swipe (toque) e arrasto (rato) ----------
+  let startX = null;
+  let dragging = false;
+
+  function dragStart(x) { startX = x; dragging = true; }
+  function dragEnd(x) {
+    if (!dragging || startX === null) return;
+    const delta = x - startX;
+    if (Math.abs(delta) > 50) {
+      if (delta < 0) goTo(index + 1);
+      else goTo(index - 1);
+    }
+    startX = null;
+    dragging = false;
+  }
+
+  viewport.addEventListener('touchstart', e => dragStart(e.touches[0].clientX), { passive: true });
+  viewport.addEventListener('touchend', e => dragEnd(e.changedTouches[0].clientX), { passive: true });
+  viewport.addEventListener('mousedown', e => { e.preventDefault(); dragStart(e.clientX); });
+  window.addEventListener('mouseup', e => dragEnd(e.clientX));
+
+  // ---------- Teclado (acessibilidade) ----------
+  section.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') goTo(index - 1);
+    if (e.key === 'ArrowRight') goTo(index + 1);
   });
+
+  // arranque
+  buildDots();
+  goTo(0);
 });
 
 // Envio do formulário de pedido de orçamento (usa o Formspree, sem recarregar a página)
