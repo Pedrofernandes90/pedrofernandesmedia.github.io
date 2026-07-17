@@ -1,7 +1,8 @@
 // =====================================================
-// CÂMARA 3D DO HERO — mirrorless detalhada com texturas geradas por código
-// Funciona imediatamente, sem ficheiros externos.
-// Desmonta-se em conjuntos lógicos com o scroll e volta a montar-se.
+// CÂMARA 3D DO HERO — mirrorless com texturas + foto real opcional
+// Se existir assets/camera-foto.png, mostra a fotografia real partida
+// em fragmentos que se estilhaçam com o scroll. Sem foto, mostra a
+// câmara 3D construída por código. Fundo de estúdio desfocado atrás.
 // =====================================================
 
 (function () {
@@ -46,7 +47,6 @@
   }
 
   function leatherTexture() {
-    // Grão fino e fosco, estilo corpo de mirrorless moderna (não couro grosso)
     const [c, ctx] = makeCanvas(1024, 1024);
     ctx.fillStyle = '#808080';
     ctx.fillRect(0, 0, 1024, 1024);
@@ -99,7 +99,6 @@
   }
 
   function lensEngravingTexture() {
-    // Estilo GM II: texto branco fino, emblema G laranja, escala de distâncias
     const [c, ctx] = makeCanvas(2048, 256);
     ctx.fillStyle = '#0d0c0b';
     ctx.fillRect(0, 0, 2048, 256);
@@ -108,7 +107,6 @@
     ctx.fillText('PF 2.8 / 24-70', 80, 105);
     ctx.font = '600 52px Arial';
     ctx.fillText('GM II', 620, 105);
-    // emblema G laranja (assinatura das lentes topo de gama)
     ctx.fillStyle = '#d97b2f';
     ctx.fillRect(860, 55, 70, 70);
     ctx.fillStyle = '#0d0c0b';
@@ -132,7 +130,6 @@
     ctx.fillStyle = '#d9c9a3';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    // Auto-ajuste: reduz o tamanho da letra até o texto caber com margem, nunca corta
     const text = 'PEDRO FERNANDES';
     let size = 110;
     do {
@@ -171,9 +168,7 @@
   const texBrand = brandTexture();
   const texDial = dialTexture();
 
-  // ---------- AMBIENTE DE ESTÚDIO (reflexos foto-realistas) ----------
-  // Gera um "estúdio" à volta da câmara: fundo escuro com softboxes brancas.
-  // É isto que se reflete nos metais e vidros, dando o aspeto de fotografia de produto.
+  // ---------- AMBIENTE DE ESTÚDIO (reflexos) ----------
   function studioEnvironment() {
     function face(draw) {
       const [c, ctx] = makeCanvas(256, 256);
@@ -208,6 +203,188 @@
   }
   scene.environment = studioEnvironment();
 
+  // ---------- CENÁRIO DE FUNDO (estúdio desfocado visível) ----------
+  function studioBackdropTexture() {
+    const W = 1600, H = 900;
+    const [c, ctx] = makeCanvas(W, H);
+
+    const wall = ctx.createRadialGradient(W * 0.45, H * 0.35, 80, W * 0.5, H * 0.5, W * 0.75);
+    wall.addColorStop(0, '#332b24');
+    wall.addColorStop(0.55, '#1c1713');
+    wall.addColorStop(1, '#0c0a08');
+    ctx.fillStyle = wall;
+    ctx.fillRect(0, 0, W, H);
+
+    const floor = ctx.createLinearGradient(0, H * 0.72, 0, H);
+    floor.addColorStop(0, '#241e18');
+    floor.addColorStop(1, '#0e0b09');
+    ctx.fillStyle = floor;
+    ctx.fillRect(0, H * 0.72, W, H * 0.28);
+    ctx.strokeStyle = 'rgba(241,236,228,0.06)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, H * 0.72);
+    ctx.lineTo(W, H * 0.72);
+    ctx.stroke();
+
+    function softboxLight(x, y, w, h, tilt) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(tilt);
+      const halo = ctx.createRadialGradient(0, 0, 10, 0, 0, w * 1.8);
+      halo.addColorStop(0, 'rgba(255,248,235,0.55)');
+      halo.addColorStop(1, 'rgba(255,248,235,0)');
+      ctx.fillStyle = halo;
+      ctx.fillRect(-w * 2, -h * 2, w * 4, h * 4);
+      ctx.fillStyle = 'rgba(255,250,240,0.95)';
+      ctx.fillRect(-w / 2, -h / 2, w, h);
+      ctx.strokeStyle = '#0d0b0a';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(-w / 2, -h / 2, w, h);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(13,11,10,0.35)';
+      ctx.beginPath();
+      ctx.moveTo(0, -h / 2); ctx.lineTo(0, h / 2);
+      ctx.moveTo(-w / 2, 0); ctx.lineTo(w / 2, 0);
+      ctx.stroke();
+      ctx.restore();
+      ctx.strokeStyle = '#171310';
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(x, y + h / 2);
+      ctx.lineTo(x, H * 0.86);
+      ctx.stroke();
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(x, H * 0.86); ctx.lineTo(x - 48, H * 0.93);
+      ctx.moveTo(x, H * 0.86); ctx.lineTo(x + 48, H * 0.93);
+      ctx.moveTo(x, H * 0.86); ctx.lineTo(x, H * 0.94);
+      ctx.stroke();
+    }
+
+    softboxLight(W * 0.16, H * 0.3, 150, 200, -0.12);
+    softboxLight(W * 0.86, H * 0.26, 130, 180, 0.14);
+
+    function tripod(x, baseY, height) {
+      ctx.strokeStyle = '#141110';
+      ctx.fillStyle = '#141110';
+      ctx.lineWidth = 9;
+      const headY = baseY - height;
+      ctx.beginPath();
+      ctx.moveTo(x, headY); ctx.lineTo(x - height * 0.34, baseY);
+      ctx.moveTo(x, headY); ctx.lineTo(x + height * 0.34, baseY);
+      ctx.moveTo(x, headY); ctx.lineTo(x + height * 0.05, baseY);
+      ctx.stroke();
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(x - height * 0.17, baseY - height * 0.45);
+      ctx.lineTo(x + height * 0.19, baseY - height * 0.45);
+      ctx.stroke();
+      ctx.fillRect(x - 26, headY - 26, 52, 30);
+      ctx.fillRect(x - 10, headY - 44, 20, 20);
+    }
+    tripod(W * 0.62, H * 0.84, 340);
+
+    for (let i = 0; i < 26; i++) {
+      const bx = Math.random() * W;
+      const by = Math.random() * H * 0.6;
+      const r = 6 + Math.random() * 16;
+      const warm = Math.random() > 0.6;
+      const g = ctx.createRadialGradient(bx, by, 1, bx, by, r);
+      g.addColorStop(0, warm ? 'rgba(232,150,80,0.5)' : 'rgba(255,250,240,0.4)');
+      g.addColorStop(1, 'rgba(255,250,240,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(bx, by, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const [small, sctx] = makeCanvas(200, 113);
+    sctx.drawImage(c, 0, 0, 200, 113);
+    const [small2, s2ctx] = makeCanvas(100, 56);
+    s2ctx.drawImage(small, 0, 0, 100, 56);
+    ctx.clearRect(0, 0, W, H);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(small2, 0, 0, W, H);
+
+    return new THREE.CanvasTexture(c);
+  }
+
+  const backdropMat = new THREE.MeshBasicMaterial({
+    map: studioBackdropTexture(),
+    transparent: true,
+    opacity: 1,
+    depthWrite: false
+  });
+  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(34, 19), backdropMat);
+  backdrop.position.set(0, 0.5, -9);
+  scene.add(backdrop);
+  // ---------- FOTO REAL DA CÂMARA (modo foto-realista) ----------
+  let photoTiles = null;
+
+  new THREE.TextureLoader().load(
+    'assets/camera-foto.png',
+    (tex) => {
+      tex.encoding = THREE.sRGBEncoding;
+      cameraGroup.visible = false;
+      buildPhotoTiles(tex);
+      resize();
+    },
+    undefined,
+    () => { /* foto não encontrada: mantém a câmara 3D, sem erro */ }
+  );
+
+  function buildPhotoTiles(tex) {
+    const img = tex.image;
+    const aspect = img.width / img.height;
+    const Wd = 4.8;
+    const Hd = Wd / aspect;
+    const cols = 9, rows = 6;
+
+    const group = new THREE.Group();
+    const tiles = [];
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const t = tex.clone();
+        t.needsUpdate = true;
+        t.repeat.set(1 / cols, 1 / rows);
+        t.offset.set(c / cols, 1 - (r + 1) / rows);
+
+        const mesh = new THREE.Mesh(
+          new THREE.PlaneGeometry(Wd / cols, Hd / rows),
+          new THREE.MeshBasicMaterial({ map: t, transparent: true })
+        );
+
+        const x = -Wd / 2 + (c + 0.5) * (Wd / cols);
+        const y = Hd / 2 - (r + 0.5) * (Hd / rows);
+        mesh.position.set(x, y, 0);
+        mesh.userData.home = mesh.position.clone();
+
+        const dir = new THREE.Vector3(x, y, 0);
+        if (dir.lengthSq() < 0.01) dir.set(0, 1, 0);
+        dir.normalize().add(new THREE.Vector3(
+          (Math.random() - 0.5) * 0.7,
+          (Math.random() - 0.5) * 0.7,
+          (Math.random() - 0.5) * 1.4
+        ));
+        mesh.userData.explode = dir.normalize().multiplyScalar(1.2 + Math.random() * 2.4);
+        mesh.userData.spin = new THREE.Vector3(
+          (Math.random() - 0.5) * 1.6,
+          (Math.random() - 0.5) * 1.6,
+          (Math.random() - 0.5) * 1.6
+        );
+
+        tiles.push(mesh);
+        group.add(mesh);
+      }
+    }
+
+    scene.add(group);
+    photoTiles = { group, tiles };
+  }
+
   // ---------- MATERIAIS ----------
   const matBody   = new THREE.MeshPhysicalMaterial({ color: 0x161514, metalness: 0.45, roughness: 0.55, clearcoat: 0.22, clearcoatRoughness: 0.7, bumpMap: texLeather, bumpScale: 0.006, envMapIntensity: 0.7 });
   const matRubber = new THREE.MeshStandardMaterial({ color: 0x232120, metalness: 0.05, roughness: 0.95, map: texGrip, bumpMap: texGrip, bumpScale: 0.018, envMapIntensity: 0.25 });
@@ -216,7 +393,7 @@
   const matLensBarrel = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.5, roughness: 0.45, map: texLens, envMapIntensity: 0.6 });
   const matGlass  = new THREE.MeshPhysicalMaterial({ color: 0x04070a, metalness: 0.1, roughness: 0.0, clearcoat: 1.0, clearcoatRoughness: 0.0, envMapIntensity: 1.6 });
   const matGlassBlue = new THREE.MeshPhysicalMaterial({ color: 0x0e1c2a, metalness: 0.2, roughness: 0.02, clearcoat: 1.0, envMapIntensity: 1.3 });
-  const matAccent = new THREE.MeshStandardMaterial({ color: 0xd97b2f, metalness: 0.6, roughness: 0.3, envMapIntensity: 0.9 }); // laranja de assinatura
+  const matAccent = new THREE.MeshStandardMaterial({ color: 0xd97b2f, metalness: 0.6, roughness: 0.3, envMapIntensity: 0.9 });
   const matBrand  = new THREE.MeshStandardMaterial({ map: texBrand, metalness: 0.3, roughness: 0.5 });
   const matDialTop = new THREE.MeshStandardMaterial({ map: texDial, metalness: 0.4, roughness: 0.5 });
   const matScreen = new THREE.MeshStandardMaterial({ color: 0x0a0f12, metalness: 0.3, roughness: 0.1, emissive: 0x0a1218, emissiveIntensity: 0.35, envMapIntensity: 1.0 });
@@ -339,7 +516,7 @@
   topScreen.position.set(0.45, 0.915, 0.18);
   topAsm.add(topScreen);
 
-  // ============ 4. EVF (visor eletrónico compacto, estilo mirrorless) ============
+  // ============ 4. EVF ============
   const prismAsm = assembly(new THREE.Vector3(0, 1.3, -0.3), 2.3);
   const evf = box(0.72, 0.26, 0.55, matBody);
   evf.position.set(0, 1.0, -0.08);
@@ -359,7 +536,6 @@
   mountRing.position.set(0, -0.02, 0.48);
   lensAsm.add(mountRing);
 
-  // anel laranja de assinatura à volta da baioneta (marca visual das mirrorless topo de gama)
   const signatureRing = new THREE.Mesh(new THREE.TorusGeometry(0.63, 0.022, 16, 64), matAccent);
   signatureRing.position.set(0, -0.02, 0.54);
   lensAsm.add(signatureRing);
@@ -466,18 +642,24 @@
   cameraGroup.scale.set(0.9, 0.9, 0.9);
 
   // ---------- Redimensionar ----------
+  function placeObject(obj, isMobile) {
+    if (isMobile) {
+      obj.position.set(0, 0.55, 0);
+      obj.scale.set(0.62, 0.62, 0.62);
+    } else {
+      obj.position.set(0.9, 0.15, 0);
+      obj.scale.set(0.9, 0.9, 0.9);
+    }
+  }
+
   function resize() {
     const rect = canvas.getBoundingClientRect();
     renderer.setSize(rect.width, rect.height, false);
     cam.aspect = rect.width / Math.max(rect.height, 1);
     cam.updateProjectionMatrix();
-    if (rect.width < 700) {
-      cameraGroup.position.set(0, 0.55, 0);
-      cameraGroup.scale.set(0.62, 0.62, 0.62);
-    } else {
-      cameraGroup.position.set(0.9, 0.15, 0);
-      cameraGroup.scale.set(0.9, 0.9, 0.9);
-    }
+    const mobile = rect.width < 700;
+    placeObject(cameraGroup, mobile);
+    if (photoTiles) placeObject(photoTiles.group, mobile);
   }
   window.addEventListener('resize', resize);
   resize();
@@ -508,6 +690,25 @@
       g.rotation.x = f * g.userData.explode.y * 0.18;
       g.rotation.y = f * g.userData.explode.x * 0.12;
     });
+
+    // fragmentos da foto real (se existir)
+    if (photoTiles) {
+      photoTiles.tiles.forEach(tile => {
+        tile.position.copy(tile.userData.home).addScaledVector(tile.userData.explode, f);
+        tile.rotation.set(
+          f * tile.userData.spin.x,
+          f * tile.userData.spin.y,
+          f * tile.userData.spin.z
+        );
+      });
+      if (!prefersReducedMotion) {
+        photoTiles.group.rotation.y = -0.08 + smooth * 0.35 + Math.sin(Date.now() * 0.00018) * 0.02;
+      }
+    }
+
+    // fundo de estúdio: esbate enquanto desmontada, volta ao normal no fim
+    backdropMat.opacity = 1 - f * 0.8;
+    backdrop.position.x = -Math.sin(Date.now() * 0.00018) * 0.35;
 
     if (!prefersReducedMotion) {
       cameraGroup.rotation.y = -0.55 + smooth * 1.35 + Math.sin(Date.now() * 0.00018) * 0.04;
