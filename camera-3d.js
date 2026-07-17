@@ -1,5 +1,5 @@
 // =====================================================
-// CÂMARA 3D DO HERO — DSLR detalhada com texturas geradas por código
+// CÂMARA 3D DO HERO — mirrorless detalhada com texturas geradas por código
 // Funciona imediatamente, sem ficheiros externos.
 // Desmonta-se em conjuntos lógicos com o scroll e volta a montar-se.
 // =====================================================
@@ -46,19 +46,20 @@
   }
 
   function leatherTexture() {
-    const [c, ctx] = makeCanvas(512, 512);
+    // Grão fino e fosco, estilo corpo de mirrorless moderna (não couro grosso)
+    const [c, ctx] = makeCanvas(1024, 1024);
     ctx.fillStyle = '#808080';
-    ctx.fillRect(0, 0, 512, 512);
-    for (let i = 0; i < 26000; i++) {
-      const v = 90 + Math.random() * 80;
+    ctx.fillRect(0, 0, 1024, 1024);
+    for (let i = 0; i < 90000; i++) {
+      const v = 105 + Math.random() * 50;
       ctx.fillStyle = `rgb(${v},${v},${v})`;
       ctx.beginPath();
-      ctx.arc(Math.random() * 512, Math.random() * 512, 0.6 + Math.random() * 1.8, 0, Math.PI * 2);
+      ctx.arc(Math.random() * 1024, Math.random() * 1024, 0.4 + Math.random() * 0.9, 0, Math.PI * 2);
       ctx.fill();
     }
     const t = new THREE.CanvasTexture(c);
     t.wrapS = t.wrapT = THREE.RepeatWrapping;
-    t.repeat.set(3, 2);
+    t.repeat.set(4, 3);
     return t;
   }
 
@@ -98,32 +99,47 @@
   }
 
   function lensEngravingTexture() {
-    const [c, ctx] = makeCanvas(1024, 128);
-    ctx.fillStyle = '#121110';
-    ctx.fillRect(0, 0, 1024, 128);
-    ctx.fillStyle = '#d8d4cc';
-    ctx.font = 'bold 34px Arial';
-    ctx.fillText('PF LENS  24-70mm  1:2.8', 40, 56);
-    ctx.fillStyle = '#a08a5b';
-    ctx.font = '24px Arial';
-    ctx.fillText('ULTRASONIC', 620, 56);
+    // Estilo GM II: texto branco fino, emblema G laranja, escala de distâncias
+    const [c, ctx] = makeCanvas(2048, 256);
+    ctx.fillStyle = '#0d0c0b';
+    ctx.fillRect(0, 0, 2048, 256);
+    ctx.fillStyle = '#e8e5df';
+    ctx.font = '600 58px Arial';
+    ctx.fillText('PF 2.8 / 24-70', 80, 105);
+    ctx.font = '600 52px Arial';
+    ctx.fillText('GM II', 620, 105);
+    // emblema G laranja (assinatura das lentes topo de gama)
+    ctx.fillStyle = '#d97b2f';
+    ctx.fillRect(860, 55, 70, 70);
+    ctx.fillStyle = '#0d0c0b';
+    ctx.font = 'bold 52px Arial';
+    ctx.fillText('G', 878, 108);
     ctx.fillStyle = '#8a8681';
-    ctx.font = '20px Arial';
-    ctx.fillText('0.38m/1.3ft   ∞     0.5   0.7   1   1.5   3   ∞', 40, 100);
+    ctx.font = '38px Arial';
+    ctx.fillText('0.21m / 0.69ft — ∞      Ø82', 1050, 105);
+    ctx.fillStyle = '#6f6b66';
+    ctx.font = '34px Arial';
+    ctx.fillText('0.3   0.5   0.7   1   1.5   3   ∞', 80, 200);
     const t = new THREE.CanvasTexture(c);
     t.wrapS = THREE.RepeatWrapping;
     return t;
   }
 
   function brandTexture() {
-    const [c, ctx] = makeCanvas(512, 128);
+    const [c, ctx] = makeCanvas(1024, 256);
     ctx.fillStyle = '#14100e';
-    ctx.fillRect(0, 0, 512, 128);
+    ctx.fillRect(0, 0, 1024, 256);
     ctx.fillStyle = '#d9c9a3';
-    ctx.font = 'bold 52px Georgia';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('PEDRO FERNANDES', 256, 64);
+    // Auto-ajuste: reduz o tamanho da letra até o texto caber com margem, nunca corta
+    const text = 'PEDRO FERNANDES';
+    let size = 110;
+    do {
+      ctx.font = `600 ${size}px Georgia`;
+      size -= 4;
+    } while (ctx.measureText(text).width > 920 && size > 20);
+    ctx.fillText(text, 512, 132);
     return new THREE.CanvasTexture(c);
   }
 
@@ -155,18 +171,55 @@
   const texBrand = brandTexture();
   const texDial = dialTexture();
 
+  // ---------- AMBIENTE DE ESTÚDIO (reflexos foto-realistas) ----------
+  // Gera um "estúdio" à volta da câmara: fundo escuro com softboxes brancas.
+  // É isto que se reflete nos metais e vidros, dando o aspeto de fotografia de produto.
+  function studioEnvironment() {
+    function face(draw) {
+      const [c, ctx] = makeCanvas(256, 256);
+      const grad = ctx.createLinearGradient(0, 0, 0, 256);
+      grad.addColorStop(0, '#2b2723');
+      grad.addColorStop(1, '#0d0b0a');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 256, 256);
+      if (draw) draw(ctx);
+      return c;
+    }
+    const softbox = (ctx, x, y, w, h, alpha) => {
+      const g = ctx.createRadialGradient(x + w/2, y + h/2, 4, x + w/2, y + h/2, Math.max(w, h));
+      g.addColorStop(0, `rgba(255,252,245,${alpha})`);
+      g.addColorStop(1, 'rgba(255,252,245,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(x - w, y - h, w * 3, h * 3);
+      ctx.fillStyle = `rgba(255,252,245,${alpha})`;
+      ctx.fillRect(x, y, w, h);
+    };
+    const faces = [
+      face(ctx => softbox(ctx, 60, 40, 60, 150, 0.85)),
+      face(ctx => { ctx.fillStyle = 'rgba(232,73,42,0.28)'; ctx.fillRect(0, 60, 256, 140); }),
+      face(ctx => softbox(ctx, 40, 70, 180, 90, 0.95)),
+      face(null),
+      face(ctx => softbox(ctx, 150, 60, 50, 130, 0.55)),
+      face(null)
+    ];
+    const tex = new THREE.CubeTexture(faces);
+    tex.needsUpdate = true;
+    return tex;
+  }
+  scene.environment = studioEnvironment();
+
   // ---------- MATERIAIS ----------
-  const matBody   = new THREE.MeshPhysicalMaterial({ color: 0x1c1a18, metalness: 0.5, roughness: 0.5, clearcoat: 0.35, clearcoatRoughness: 0.6, bumpMap: texLeather, bumpScale: 0.012 });
-  const matRubber = new THREE.MeshStandardMaterial({ color: 0x2a2725, metalness: 0.05, roughness: 0.95, map: texGrip, bumpMap: texGrip, bumpScale: 0.02 });
-  const matMetal  = new THREE.MeshPhysicalMaterial({ color: 0x9a958d, metalness: 0.95, roughness: 0.3, clearcoat: 0.5, roughnessMap: texBrushed, bumpMap: texBrushed, bumpScale: 0.004 });
-  const matDark   = new THREE.MeshStandardMaterial({ color: 0x121110, metalness: 0.6, roughness: 0.4, bumpMap: texLeather, bumpScale: 0.006 });
-  const matLensBarrel = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.55, roughness: 0.42, map: texLens });
-  const matGlass  = new THREE.MeshPhysicalMaterial({ color: 0x06090c, metalness: 0.2, roughness: 0.02, clearcoat: 1.0, clearcoatRoughness: 0.05 });
-  const matGlassBlue = new THREE.MeshPhysicalMaterial({ color: 0x11202e, metalness: 0.3, roughness: 0.03, clearcoat: 1.0 });
-  const matAccent = new THREE.MeshStandardMaterial({ color: 0xb3372a, metalness: 0.5, roughness: 0.35 });
+  const matBody   = new THREE.MeshPhysicalMaterial({ color: 0x161514, metalness: 0.45, roughness: 0.55, clearcoat: 0.22, clearcoatRoughness: 0.7, bumpMap: texLeather, bumpScale: 0.006, envMapIntensity: 0.7 });
+  const matRubber = new THREE.MeshStandardMaterial({ color: 0x232120, metalness: 0.05, roughness: 0.95, map: texGrip, bumpMap: texGrip, bumpScale: 0.018, envMapIntensity: 0.25 });
+  const matMetal  = new THREE.MeshPhysicalMaterial({ color: 0xa8a49c, metalness: 1.0, roughness: 0.22, clearcoat: 0.4, roughnessMap: texBrushed, bumpMap: texBrushed, bumpScale: 0.003, envMapIntensity: 1.1 });
+  const matDark   = new THREE.MeshStandardMaterial({ color: 0x100f0e, metalness: 0.55, roughness: 0.45, bumpMap: texLeather, bumpScale: 0.004, envMapIntensity: 0.6 });
+  const matLensBarrel = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.5, roughness: 0.45, map: texLens, envMapIntensity: 0.6 });
+  const matGlass  = new THREE.MeshPhysicalMaterial({ color: 0x04070a, metalness: 0.1, roughness: 0.0, clearcoat: 1.0, clearcoatRoughness: 0.0, envMapIntensity: 1.6 });
+  const matGlassBlue = new THREE.MeshPhysicalMaterial({ color: 0x0e1c2a, metalness: 0.2, roughness: 0.02, clearcoat: 1.0, envMapIntensity: 1.3 });
+  const matAccent = new THREE.MeshStandardMaterial({ color: 0xd97b2f, metalness: 0.6, roughness: 0.3, envMapIntensity: 0.9 }); // laranja de assinatura
   const matBrand  = new THREE.MeshStandardMaterial({ map: texBrand, metalness: 0.3, roughness: 0.5 });
   const matDialTop = new THREE.MeshStandardMaterial({ map: texDial, metalness: 0.4, roughness: 0.5 });
-  const matScreen = new THREE.MeshStandardMaterial({ color: 0x0a0f12, metalness: 0.3, roughness: 0.15, emissive: 0x0a1218, emissiveIntensity: 0.35 });
+  const matScreen = new THREE.MeshStandardMaterial({ color: 0x0a0f12, metalness: 0.3, roughness: 0.1, emissive: 0x0a1218, emissiveIntensity: 0.35, envMapIntensity: 1.0 });
 
   // ---------- ESTRUTURA ----------
   const cameraGroup = new THREE.Group();
@@ -286,15 +339,16 @@
   topScreen.position.set(0.45, 0.915, 0.18);
   topAsm.add(topScreen);
 
-  // ============ 4. PENTAPRISMA ============
+  // ============ 4. EVF (visor eletrónico compacto, estilo mirrorless) ============
   const prismAsm = assembly(new THREE.Vector3(0, 1.3, -0.3), 2.3);
-  const prism = cyl(0.32, 0.52, 0.5, matBody, 4);
-  prism.rotation.y = Math.PI / 4;
-  prism.position.set(0, 1.12, 0.02);
-  prism.scale.set(1.25, 1, 0.85);
-  prismAsm.add(prism);
-  const prismWindow = box(0.4, 0.16, 0.02, matGlassBlue);
-  prismWindow.position.set(0, 1.08, 0.42);
+  const evf = box(0.72, 0.26, 0.55, matBody);
+  evf.position.set(0, 1.0, -0.08);
+  prismAsm.add(evf);
+  const evfTop = box(0.6, 0.06, 0.45, matDark);
+  evfTop.position.set(0, 1.16, -0.08);
+  prismAsm.add(evfTop);
+  const prismWindow = box(0.34, 0.14, 0.02, matGlassBlue);
+  prismWindow.position.set(0, 1.0, 0.2);
   prismAsm.add(prismWindow);
 
   // ============ 5. LENTE — corpo ============
@@ -304,6 +358,11 @@
   mountRing.rotation.x = Math.PI / 2;
   mountRing.position.set(0, -0.02, 0.48);
   lensAsm.add(mountRing);
+
+  // anel laranja de assinatura à volta da baioneta (marca visual das mirrorless topo de gama)
+  const signatureRing = new THREE.Mesh(new THREE.TorusGeometry(0.63, 0.022, 16, 64), matAccent);
+  signatureRing.position.set(0, -0.02, 0.54);
+  lensAsm.add(signatureRing);
 
   const alignDot = cyl(0.035, 0.035, 0.02, matAccent, 12);
   alignDot.rotation.x = Math.PI / 2;
