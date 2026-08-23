@@ -103,6 +103,38 @@ document.addEventListener('DOMContentLoaded', () => {
   goTo(0);
 });
 
+// =====================================================
+// PACOTES / PREÇOS — botões "Escolher Basic/Pro" e
+// "Pedir orçamento" levam o visitante até ao formulário
+// e pré-selecionam o pacote escolhido.
+// =====================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const planButtons = document.querySelectorAll('.price-cta[data-plan-select]');
+  const planSelect = document.getElementById('q-plan');
+  const formWrap = document.getElementById('quote-form-wrap');
+  const nameInput = document.getElementById('q-name');
+
+  if (!planButtons.length) return;
+
+  planButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const plan = btn.dataset.planSelect;
+
+      if (planSelect && plan) {
+        planSelect.value = plan;
+      }
+
+      if (formWrap) {
+        formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      if (nameInput) {
+        window.setTimeout(() => nameInput.focus({ preventScroll: true }), 500);
+      }
+    });
+  });
+});
+
 // Envio do formulário de pedido de orçamento (usa o Formspree, sem recarregar a página)
 // IMPORTANTE: para isto funcionar, tens de substituir "YOUR_FORM_ID" no index.html
 // pelo ID do teu formulário Formspree — instruções no COMO-EDITAR.md
