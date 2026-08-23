@@ -210,73 +210,166 @@
 </section>
 
 <!-- ===================================================== -->
-<!-- PEDIDO DE ORÇAMENTO -->
+<!-- PACOTES / PREÇOS + PEDIDO DE ORÇAMENTO -->
 <!-- IMPORTANTE: substitui YOUR_FORM_ID pelo teu ID do Formspree (ver COMO-EDITAR.md) -->
+<!-- Para mudar preços, horas, quantidades ou benefícios dos pacotes: edita as -->
+<!-- strings "plan.*" e "extras.*" no ficheiro i18n.js — não precisas de tocar aqui. -->
 <!-- ===================================================== -->
-<section id="orcamento" class="quote">
+<section id="orcamento" class="pricing">
   <div class="section-head">
-    <h2 class="section-title" data-i18n="quote.title">Pedido de orçamento</h2>
-    <p class="section-note" data-i18n="quote.note">Resposta em 48 horas</p>
+    <h2 class="section-title" data-i18n="pricing.title">Pacotes &amp; Preços</h2>
+    <p class="section-note" data-i18n="pricing.note">Para empresas e marcas</p>
   </div>
 
-  <p class="quote-lead" data-i18n="quote.lead">Conta-me os detalhes do teu projeto e envio-te uma proposta personalizada por email.</p>
+  <p class="pricing-lead" data-i18n="pricing.lead">Conteúdo profissional de fotografia e vídeo para redes sociais, pensado para empresas e marcas. Escolhe o pacote certo para o teu negócio.</p>
 
-  <form id="quote-form" class="quote-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-    <div class="form-row">
-      <div class="form-field">
-        <label for="q-name" data-i18n="quote.name">Nome completo</label>
-        <input type="text" id="q-name" name="name" required>
+  <div class="pricing-grid">
+
+    <!-- ---------- BASIC ---------- -->
+    <article class="price-card" data-plan="basic">
+      <div class="price-card-top">
+        <h3 class="price-name" data-i18n="plan.basic.name">Basic</h3>
+        <p class="price-tagline" data-i18n="plan.basic.tagline">Conteúdo essencial para pequenos negócios que querem começar a comunicar nas redes sociais.</p>
       </div>
-      <div class="form-field">
-        <label for="q-email" data-i18n="quote.email">Email</label>
-        <input type="email" id="q-email" name="email" required>
+      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.basic.price">250</span></p>
+      <ul class="price-features">
+        <li data-i18n="plan.basic.f1">Até 2 horas de captação</li>
+        <li data-i18n="plan.basic.f2">15 fotografias profissionais editadas</li>
+        <li data-i18n="plan.basic.f3">1 vídeo vertical Instagram/TikTok</li>
+        <li data-i18n="plan.basic.f4">Vídeo até 30 segundos</li>
+        <li data-i18n="plan.basic.f5">Edição profissional</li>
+        <li data-i18n="plan.basic.f6">1 ronda de alterações</li>
+        <li data-i18n="plan.basic.f7">Entrega em 5–7 dias úteis</li>
+        <li data-i18n="plan.basic.f8">Formato otimizado para redes sociais</li>
+      </ul>
+      <button type="button" class="price-cta" data-plan-select="basic" data-i18n="plan.basic.cta">Escolher Basic</button>
+    </article>
+
+    <!-- ---------- PRO (destaque) ---------- -->
+    <article class="price-card price-card-featured" data-plan="pro">
+      <span class="price-badge" data-i18n="plan.pro.badge">Mais Popular</span>
+      <div class="price-card-top">
+        <h3 class="price-name" data-i18n="plan.pro.name">Pro</h3>
+        <p class="price-tagline" data-i18n="plan.pro.tagline">A melhor relação qualidade/preço para empresas que querem criar conteúdo com regularidade.</p>
       </div>
+      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.pro.price">450</span></p>
+      <ul class="price-features">
+        <li data-i18n="plan.pro.f1">Até 4 horas de captação</li>
+        <li data-i18n="plan.pro.f2">30 fotografias profissionais editadas</li>
+        <li data-i18n="plan.pro.f3">3 vídeos verticais Instagram/TikTok</li>
+        <li data-i18n="plan.pro.f4">Vídeos até 45 segundos cada</li>
+        <li data-i18n="plan.pro.f5">Edição profissional</li>
+        <li data-i18n="plan.pro.f6">2 rondas de alterações</li>
+        <li data-i18n="plan.pro.f7">Entrega em 5–7 dias úteis</li>
+        <li data-i18n="plan.pro.f8">Formatos otimizados para redes sociais</li>
+      </ul>
+      <button type="button" class="price-cta" data-plan-select="pro" data-i18n="plan.pro.cta">Escolher Pro</button>
+    </article>
+
+    <!-- ---------- CUSTOM ---------- -->
+    <article class="price-card" data-plan="custom">
+      <div class="price-card-top">
+        <h3 class="price-name" data-i18n="plan.custom.name">Custom</h3>
+        <p class="price-tagline" data-i18n="plan.custom.tagline">Solução 100% personalizada para marcas, empresas e clientes com necessidades específicas.</p>
+      </div>
+      <p class="price-amount"><span class="price-from" data-i18n="plan.custom.from">Desde</span> <span class="price-currency">€</span><span data-i18n="plan.custom.price">600</span></p>
+      <p class="price-custom-intro" data-i18n="plan.custom.intro">Personaliza o que precisares:</p>
+      <ul class="price-chips">
+        <li data-i18n="plan.custom.c1">Horas de captação</li>
+        <li data-i18n="plan.custom.c2">Nº de fotografias</li>
+        <li data-i18n="plan.custom.c3">Nº de vídeos</li>
+        <li data-i18n="plan.custom.c4">Vertical ou horizontal</li>
+        <li data-i18n="plan.custom.c5">Conteúdo para anúncios</li>
+        <li data-i18n="plan.custom.c6">Fotografia de produto</li>
+        <li data-i18n="plan.custom.c7">Entrevistas</li>
+        <li data-i18n="plan.custom.c8">Campanhas de marca</li>
+        <li data-i18n="plan.custom.c9">Cobertura de eventos</li>
+      </ul>
+      <button type="button" class="price-cta price-cta-outline" data-plan-select="custom" data-i18n="plan.custom.cta">Pedir orçamento personalizado</button>
+    </article>
+
+  </div>
+
+  <!-- ---------- EXTRAS ---------- -->
+  <div class="extras">
+    <h3 class="extras-title" data-i18n="extras.title">Serviços adicionais</h3>
+    <ul class="extras-list">
+      <li><span data-i18n="extras.e1">Vídeo vertical adicional</span><span class="extras-price">€80</span></li>
+      <li><span data-i18n="extras.e2">Vídeo horizontal adicional</span><span class="extras-price">€120</span></li>
+      <li><span data-i18n="extras.e3">10 fotografias adicionais</span><span class="extras-price">€60</span></li>
+      <li><span data-i18n="extras.e4">Hora adicional de captação</span><span class="extras-price">€75</span></li>
+      <li><span data-i18n="extras.e5">Entrega urgente</span><span class="extras-price">+€100</span></li>
+      <li><span data-i18n="extras.e6">Fotografia de produto</span><span class="extras-price" data-i18n="extras.e6price">desde €100</span></li>
+      <li><span data-i18n="extras.e7">Vídeo publicitário / Ad</span><span class="extras-price" data-i18n="extras.e7price">desde €150</span></li>
+      <li><span data-i18n="extras.e8">Deslocações fora da zona habitual</span><span class="extras-price">€0,40/km</span></li>
+    </ul>
+  </div>
+
+  <!-- ---------- FORMULÁRIO ---------- -->
+  <div class="quote-form-wrap" id="quote-form-wrap">
+    <div class="section-head section-head--sub">
+      <h3 class="section-subtitle" data-i18n="quote.title">Pedido de orçamento</h3>
+      <p class="section-note" data-i18n="quote.note">Resposta em 48 horas</p>
     </div>
 
-    <div class="form-row">
-      <div class="form-field">
-        <label for="q-phone" data-i18n="quote.phone">Telefone (opcional)</label>
-        <input type="tel" id="q-phone" name="phone">
-      </div>
-      <div class="form-field">
-        <label for="q-type" data-i18n="quote.type">Tipo de projeto</label>
-        <select id="q-type" name="project_type">
-          <option data-i18n="tag.lifestyle">Lifestyle</option>
-          <option data-i18n="tag.viagem">Viagem</option>
-          <option data-i18n="tag.casamento">Casamento</option>
-          <option data-i18n="tag.desporto">Desporto</option>
-          <option data-i18n="tab.imobiliaria">Imobiliária</option>
-          <option data-i18n="quote.other">Outro</option>
-        </select>
-      </div>
-    </div>
+    <p class="quote-lead" data-i18n="quote.lead">Conta-me os detalhes do teu projeto e envio-te uma proposta personalizada por email.</p>
 
-    <div class="form-row">
-      <div class="form-field">
-        <label for="q-date" data-i18n="quote.date">Data prevista do evento (opcional)</label>
-        <input type="date" id="q-date" name="event_date">
+    <form id="quote-form" class="quote-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="q-name" data-i18n="quote.name">Nome completo</label>
+          <input type="text" id="q-name" name="name" required>
+        </div>
+        <div class="form-field">
+          <label for="q-email" data-i18n="quote.email">Email</label>
+          <input type="email" id="q-email" name="email" required>
+        </div>
       </div>
-      <div class="form-field">
-        <label for="q-budget" data-i18n="quote.budget">Orçamento estimado</label>
-        <select id="q-budget" name="budget">
-          <option>&lt; 250€</option>
-          <option>250€ – 500€</option>
-          <option>500€ – 1000€</option>
-          <option>1000€ +</option>
-          <option data-i18n="quote.notsure">Ainda não sei</option>
-        </select>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="q-phone" data-i18n="quote.phone">Telefone (opcional)</label>
+          <input type="tel" id="q-phone" name="phone">
+        </div>
+        <div class="form-field">
+          <label for="q-plan" data-i18n="quote.plan">Pacote pretendido</label>
+          <select id="q-plan" name="plan">
+            <option value="basic" data-i18n="plan.basic.name">Basic</option>
+            <option value="pro" data-i18n="plan.pro.name">Pro</option>
+            <option value="custom" data-i18n="plan.custom.name" selected>Custom</option>
+            <option value="unsure" data-i18n="quote.notsure">Ainda não sei</option>
+          </select>
+        </div>
       </div>
-    </div>
 
-    <div class="form-field form-field-full">
-      <label for="q-message" data-i18n="quote.message">Conta-me sobre o projeto</label>
-      <textarea id="q-message" name="message" rows="5" required></textarea>
-    </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="q-type" data-i18n="quote.type">Tipo de projeto</label>
+          <select id="q-type" name="project_type">
+            <option data-i18n="tag.lifestyle">Lifestyle</option>
+            <option data-i18n="tag.viagem">Viagem</option>
+            <option data-i18n="tag.casamento">Casamento</option>
+            <option data-i18n="tag.desporto">Desporto</option>
+            <option data-i18n="tab.imobiliaria">Imobiliária</option>
+            <option data-i18n="quote.other">Outro</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="q-date" data-i18n="quote.date">Data prevista do evento (opcional)</label>
+          <input type="date" id="q-date" name="event_date">
+        </div>
+      </div>
 
-    <button type="submit" class="quote-submit" data-i18n="quote.submit">Enviar pedido</button>
+      <div class="form-field form-field-full">
+        <label for="q-message" data-i18n="quote.message">Conta-me sobre o projeto</label>
+        <textarea id="q-message" name="message" rows="5" required></textarea>
+      </div>
 
-    <p class="quote-status" id="quote-status" role="status"></p>
-  </form>
+      <button type="submit" class="quote-submit" data-i18n="quote.submit">Enviar pedido</button>
+
+      <p class="quote-status" id="quote-status" role="status"></p>
+    </form>
+  </div>
 </section>
 
 <!-- ===================================================== -->
