@@ -139,7 +139,15 @@ const PLAN_CONFIG = {
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('quote-modal');
   const form = document.getElementById('quote-form');
-  if (!modal || !form) return;
+  if (!modal || !form) {
+    console.warn(
+      '[pacotes] Não encontrei o modal de pedido (#quote-modal / #quote-form) no HTML. ' +
+      'Os botões dos pacotes não vão fazer nada até isto ser corrigido — confirma que ' +
+      'estás a usar a versão mais recente do index.html, style.css, i18n.js e script.js em conjunto ' +
+      '(os 4 ficheiros têm de vir do mesmo lote de alterações) e limpa a cache do browser.'
+    );
+    return;
+  }
 
   const modalPanel = modal.querySelector('.modal-panel');
   const planLineEl = document.getElementById('modal-plan-line');
@@ -296,7 +304,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Abrir / Fechar modal ----------
   function openModal(planKey, trigger) {
-    if (!PLAN_CONFIG[planKey]) return;
+    if (!PLAN_CONFIG[planKey]) {
+      console.warn('[pacotes] Botão com data-plan-select="' + planKey + '" não corresponde a nenhum plano em PLAN_CONFIG.');
+      return;
+    }
     currentPlanKey = planKey;
     lastTrigger = trigger || null;
 
