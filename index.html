@@ -285,7 +285,7 @@
         <li data-i18n="plan.custom.c8">Campanhas de marca</li>
         <li data-i18n="plan.custom.c9">Cobertura de eventos</li>
       </ul>
-      <button type="button" class="price-cta price-cta-outline" data-plan-select="custom" data-i18n="plan.custom.cta">Pedir orçamento personalizado</button>
+      <button type="button" class="price-cta price-cta-outline" data-plan-select="custom" data-i18n="plan.custom.cta">Personalizar projeto</button>
     </article>
 
   </div>
@@ -305,71 +305,7 @@
     </ul>
   </div>
 
-  <!-- ---------- FORMULÁRIO ---------- -->
-  <div class="quote-form-wrap" id="quote-form-wrap">
-    <div class="section-head section-head--sub">
-      <h3 class="section-subtitle" data-i18n="quote.title">Pedido de orçamento</h3>
-      <p class="section-note" data-i18n="quote.note">Resposta em 48 horas</p>
-    </div>
-
-    <p class="quote-lead" data-i18n="quote.lead">Conta-me os detalhes do teu projeto e envio-te uma proposta personalizada por email.</p>
-
-    <form id="quote-form" class="quote-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <div class="form-row">
-        <div class="form-field">
-          <label for="q-name" data-i18n="quote.name">Nome completo</label>
-          <input type="text" id="q-name" name="name" required>
-        </div>
-        <div class="form-field">
-          <label for="q-email" data-i18n="quote.email">Email</label>
-          <input type="email" id="q-email" name="email" required>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-field">
-          <label for="q-phone" data-i18n="quote.phone">Telefone (opcional)</label>
-          <input type="tel" id="q-phone" name="phone">
-        </div>
-        <div class="form-field">
-          <label for="q-plan" data-i18n="quote.plan">Pacote pretendido</label>
-          <select id="q-plan" name="plan">
-            <option value="basic" data-i18n="plan.basic.name">Basic</option>
-            <option value="pro" data-i18n="plan.pro.name">Pro</option>
-            <option value="custom" data-i18n="plan.custom.name" selected>Custom</option>
-            <option value="unsure" data-i18n="quote.notsure">Ainda não sei</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-field">
-          <label for="q-type" data-i18n="quote.type">Tipo de projeto</label>
-          <select id="q-type" name="project_type">
-            <option data-i18n="tag.lifestyle">Lifestyle</option>
-            <option data-i18n="tag.viagem">Viagem</option>
-            <option data-i18n="tag.casamento">Casamento</option>
-            <option data-i18n="tag.desporto">Desporto</option>
-            <option data-i18n="tab.imobiliaria">Imobiliária</option>
-            <option data-i18n="quote.other">Outro</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="q-date" data-i18n="quote.date">Data prevista do evento (opcional)</label>
-          <input type="date" id="q-date" name="event_date">
-        </div>
-      </div>
-
-      <div class="form-field form-field-full">
-        <label for="q-message" data-i18n="quote.message">Conta-me sobre o projeto</label>
-        <textarea id="q-message" name="message" rows="5" required></textarea>
-      </div>
-
-      <button type="submit" class="quote-submit" data-i18n="quote.submit">Enviar pedido</button>
-
-      <p class="quote-status" id="quote-status" role="status"></p>
-    </form>
-  </div>
+  <p class="pricing-footnote" data-i18n="pricing.footnote">Ao escolher um pacote, o pedido é enviado com o plano já associado — não precisas de o voltar a indicar.</p>
 </section>
 
 <!-- ===================================================== -->
@@ -390,6 +326,117 @@
 <footer class="footer">
   <p data-i18n="footer.text">© 2026 Pedro Fernandes. Feito fotograma a fotograma.</p>
 </footer>
+
+<!-- ===================================================== -->
+<!-- MODAL DE PEDIDO — abre ao clicar num botão de pacote -->
+<!-- (.price-cta[data-plan-select]). O plano fica bloqueado -->
+<!-- automaticamente; ver script.js » PLAN_CONFIG para editar -->
+<!-- preços/sinais e i18n.js » chaves "modal.*" para textos. -->
+<!-- IMPORTANTE: substitui YOUR_FORM_ID pelo teu ID do Formspree (ver COMO-EDITAR.md) -->
+<!-- ===================================================== -->
+<div class="modal" id="quote-modal" aria-hidden="true">
+  <div class="modal-backdrop" data-modal-close></div>
+
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button type="button" class="modal-close" data-modal-close aria-label="Fechar">×</button>
+
+    <div class="modal-head">
+      <p class="modal-eyebrow" data-i18n="quote.note">Resposta em 48 horas</p>
+      <h3 id="modal-title" class="modal-title" data-i18n="quote.title">Pedido de orçamento</h3>
+      <p class="modal-plan-line" id="modal-plan-line" aria-live="polite"></p>
+    </div>
+
+    <!-- ---------- FORMULÁRIO ---------- -->
+    <form id="quote-form" class="quote-form" novalidate action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+      <!-- Dados do pacote: preenchidos por JS, não editáveis pelo utilizador -->
+      <input type="hidden" name="_subject" id="q-subject" value="">
+      <input type="hidden" name="plano" id="q-plan-value" value="">
+      <input type="hidden" name="valor_pacote" id="q-plan-price" value="">
+      <input type="hidden" name="sinal_50pc" id="q-plan-signal" value="">
+      <input type="hidden" name="resumo_pedido" id="q-summary" value="">
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="q-name" data-i18n="modal.field.name">Nome</label>
+          <input type="text" id="q-name" name="name" autocomplete="name" required>
+          <span class="field-error" data-error-for="q-name"></span>
+        </div>
+        <div class="form-field">
+          <label for="q-email" data-i18n="modal.field.email">Email</label>
+          <input type="email" id="q-email" name="email" autocomplete="email" required>
+          <span class="field-error" data-error-for="q-email"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="q-phone" data-i18n="modal.field.phone">Telefone</label>
+          <input type="tel" id="q-phone" name="phone" autocomplete="tel" required>
+          <span class="field-error" data-error-for="q-phone"></span>
+        </div>
+        <div class="form-field">
+          <label for="q-company" data-i18n="modal.field.company">Empresa / Marca (opcional)</label>
+          <input type="text" id="q-company" name="company" autocomplete="organization">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="q-date" data-i18n="modal.field.date">Data pretendida</label>
+          <input type="date" id="q-date" name="event_date" required>
+          <span class="field-error" data-error-for="q-date"></span>
+        </div>
+        <div class="form-field">
+          <label for="q-location" data-i18n="modal.field.location">Localização do projeto</label>
+          <input type="text" id="q-location" name="location" required>
+          <span class="field-error" data-error-for="q-location"></span>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="q-type" data-i18n="modal.field.type">Tipo de projeto</label>
+        <select id="q-type" name="project_type" required>
+          <option value="" data-i18n="modal.type.placeholder">Escolhe uma opção</option>
+          <option data-i18n="modal.type.social">Conteúdo para redes sociais</option>
+          <option data-i18n="modal.type.photo">Fotografia</option>
+          <option data-i18n="modal.type.video">Vídeo</option>
+          <option data-i18n="modal.type.photovideo">Fotografia + Vídeo</option>
+          <option data-i18n="modal.type.ad">Publicidade / Ad</option>
+          <option data-i18n="modal.type.product">Produto</option>
+          <option data-i18n="modal.type.event">Evento</option>
+          <option data-i18n="modal.type.other">Outro</option>
+        </select>
+        <span class="field-error" data-error-for="q-type"></span>
+      </div>
+
+      <div class="form-field form-field-full">
+        <label for="q-message" data-i18n="modal.field.description">Descrição do projeto</label>
+        <textarea id="q-message" name="message" rows="4" required></textarea>
+        <span class="field-error" data-error-for="q-message"></span>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="quote-submit" id="quote-submit-btn">
+          <span class="btn-label" data-i18n="modal.submit.default">Enviar pedido</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="modal-cancel" data-modal-close data-i18n="modal.cancel">Cancelar</button>
+      </div>
+
+      <p class="quote-status" id="quote-status" role="status"></p>
+    </form>
+
+    <!-- ---------- MENSAGEM DE SUCESSO ---------- -->
+    <div class="modal-success" id="modal-success" hidden>
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h3 data-i18n="modal.success.title">Pedido enviado com sucesso!</h3>
+      <p data-i18n="modal.success.body">Obrigado pelo seu interesse. Vou analisar o seu pedido e entrar em contacto consigo brevemente para confirmar disponibilidade e os próximos passos.</p>
+      <p class="success-signal" id="modal-success-signal"></p>
+      <button type="button" class="quote-submit" data-modal-close data-i18n="modal.success.close">Fechar</button>
+    </div>
+  </div>
+</div>
 
 <script src="i18n.js"></script>
 <script src="script.js"></script>
