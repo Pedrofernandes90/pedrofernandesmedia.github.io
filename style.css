@@ -654,110 +654,35 @@ section { padding: 110px 5%; }
 }
 
 /* =====================================================
-   MODAL DE PEDIDO — aberto pelos botões dos pacotes
+   PEDIDO DE ORÇAMENTO — formulário único, reutilizado
+   pelos 3 botões de pacote (scroll suave + auto-seleção
+   do campo "Pacote pretendido" — ver script.js).
+
+   scroll-margin-top garante que, ao fazer scroll até aqui,
+   o título não fica escondido atrás do cabeçalho fixo.
    ===================================================== */
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+.quote {
+  scroll-margin-top: 96px;
 }
 
-.modal.is-open { display: flex; }
-
-body.modal-open { overflow: hidden; }
-
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 8, 7, 0.72);
-  backdrop-filter: blur(3px);
-  opacity: 0;
-  transition: opacity 0.25s;
+.quote-lead {
+  max-width: 620px;
+  opacity: 0.8;
+  font-size: 16px;
+  margin-bottom: 40px;
 }
 
-.modal.is-open .modal-backdrop { opacity: 1; }
-
-.modal-panel {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 640px;
-  max-height: 88vh;
-  overflow-y: auto;
-  background: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 40px 36px;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transform: translateY(18px) scale(0.98);
-  transition: opacity 0.25s, transform 0.25s;
-}
-
-.modal.is-open .modal-panel {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.modal-close {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--paper);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
-}
-.modal-close:hover { border-color: var(--flare); color: var(--flare); }
-
-.modal-head { margin-bottom: 30px; padding-right: 30px; }
-
-.modal-eyebrow {
-  font-family: var(--label);
-  font-size: 13.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-
-.modal-title { font-size: clamp(24px, 3vw, 30px); margin-bottom: 16px; }
-
-.modal-plan-line {
-  display: inline-block;
-  font-family: var(--label);
-  font-size: 14.5px;
-  letter-spacing: 0.03em;
-  background: rgba(232, 73, 42, 0.12);
-  border: 1px solid var(--flare);
-  color: var(--paper);
-  padding: 10px 16px;
-  border-radius: 4px;
-}
-
-/* =====================================================
-   FORMULÁRIO — dentro do modal
-   ===================================================== */
 .quote-form {
+  max-width: 720px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 22px;
 }
 
 .form-field { display: flex; flex-direction: column; gap: 8px; }
@@ -766,7 +691,7 @@ body.modal-open { overflow: hidden; }
 .form-field label {
   font-family: var(--label);
   letter-spacing: 0.05em;
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--gold);
   text-transform: uppercase;
 }
@@ -787,6 +712,14 @@ body.modal-open { overflow: hidden; }
 .form-field select { appearance: none; cursor: pointer; }
 .form-field select option { background: var(--ink); color: var(--paper); }
 
+/* destaca por um instante o campo "Pacote pretendido" quando é
+   preenchido automaticamente por um botão de pacote */
+.form-field.field-flash select,
+.form-field.field-flash input {
+  border-color: var(--flare);
+  transition: border-color 0.3s;
+}
+
 .form-field input:focus,
 .form-field select:focus,
 .form-field textarea:focus {
@@ -796,47 +729,7 @@ body.modal-open { overflow: hidden; }
 
 .form-field textarea { resize: vertical; }
 
-/* ---------- validação ---------- */
-.field-error {
-  display: none;
-  font-family: var(--label);
-  font-size: 12.5px;
-  letter-spacing: 0.02em;
-  color: var(--flare);
-}
-
-.form-field.has-error input,
-.form-field.has-error select,
-.form-field.has-error textarea {
-  border-color: var(--flare);
-}
-.form-field.has-error .field-error { display: block; }
-
-/* ---------- ações do modal ---------- */
-.modal-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.modal-cancel {
-  font-family: var(--label);
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  background: transparent;
-  border: none;
-  color: var(--paper);
-  opacity: 0.6;
-  cursor: pointer;
-  padding: 13px 6px;
-  transition: opacity 0.2s;
-}
-.modal-cancel:hover { opacity: 1; }
-
-/* ---------- botão principal + estados ---------- */
 .quote-submit {
-  position: relative;
   align-self: flex-start;
   font-family: var(--label);
   letter-spacing: 0.08em;
@@ -847,80 +740,22 @@ body.modal-open { overflow: hidden; }
   border: none;
   border-radius: 2px;
   cursor: pointer;
-  transition: opacity 0.2s, background 0.2s;
+  transition: opacity 0.2s;
 }
 .quote-submit:hover { opacity: 0.88; }
-.quote-submit:disabled { cursor: not-allowed; }
-
-.quote-submit .btn-spinner {
-  display: none;
-  width: 15px;
-  height: 15px;
-  border: 2px solid rgba(20,16,14,0.35);
-  border-top-color: var(--ink);
-  border-radius: 50%;
-  animation: btn-spin 0.7s linear infinite;
-}
-
-.quote-submit.is-loading { opacity: 0.85; pointer-events: none; }
-.quote-submit.is-loading .btn-label { opacity: 0; }
-.quote-submit.is-loading .btn-spinner {
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -8px 0 0 -8px;
-}
-
-.quote-submit.is-success {
-  background: var(--gold);
-  opacity: 1;
-}
-
-@keyframes btn-spin { to { transform: rotate(360deg); } }
+.quote-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .quote-status {
   font-family: var(--label);
-  font-size: 14px;
+  font-size: 14.5px;
   letter-spacing: 0.03em;
   color: var(--gold);
   min-height: 20px;
 }
 .quote-status.is-error { color: var(--flare); }
 
-/* ---------- painel de sucesso ---------- */
-.modal-success { text-align: center; padding: 10px 0 4px; }
-
-.success-icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 22px;
-  border-radius: 50%;
-  background: var(--flare);
-  color: var(--ink);
-  font-size: 26px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-success h3 { font-size: 24px; margin-bottom: 14px; }
-.modal-success p { font-size: 15px; opacity: 0.85; max-width: 460px; margin: 0 auto 12px; }
-.modal-success .success-signal { color: var(--gold); font-family: var(--label); font-size: 14px; opacity: 1; }
-.modal-success .quote-submit { margin-top: 20px; align-self: center; }
-
 @media (max-width: 640px) {
   .form-row { grid-template-columns: 1fr; }
-
-  .modal { padding: 0; }
-  .modal-panel {
-    max-width: 100%;
-    max-height: 100svh;
-    height: 100svh;
-    border-radius: 0;
-    padding: 28px 22px 32px;
-  }
 }
 
 /* =====================================================
