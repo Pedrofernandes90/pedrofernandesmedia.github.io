@@ -407,5 +407,114 @@
 <!-- Three.js: motor 3D usado para desenhar e animar a câmara no hero -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="camera-3d.js?v=4"></script>
+<!-- ===================================================== -->
+<!-- BOTÕES DOS PACOTES → FORMULÁRIO                        -->
+<!-- Colar mesmo antes de </body> no index.html.            -->
+<!-- Funciona sozinho, sem depender do script.js.           -->
+<!-- ===================================================== -->
+<script>
+(function () {
+  function iniciar() {
+    // 1. Encontrar o campo "Pacote pretendido"
+    var selectPacote = document.getElementById('q-plan')
+                    || document.querySelector('select[name="plan"]');
+
+    if (!selectPacote) {
+      console.error('[Pacotes] ERRO: não encontrei o campo "Pacote pretendido" na página.');
+      return;
+    }
+
+    // 2. Encontrar os 3 botões dos pacotes
+    var botoes = document.querySelectorAll('[data-plan-select]');
+
+    // Se não tiverem o atributo data-plan-select, procura pelo texto do botão
+    if (!botoes.length) {
+      var todos = document.querySelectorAll('button, a');
+      var encontrados = [];
+      for (var i = 0; i < todos.length; i++) {
+        var texto = (todos[i].textContent || '').toLowerCase();
+        if (texto.indexOf('escolher basic') !== -1) { todos[i].setAttribute('data-plan-select', 'basic'); encontrados.push(todos[i]); }
+        else if (texto.indexOf('escolher pro') !== -1) { todos[i].setAttribute('data-plan-select', 'pro'); encontrados.push(todos[i]); }
+        else if (texto.indexOf('orçamento personalizado') !== -1 || texto.indexOf('personalizar projeto') !== -1) { todos[i].setAttribute('data-plan-select', 'custom'); encontrados.push(todos[i]); }
+      }
+      botoes = encontrados;
+    }
+
+    console.log('[Pacotes] Botões encontrados:', botoes.length);
+
+    if (!botoes.length) {
+      console.error('[Pacotes] ERRO: não encontrei os botões dos pacotes.');
+      return;
+    }
+
+    // 3. Ligar o clique de cada botão
+    for (var j = 0; j < botoes.length; j++) {
+      (function (botao) {
+        botao.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          var pacote = botao.getAttribute('data-plan-select'); // basic | pro | custom
+          console.log('[Pacotes] Clicaste em:', pacote);
+
+          // Seleciona a opção correspondente
+          var selecionou = false;
+          for (var k = 0; k < selectPacote.options.length; k++) {
+            if (selectPacote.options[k].value === pacote) {
+              selectPacote.selectedIndex = k;
+              selecionou = true;
+              break;
+            }
+          }
+
+          // Se os values não corresponderem, tenta pelo texto visível
+          if (!selecionou) {
+            var procura = { basic: 'basic', pro: 'pro', custom: 'custom' }[pacote];
+            for (var m = 0; m < selectPacote.options.length; m++) {
+              if ((selectPacote.options[m].text || '').toLowerCase().indexOf(procura) !== -1) {
+                selectPacote.selectedIndex = m;
+                selecionou = true;
+                break;
+              }
+            }
+          }
+
+          console.log('[Pacotes] Pacote selecionado:', selectPacote.value || selectPacote.options[selectPacote.selectedIndex].text);
+
+          // Avisa outros scripts de que o valor mudou
+          selectPacote.dispatchEvent(new Event('change', { bubbles: true }));
+
+          // 4. Scroll suave até ao campo
+          var alvo = selectPacote.closest ? selectPacote.closest('.form-field') : null;
+          if (!alvo) alvo = selectPacote.parentNode;
+          alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          // 5. Destaque visual temporário
+          var corOriginal = selectPacote.style.borderColor;
+          var sombraOriginal = selectPacote.style.boxShadow;
+          selectPacote.style.borderColor = '#e8492a';
+          selectPacote.style.boxShadow = '0 0 0 3px rgba(232,73,42,0.25)';
+          setTimeout(function () {
+            selectPacote.style.borderColor = corOriginal;
+            selectPacote.style.boxShadow = sombraOriginal;
+          }, 1500);
+
+          // 6. Foca o campo
+          setTimeout(function () {
+            selectPacote.focus({ preventScroll: true });
+          }, 600);
+        });
+      })(botoes[j]);
+    }
+
+    console.log('[Pacotes] Tudo pronto! Os botões estão a funcionar. ✓');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciar);
+  } else {
+    iniciar();
+  }
+})();
+</script>
 </body>
 </html>
