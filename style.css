@@ -472,6 +472,17 @@ section { padding: 110px 5%; }
 
 .price-currency { font-size: 0.5em; color: var(--gold); font-weight: 600; }
 
+/* "/mês" a seguir ao preço — discreto, para não competir com o número */
+.price-period {
+  font-family: var(--label);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  opacity: 0.6;
+  align-self: flex-end;
+  margin-bottom: 4px;
+}
+
 .price-from {
   font-family: var(--label);
   font-size: 14px;
