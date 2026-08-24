@@ -223,7 +223,7 @@
     <p class="section-note" data-i18n="pricing.note">Para empresas e marcas</p>
   </div>
 
-  <p class="pricing-lead" data-i18n="pricing.lead">Conteúdo profissional de fotografia e vídeo para redes sociais, pensado para empresas e marcas. Escolhe o pacote certo para o teu negócio.</p>
+  <p class="pricing-lead" data-i18n="pricing.lead">Planos mensais de fotografia e vídeo para redes sociais, pensados para empresas e marcas. Conteúdo novo todos os meses, sem contratos complicados.</p>
 
   <div class="pricing-grid">
 
@@ -233,7 +233,7 @@
         <h3 class="price-name" data-i18n="plan.basic.name">Basic</h3>
         <p class="price-tagline" data-i18n="plan.basic.tagline">Conteúdo essencial para pequenos negócios que querem começar a comunicar nas redes sociais.</p>
       </div>
-      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.basic.price">250</span></p>
+      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.basic.price">250</span><span class="price-period" data-i18n="plan.period">/mês</span></p>
       <ul class="price-features">
         <li data-i18n="plan.basic.f1">Até 2 horas de captação</li>
         <li data-i18n="plan.basic.f2">15 fotografias profissionais editadas</li>
@@ -254,7 +254,7 @@
         <h3 class="price-name" data-i18n="plan.pro.name">Pro</h3>
         <p class="price-tagline" data-i18n="plan.pro.tagline">A melhor relação qualidade/preço para empresas que querem criar conteúdo com regularidade.</p>
       </div>
-      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.pro.price">450</span></p>
+      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.pro.price">450</span><span class="price-period" data-i18n="plan.period">/mês</span></p>
       <ul class="price-features">
         <li data-i18n="plan.pro.f1">Até 4 horas de captação</li>
         <li data-i18n="plan.pro.f2">30 fotografias profissionais editadas</li>
@@ -274,7 +274,7 @@
         <h3 class="price-name" data-i18n="plan.custom.name">Custom</h3>
         <p class="price-tagline" data-i18n="plan.custom.tagline">Solução 100% personalizada para marcas, empresas e clientes com necessidades específicas.</p>
       </div>
-      <p class="price-amount"><span class="price-from" data-i18n="plan.custom.from">Desde</span> <span class="price-currency">€</span><span data-i18n="plan.custom.price">600</span></p>
+      <p class="price-amount"><span class="price-from" data-i18n="plan.custom.from">Desde</span> <span class="price-currency">€</span><span data-i18n="plan.custom.price">600</span><span class="price-period" data-i18n="plan.period">/mês</span></p>
       <p class="price-custom-intro" data-i18n="plan.custom.intro">Personaliza o que precisares:</p>
       <ul class="price-chips">
         <li data-i18n="plan.custom.c1">Horas de captação</li>
@@ -407,6 +407,7 @@
 <!-- Three.js: motor 3D usado para desenhar e animar a câmara no hero -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="camera-3d.js?v=4"></script>
+
 <!-- ===================================================== -->
 <!-- BOTÕES DOS PACOTES → FORMULÁRIO                        -->
 <!-- Colar mesmo antes de </body> no index.html.            -->
@@ -415,6 +416,9 @@
 <script>
 (function () {
   function iniciar() {
+    // Só corre uma vez, mesmo que este bloco apareça repetido na página
+    if (window.__pacotesLigados) return;
+
     // 1. Encontrar o campo "Pacote pretendido"
     var selectPacote = document.getElementById('q-plan')
                     || document.querySelector('select[name="plan"]');
@@ -507,6 +511,10 @@
     }
 
     console.log('[Pacotes] Tudo pronto! Os botões estão a funcionar. ✓');
+
+    // Marca que os botões já estão ligados, para o script.js não os ligar
+    // outra vez (o que faria cada clique disparar a dobrar).
+    window.__pacotesLigados = true;
   }
 
   if (document.readyState === 'loading') {
@@ -516,5 +524,6 @@
   }
 })();
 </script>
+
 </body>
 </html>
