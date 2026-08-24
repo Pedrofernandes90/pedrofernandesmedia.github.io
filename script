@@ -104,288 +104,90 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // =====================================================
-// PACOTES / PREÇOS — sistema de pedido por pacote
+// PACOTES / PREÇOS — botões "Escolher Basic", "Escolher Pro"
+// e "Pedir orçamento personalizado" (.price-cta[data-plan-select])
 //
-// Fluxo: PACOTE → MODAL COM FORMULÁRIO → PEDIDO ENVIADO →
-// CONFIRMAÇÃO → (fase 2) SINAL DE 50% VIA STRIPE
-//
-// PLAN_CONFIG é a única fonte de verdade sobre preços e
-// sinais. Quando quiseres ligar o Stripe, é aqui que entra
-// o priceId/paymentLink de cada pacote — o resto do fluxo
-// (validação, modal, envio, resumo do pedido) já está pronto
-// e não precisa de ser reconstruído.
+// Reutilizam o formulário "Pedido de orçamento" já existente
+// na página: ao clicar, fazem scroll suave até lá e selecionam
+// automaticamente a opção correta no campo "Pacote pretendido"
+// (#q-plan). Se o utilizador chegar ao formulário sem clicar
+// num pacote (ex.: link do menu), o campo mantém-se em
+// "Seleciona um pacote" — nada é pré-selecionado à força.
 // =====================================================
-const PLAN_CONFIG = {
-  basic: {
-    price: 250,
-    signal: 125,          // 50% de sinal
-    isCustom: false,
-    // stripe: { priceId: null, paymentLink: null }  // preencher na fase 2
-  },
-  pro: {
-    price: 450,
-    signal: 225,           // 50% de sinal
-    isCustom: false,
-    // stripe: { priceId: null, paymentLink: null }  // preencher na fase 2
-  },
-  custom: {
-    price: 600,             // valor de referência ("desde")
-    signal: null,           // definido depois, com base no orçamento final
-    isCustom: true,
-    // stripe: { priceId: null, paymentLink: null }  // não aplicável na fase 1
-  }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('quote-modal');
-  const form = document.getElementById('quote-form');
-  if (!modal || !form) {
+  const planButtons = document.querySelectorAll('.price-cta[data-plan-select]');
+  const planSelect = document.getElementById('q-plan');
+  const formSection = document.getElementById('pedido-orcamento');
+
+  if (!planButtons.length) return;
+
+  if (!planSelect || !formSection) {
     console.warn(
-      '[pacotes] Não encontrei o modal de pedido (#quote-modal / #quote-form) no HTML. ' +
-      'Os botões dos pacotes não vão fazer nada até isto ser corrigido — confirma que ' +
-      'estás a usar a versão mais recente do index.html, style.css, i18n.js e script.js em conjunto ' +
-      '(os 4 ficheiros têm de vir do mesmo lote de alterações) e limpa a cache do browser.'
+      '[pacotes] Não encontrei o formulário de orçamento (#pedido-orcamento / #q-plan) no HTML. ' +
+      'Os botões dos pacotes não vão conseguir selecionar o pacote — confirma que estás a usar ' +
+      'a versão mais recente do index.html, style.css, i18n.js e script.js em conjunto.'
     );
     return;
   }
 
-  const modalPanel = modal.querySelector('.modal-panel');
-  const planLineEl = document.getElementById('modal-plan-line');
-  const successPanel = document.getElementById('modal-success');
-  const successSignalEl = document.getElementById('modal-success-signal');
-  const statusEl = document.getElementById('quote-status');
-  const submitBtn = document.getElementById('quote-submit-btn');
-  const submitLabelEl = submitBtn.querySelector('.btn-label');
-  const cancelBtns = modal.querySelectorAll('[data-modal-close]');
+  planButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const plan = btn.dataset.planSelect; // "basic" | "pro" | "custom"
 
-  const nameInput = document.getElementById('q-name');
-  const subjectField = document.getElementById('q-subject');
-  const planValueField = document.getElementById('q-plan-value');
-  const planPriceField = document.getElementById('q-plan-price');
-  const planSignalField = document.getElementById('q-plan-signal');
-  const summaryField = document.getElementById('q-summary');
+      // 1. seleciona automaticamente a opção correta no <select> já existente
+      const optionExists = Array.from(planSelect.options).some(opt => opt.value === plan);
+      if (optionExists) {
+        planSelect.value = plan;
+        planSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
-  let currentPlanKey = null;
-  let lastTrigger = null;
+        // pequeno destaque visual para confirmar ao utilizador que o pacote ficou selecionado
+        const wrap = planSelect.closest('.form-field');
+        if (wrap) {
+          wrap.classList.add('field-flash');
+          window.setTimeout(() => wrap.classList.remove('field-flash'), 900);
+        }
+      }
+
+      // 2. scroll suave até ao formulário (scroll-margin-top no CSS evita
+      //    que o título fique escondido atrás do cabeçalho fixo)
+      formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // 3. foca o primeiro campo por preencher, já com o scroll terminado
+      const nameInput = document.getElementById('q-name');
+      if (nameInput) {
+        window.setTimeout(() => nameInput.focus({ preventScroll: true }), 500);
+      }
+    });
+  });
+});
+
+// =====================================================
+// ENVIO DO FORMULÁRIO DE PEDIDO DE ORÇAMENTO
+// Usa o Formspree, sem recarregar a página.
+// IMPORTANTE: substitui "YOUR_FORM_ID" no index.html pelo teu
+// ID do Formspree — instruções no COMO-EDITAR.md
+// =====================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('quote-form');
+  const status = document.getElementById('quote-status');
+  if (!form) return;
 
   const lang = () => localStorage.getItem('site-lang') || 'pt';
   const t = (key) => (typeof translations !== 'undefined' && translations[lang()] && translations[lang()][key]) || key;
-  const fill = (template, data) => template.replace(/\{(\w+)\}/g, (_, k) => (data[k] !== undefined ? data[k] : ''));
-
-  const requiredFields = ['q-name', 'q-email', 'q-phone', 'q-date', 'q-location', 'q-type', 'q-message'];
-
-  // ---------- Textos dinâmicos (plano + sucesso) ----------
-  function planDisplayName(key) {
-    return t('plan.' + key + '.name');
-  }
-
-  function renderPlanLine() {
-    if (!currentPlanKey) return;
-    const cfg = PLAN_CONFIG[currentPlanKey];
-    if (cfg.isCustom) {
-      planLineEl.textContent = fill(t('modal.custom.line'), { price: cfg.price });
-    } else {
-      planLineEl.textContent = fill(t('modal.plan.line'), { name: planDisplayName(currentPlanKey), price: cfg.price });
-    }
-  }
-
-  function renderSuccessSignal() {
-    if (!currentPlanKey) return;
-    const cfg = PLAN_CONFIG[currentPlanKey];
-    successSignalEl.textContent = cfg.isCustom ? '' : fill(t('modal.success.signal'), { signal: cfg.signal });
-  }
-
-  function renderSubmitLabel() {
-    if (!currentPlanKey) return;
-    const cfg = PLAN_CONFIG[currentPlanKey];
-    submitLabelEl.textContent = cfg.isCustom ? t('modal.submit.custom') : t('modal.submit.default');
-  }
-
-  // Reaplica os textos dinâmicos se o idioma mudar com o modal aberto
-  const langToggle = document.getElementById('lang-toggle');
-  if (langToggle) {
-    langToggle.addEventListener('click', () => {
-      if (!modal.classList.contains('is-open')) return;
-      window.setTimeout(() => {
-        renderPlanLine();
-        renderSuccessSignal();
-        renderSubmitLabel();
-      }, 0);
-    });
-  }
-
-  // ---------- Dados escondidos do pacote (não editáveis pelo utilizador) ----------
-  function applyPlanToForm(key) {
-    const cfg = PLAN_CONFIG[key];
-    planValueField.value = planDisplayName(key);
-    planPriceField.value = '€' + cfg.price + (cfg.isCustom ? ' (desde)' : '');
-    planSignalField.value = cfg.isCustom ? 'a definir após orçamento' : '€' + cfg.signal;
-    subjectField.value = 'Novo pedido — Plano ' + planDisplayName(key);
-  }
-
-  function buildSummary(data) {
-    const cfg = PLAN_CONFIG[currentPlanKey];
-    const lines = [
-      'Novo pedido — Plano ' + planDisplayName(currentPlanKey),
-      '',
-      'Nome: ' + data.name,
-      'Email: ' + data.email,
-      'Telefone: ' + data.phone,
-      'Empresa: ' + (data.company || '—'),
-      'Data: ' + data.event_date,
-      'Localização: ' + data.location,
-      'Tipo: ' + data.project_type,
-      'Plano: ' + planDisplayName(currentPlanKey),
-      'Valor: €' + cfg.price + (cfg.isCustom ? ' (desde)' : ''),
-      'Sinal (50%): ' + (cfg.isCustom ? 'a definir após orçamento' : '€' + cfg.signal),
-      '',
-      'Descrição:',
-      data.message
-    ];
-    return lines.join('\n');
-  }
-
-  // ---------- Validação ----------
-  function fieldError(id) {
-    return modal.querySelector('.field-error[data-error-for="' + id + '"]');
-  }
-
-  function clearErrors() {
-    requiredFields.forEach(id => {
-      const field = document.getElementById(id);
-      const wrap = field.closest('.form-field');
-      wrap.classList.remove('has-error');
-      const err = fieldError(id);
-      if (err) err.textContent = '';
-    });
-  }
-
-  function setFieldError(id, message) {
-    const field = document.getElementById(id);
-    const wrap = field.closest('.form-field');
-    wrap.classList.add('has-error');
-    const err = fieldError(id);
-    if (err) err.textContent = message;
-  }
-
-  function validate() {
-    clearErrors();
-    let firstInvalid = null;
-    let valid = true;
-
-    requiredFields.forEach(id => {
-      const field = document.getElementById(id);
-      const value = field.value.trim();
-
-      if (!value) {
-        setFieldError(id, t('form.error.required'));
-        valid = false;
-        if (!firstInvalid) firstInvalid = field;
-        return;
-      }
-
-      if (id === 'q-email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        setFieldError(id, t('form.error.email'));
-        valid = false;
-        if (!firstInvalid) firstInvalid = field;
-        return;
-      }
-
-      if (id === 'q-phone' && !/^[0-9+()\-\s]{6,}$/.test(value)) {
-        setFieldError(id, t('form.error.phone'));
-        valid = false;
-        if (!firstInvalid) firstInvalid = field;
-      }
-    });
-
-    if (firstInvalid) firstInvalid.focus();
-    return valid;
-  }
-
-  // ---------- Abrir / Fechar modal ----------
-  function openModal(planKey, trigger) {
-    if (!PLAN_CONFIG[planKey]) {
-      console.warn('[pacotes] Botão com data-plan-select="' + planKey + '" não corresponde a nenhum plano em PLAN_CONFIG.');
-      return;
-    }
-    currentPlanKey = planKey;
-    lastTrigger = trigger || null;
-
-    form.reset();
-    clearErrors();
-    statusEl.textContent = '';
-    statusEl.classList.remove('is-error');
-    submitBtn.classList.remove('is-loading', 'is-success');
-    submitBtn.disabled = false;
-    successPanel.hidden = true;
-    form.hidden = false;
-
-    applyPlanToForm(planKey);
-    renderPlanLine();
-    renderSuccessSignal();
-    renderSubmitLabel();
-
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
-
-    window.setTimeout(() => nameInput.focus(), 250);
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
-    if (lastTrigger) lastTrigger.focus();
-  }
-
-  document.querySelectorAll('.price-cta[data-plan-select]').forEach(btn => {
-    btn.addEventListener('click', () => openModal(btn.dataset.planSelect, btn));
-  });
-
-  cancelBtns.forEach(btn => btn.addEventListener('click', closeModal));
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
-  });
-
-  // clique fora do painel fecha o modal (o próprio backdrop já tem data-modal-close,
-  // isto é só uma rede de segurança caso o clique comece dentro e "arraste" para fora)
-  modalPanel.addEventListener('click', (e) => e.stopPropagation());
-
-  // ---------- Envio ----------
-  const msg = {
-    notConfigured: () => t('modal.error.notConfigured'),
-    error: () => t('modal.error')
-  };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!validate()) return;
 
     if (form.action.includes('YOUR_FORM_ID')) {
-      statusEl.textContent = msg.notConfigured();
-      statusEl.classList.add('is-error');
+      status.textContent = t('quote.notConfigured');
+      status.classList.add('is-error');
       return;
     }
 
-    const data = {
-      name: document.getElementById('q-name').value.trim(),
-      email: document.getElementById('q-email').value.trim(),
-      phone: document.getElementById('q-phone').value.trim(),
-      company: document.getElementById('q-company').value.trim(),
-      event_date: document.getElementById('q-date').value,
-      location: document.getElementById('q-location').value.trim(),
-      project_type: document.getElementById('q-type').value,
-      message: document.getElementById('q-message').value.trim()
-    };
-
-    summaryField.value = buildSummary(data);
-
-    submitBtn.classList.add('is-loading');
+    const submitBtn = form.querySelector('.quote-submit');
     submitBtn.disabled = true;
-    statusEl.textContent = '';
-    statusEl.classList.remove('is-error');
+    status.classList.remove('is-error');
+    status.textContent = t('quote.sending');
 
     try {
       const response = await fetch(form.action, {
@@ -394,25 +196,17 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Accept': 'application/json' }
       });
 
-      if (!response.ok) throw new Error('Formspree error');
-
-      submitBtn.classList.remove('is-loading');
-      submitBtn.classList.add('is-success');
-
-      window.setTimeout(() => {
-        form.hidden = true;
-        successPanel.hidden = false;
-        modalPanel.scrollTop = 0;
-      }, 300);
-
-      // Estrutura do pedido, pronta para email / CRM / base de dados / Stripe (fase 2):
-      // { ...data, plan: currentPlanKey, price: PLAN_CONFIG[currentPlanKey].price,
-      //   signal: PLAN_CONFIG[currentPlanKey].signal }
+      if (response.ok) {
+        status.textContent = t('quote.success');
+        form.reset();
+      } else {
+        throw new Error('Formspree error');
+      }
     } catch (err) {
-      submitBtn.classList.remove('is-loading');
+      status.textContent = t('quote.error');
+      status.classList.add('is-error');
+    } finally {
       submitBtn.disabled = false;
-      statusEl.textContent = msg.error();
-      statusEl.classList.add('is-error');
     }
   });
 });
