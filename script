@@ -1,4 +1,12 @@
 // =====================================================
+// CONFIRMAÇÃO DE CARREGAMENTO — se isto NÃO aparecer na
+// consola do browser (F12 → Console), o ficheiro script.js
+// não está a ser carregado pela página (nome/caminho errado,
+// upload incompleto, ou cache do browser/servidor).
+// =====================================================
+console.log('%c[Pedro Fernandes] script.js carregado ✓', 'color: #e8492a; font-weight: bold; font-size: 13px;');
+
+// =====================================================
 // PORTEFÓLIO — carrossel com swipe e categorias coloridas
 // =====================================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -115,24 +123,43 @@ document.addEventListener('DOMContentLoaded', () => {
 // mantém-se em "Seleciona um pacote" — nada é pré-selecionado à força.
 // =====================================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Se o bloco inline no index.html já ligou os botões, não fazer nada aqui
+  // (caso contrário cada clique disparava duas vezes).
+  if (window.__pacotesLigados) {
+    console.log('[Pacotes] Os botões já foram ligados pelo bloco no index.html — script.js não repete.');
+    return;
+  }
+
   const planButtons = document.querySelectorAll('.price-cta[data-plan-select]');
   const planSelect = document.getElementById('q-plan');
   const planField = document.getElementById('plan-field');
 
-  if (!planButtons.length) return;
+  console.log('[Pacotes] Botões de pacote encontrados na página:', planButtons.length);
+
+  if (!planButtons.length) {
+    console.warn(
+      '[Pacotes] Não encontrei nenhum botão ".price-cta[data-plan-select]" no HTML. ' +
+      'Os botões "Escolher Basic/Pro" e "Pedir orçamento personalizado" precisam da classe ' +
+      '"price-cta" e do atributo "data-plan-select" (basic/pro/custom) para funcionarem.'
+    );
+    return;
+  }
 
   if (!planSelect || !planField) {
     console.warn(
-      '[pacotes] Não encontrei o campo "Pacote pretendido" (#plan-field / #q-plan) no HTML. ' +
+      '[Pacotes] Não encontrei o campo "Pacote pretendido" (#plan-field / #q-plan) no HTML. ' +
       'Os botões dos pacotes não vão conseguir selecionar o pacote — confirma que estás a usar ' +
       'a versão mais recente do index.html, style.css, i18n.js e script.js em conjunto.'
     );
     return;
   }
 
+  console.log('[Pacotes] Tudo encontrado — os botões estão prontos a funcionar. ✓');
+
   planButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const plan = btn.dataset.planSelect; // "basic" | "pro" | "custom"
+      console.log('[Pacotes] Clique detetado no botão:', plan);
 
       // 1. seleciona automaticamente a opção correta no <select> já existente
       const optionExists = Array.from(planSelect.options).some(opt => opt.value === plan);
