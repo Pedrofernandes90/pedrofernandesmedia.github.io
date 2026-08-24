@@ -59,7 +59,12 @@ const translations = {
     /* ---------- PACOTES / PREÇOS ---------- */
     "pricing.title": "Pacotes & Preços",
     "pricing.note": "Para empresas e marcas",
-    "pricing.lead": "Conteúdo profissional de fotografia e vídeo para redes sociais, pensado para empresas e marcas. Escolhe o pacote certo para o teu negócio.",
+    "pricing.lead": "Planos mensais de fotografia e vídeo para redes sociais, pensados para empresas e marcas. Conteúdo novo todos os meses, sem contratos complicados.",
+
+    /* "/mês" aparece a seguir aos 3 preços. Se algum dia deixarem
+       de ser mensais, muda esta linha (ou apaga o <span class="price-period">
+       do index.html no pacote em questão). */
+    "plan.period": "/mês",
 
     "plan.basic.name": "Basic",
     "plan.basic.tagline": "Conteúdo essencial para pequenos negócios que querem começar a comunicar nas redes sociais.",
@@ -194,7 +199,9 @@ const translations = {
     /* ---------- PACKAGES / PRICING ---------- */
     "pricing.title": "Packages & Pricing",
     "pricing.note": "For businesses and brands",
-    "pricing.lead": "Professional photography and video content for social media, built for businesses and brands. Pick the package that fits your business.",
+    "pricing.lead": "Monthly photography and video plans for social media, built for businesses and brands. Fresh content every month, no complicated contracts.",
+
+    "plan.period": "/month",
 
     "plan.basic.name": "Basic",
     "plan.basic.tagline": "Essential content for small businesses starting to show up on social media.",
