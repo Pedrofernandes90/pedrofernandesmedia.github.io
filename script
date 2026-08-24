@@ -108,22 +108,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // e "Pedir orçamento personalizado" (.price-cta[data-plan-select])
 //
 // Reutilizam o formulário "Pedido de orçamento" já existente
-// na página: ao clicar, fazem scroll suave até lá e selecionam
-// automaticamente a opção correta no campo "Pacote pretendido"
-// (#q-plan). Se o utilizador chegar ao formulário sem clicar
-// num pacote (ex.: link do menu), o campo mantém-se em
-// "Seleciona um pacote" — nada é pré-selecionado à força.
+// na página: ao clicar, fazem scroll suave diretamente até ao
+// campo "Pacote pretendido" (#plan-field) e selecionam
+// automaticamente a opção correta. Se o utilizador chegar ao
+// formulário sem clicar num pacote (ex.: link do menu), o campo
+// mantém-se em "Seleciona um pacote" — nada é pré-selecionado à força.
 // =====================================================
 document.addEventListener('DOMContentLoaded', () => {
   const planButtons = document.querySelectorAll('.price-cta[data-plan-select]');
   const planSelect = document.getElementById('q-plan');
-  const formSection = document.getElementById('pedido-orcamento');
+  const planField = document.getElementById('plan-field');
 
   if (!planButtons.length) return;
 
-  if (!planSelect || !formSection) {
+  if (!planSelect || !planField) {
     console.warn(
-      '[pacotes] Não encontrei o formulário de orçamento (#pedido-orcamento / #q-plan) no HTML. ' +
+      '[pacotes] Não encontrei o campo "Pacote pretendido" (#plan-field / #q-plan) no HTML. ' +
       'Os botões dos pacotes não vão conseguir selecionar o pacote — confirma que estás a usar ' +
       'a versão mais recente do index.html, style.css, i18n.js e script.js em conjunto.'
     );
@@ -139,24 +139,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (optionExists) {
         planSelect.value = plan;
         planSelect.dispatchEvent(new Event('change', { bubbles: true }));
-
-        // pequeno destaque visual para confirmar ao utilizador que o pacote ficou selecionado
-        const wrap = planSelect.closest('.form-field');
-        if (wrap) {
-          wrap.classList.add('field-flash');
-          window.setTimeout(() => wrap.classList.remove('field-flash'), 900);
-        }
       }
 
-      // 2. scroll suave até ao formulário (scroll-margin-top no CSS evita
-      //    que o título fique escondido atrás do cabeçalho fixo)
-      formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // 2. destaque visual para confirmar ao utilizador que o pacote ficou selecionado
+      planField.classList.add('field-flash');
+      window.setTimeout(() => planField.classList.remove('field-flash'), 1200);
 
-      // 3. foca o primeiro campo por preencher, já com o scroll terminado
-      const nameInput = document.getElementById('q-name');
-      if (nameInput) {
-        window.setTimeout(() => nameInput.focus({ preventScroll: true }), 500);
-      }
+      // 3. scroll suave diretamente até ao campo "Pacote pretendido"
+      //    (scroll-margin-top no CSS evita que fique escondido atrás do cabeçalho fixo)
+      planField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // 4. foca o próprio campo já selecionado, assim que o scroll terminar
+      window.setTimeout(() => planSelect.focus({ preventScroll: true }), 500);
     });
   });
 });
