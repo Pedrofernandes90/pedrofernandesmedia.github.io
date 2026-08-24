@@ -713,11 +713,20 @@ section { padding: 110px 5%; }
 .form-field select option { background: var(--ink); color: var(--paper); }
 
 /* destaca por um instante o campo "Pacote pretendido" quando é
-   preenchido automaticamente por um botão de pacote */
+   preenchido automaticamente por um botão de pacote — é o alvo
+   direto do scroll, por isso o scroll-margin evita que fique
+   escondido atrás do cabeçalho fixo em ecrãs pequenos/curtos */
+#plan-field {
+  scroll-margin-top: 120px;
+  scroll-margin-bottom: 120px;
+  border-radius: 4px;
+}
+
 .form-field.field-flash select,
 .form-field.field-flash input {
   border-color: var(--flare);
-  transition: border-color 0.3s;
+  box-shadow: 0 0 0 3px rgba(232, 73, 42, 0.18);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .form-field input:focus,
