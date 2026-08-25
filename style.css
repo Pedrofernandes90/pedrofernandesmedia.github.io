@@ -264,33 +264,48 @@ section { padding: 110px 5%; }
 }
 
 /* ---------- Apresentação do projeto ----------
-   Regra de ouro: limitamos sempre a LARGURA, nunca a altura.
-   Com aspect-ratio, a altura decorre da largura — assim a proporção
-   do vídeo nunca quebra e não aparecem barras pretas nem caixas vazias. */
-.pf-stage {
-  position: relative;
-  width: min(90vw, 1400px);
-  margin: 0 auto;
+   ESTRUTURA:
+     .pf-stage  -> centra (largura total disponível)
+     .pf-frame  -> tem EXATAMENTE o tamanho do vídeo (container = vídeo)
+     .pf-media  -> o vídeo em si; a altura vem do aspect-ratio
+
+   O tamanho é sempre definido pela LARGURA. A altura decorre da
+   proporção, por isso o vídeo nunca é esticado nem sobra espaço. */
+
+/* a secção do portefólio respira menos nas laterais para o vídeo ser maior */
+.portfolio { padding-left: 3%; padding-right: 3%; }
+
+/* cabeçalho e separadores acompanham a largura do vídeo */
+.portfolio .section-head,
+.portfolio .cat-pills {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
 }
+.portfolio .cat-pills { margin-bottom: 34px; }
+
+.pf-stage {
+  display: flex;
+  justify-content: center;
+}
+
+.pf-frame {
+  position: relative;          /* âncora para as setas */
+  width: min(100%, 1800px);    /* ~94vw no desktop, ~97vw no telemóvel */
+  line-height: 0;              /* nada de espaço fantasma por baixo */
+}
+
+/* vídeos verticais: a altura é limitada convertendo-a em largura */
+.pf-frame.vertical { width: min(100%, calc(86vh * 9 / 16)); }
 
 .pf-media {
   width: 100%;
-  /* o vídeo nunca passa de ~78% da altura do ecrã, mas isso é conseguido
-     limitando a largura — a proporção mantém-se intacta */
-  max-width: calc(78vh * 16 / 9);
   aspect-ratio: 16 / 9;
-  margin: 0 auto;
   background: #000;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
 }
-
-/* vídeos verticais (Reels/TikTok) */
-.pf-media.vertical {
-  max-width: calc(78vh * 9 / 16);
-  aspect-ratio: 9 / 16;
-}
+.pf-media.vertical { aspect-ratio: 9 / 16; }
 
 .pf-media iframe,
 .pf-media img {
@@ -301,26 +316,26 @@ section { padding: 110px 5%; }
 }
 .pf-media img { object-fit: cover; }
 
-/* ---------- Setas sobre as extremidades do vídeo ---------- */
+/* ---------- Setas: absolutas, nunca deslocam o vídeo ---------- */
 .pf-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;
-  width: 54px;
-  height: 54px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 1px solid rgba(241, 236, 228, 0.35);
-  background: rgba(20, 16, 14, 0.55);
+  background: rgba(20, 16, 14, 0.5);
   backdrop-filter: blur(8px);
   color: var(--paper);
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1;
   cursor: pointer;
   transition: background 0.25s, border-color 0.25s, color 0.25s, opacity 0.25s;
 }
-.pf-prev { left: 16px; }
-.pf-next { right: 16px; }
+.pf-prev { left: 18px; }
+.pf-next { right: 18px; }
 
 .pf-arrow:hover {
   background: var(--cat);
@@ -329,22 +344,10 @@ section { padding: 110px 5%; }
 }
 .pf-arrow:disabled { opacity: 0; pointer-events: none; }
 
-/* em ecrãs largos as setas saem para fora do vídeo — mais limpo */
-@media (min-width: 1600px) {
-  .pf-prev { left: -78px; }
-  .pf-next { right: -78px; }
-  .pf-arrow {
-    background: transparent;
-    border-color: var(--cat);
-    color: var(--cat);
-    backdrop-filter: none;
-  }
-}
-
 /* ---------- Título e descrição ---------- */
 .pf-info {
   max-width: 660px;
-  margin: 30px auto 0;
+  margin: 28px auto 0;
   text-align: center;
 }
 .pf-info[hidden] { display: none; }
@@ -354,6 +357,7 @@ section { padding: 110px 5%; }
   color: var(--cat);
   transition: color 0.4s;
   margin-bottom: 8px;
+  line-height: 1.25;
 }
 .pf-info p {
   font-size: 15.5px;
@@ -361,7 +365,7 @@ section { padding: 110px 5%; }
   line-height: 1.6;
 }
 
-/* categoria ainda sem projetos: só uma linha de texto, sem caixa */
+/* categoria ainda sem projetos: uma linha de texto, sem caixa */
 .pf-empty {
   text-align: center;
   font-family: var(--label);
@@ -384,7 +388,7 @@ section { padding: 110px 5%; }
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 26px;
+  margin-top: 24px;
 }
 .swipe-dot {
   width: 9px;
@@ -399,12 +403,12 @@ section { padding: 110px 5%; }
 .swipe-dot.active { background: var(--cat); }
 
 @media (max-width: 640px) {
-  .pf-stage { width: 100%; }
-  .pf-media { border-radius: 4px; box-shadow: 0 14px 36px rgba(0,0,0,0.45); }
-  .pf-arrow { width: 46px; height: 46px; font-size: 17px; }
+  .portfolio { padding-left: 3%; padding-right: 3%; }
+  .pf-media { border-radius: 4px; }
+  .pf-arrow { width: 44px; height: 44px; font-size: 17px; }
   .pf-prev { left: 8px; }
   .pf-next { right: 8px; }
-  .pf-info { margin-top: 22px; }
+  .pf-info { margin-top: 20px; }
   .pf-info p { font-size: 14.5px; }
 }
 
@@ -435,10 +439,10 @@ section { padding: 110px 5%; }
 .about-photo {
   aspect-ratio: 4 / 5;
   background: linear-gradient(135deg, #241d18, #35281f);
-  border: 1px dashed rgba(241,236,228,0.25);
-  border-radius: 2px;
+  border-radius: 3px;
+  overflow: hidden;
 }
-.about-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; }
+.about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .about-text p { margin-top: 18px; font-size: 16.5px; opacity: 0.85; max-width: 640px; }
 .about-text p:first-of-type { margin-top: 26px; }
