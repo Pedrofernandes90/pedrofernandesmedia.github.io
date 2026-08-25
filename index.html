@@ -62,9 +62,11 @@
 </div>
 
 <!-- ===================================================== -->
-<!-- PORTEFÓLIO — carrossel único com swipe, cor muda por categoria -->
-<!-- Para adicionar um slide: copia um bloco <figure class="slide"> dentro
-     do .swipe-track da categoria certa e mete a tua imagem lá dentro. -->
+<!-- PORTEFÓLIO                                             -->
+<!-- A lista de projetos está no bloco <script> no fim       -->
+<!-- deste ficheiro (const PROJETOS). Para adicionar um      -->
+<!-- projeto novo, acrescenta uma linha lá — não é preciso   -->
+<!-- mexer neste HTML.                                       -->
 <!-- ===================================================== -->
 <section id="trabalhos" class="portfolio" data-active="lifestyle">
   <div class="section-head">
@@ -80,144 +82,19 @@
   </div>
 
   <div class="swiper">
-    <button class="swipe-arrow swipe-prev" aria-label="Anterior">←</button>
+    <button class="swipe-arrow swipe-prev" type="button" aria-label="Projeto anterior">←</button>
 
     <div class="swipe-viewport">
-
-      <!-- ======== LIFESTYLE & VIAGEM ======== -->
-      <!-- Para trocar os textos dos slides, edita as chaves "work.*" no i18n.js -->
-      <div class="swipe-track active" data-cat="lifestyle">
-
-        <!-- vimeo.com/1220962151 -->
-        <figure class="slide">
-          <div class="slide-media">
-            <div class="video-embed" data-vimeo="1220962151"></div>
-          </div>
-          <figcaption>
-            <h3 data-i18n="work.7.title">Lifestyle em movimento</h3>
-            <p data-i18n="work.7.desc">Um olhar sobre o dia a dia — pessoas, lugares e a luz certa no momento certo.</p>
-          </figcaption>
-        </figure>
-
-        <!-- vimeo.com/1220990241 -->
-        <figure class="slide">
-          <div class="slide-media">
-            <div class="video-embed" data-vimeo="1220990241"></div>
-          </div>
-          <figcaption>
-            <h3 data-i18n="work.8.title">Histórias do quotidiano</h3>
-            <p data-i18n="work.8.desc">Momentos simples filmados com atenção ao detalhe e ao ritmo.</p>
-          </figcaption>
-        </figure>
-
-        <!-- vimeo.com/1220990606 -->
-        <figure class="slide">
-          <div class="slide-media">
-            <div class="video-embed" data-vimeo="1220990606"></div>
-          </div>
-          <figcaption>
-            <h3 data-i18n="work.9.title">Marca em movimento</h3>
-            <p data-i18n="work.9.desc">Conteúdo pensado para redes sociais — dinâmico, curto e com identidade.</p>
-          </figcaption>
-        </figure>
-
-        <!-- vimeo.com/1220990861 — VIAGEM -->
-        <figure class="slide">
-          <div class="slide-media">
-            <div class="video-embed" data-vimeo="1220990861"></div>
-          </div>
-          <figcaption>
-            <h3 data-i18n="work.10.title">Diário de viagem</h3>
-            <p data-i18n="work.10.desc">Estradas, paisagens e o que acontece pelo caminho.</p>
-          </figcaption>
-        </figure>
-
-        <!-- vimeo.com/1220990729 -->
-        <figure class="slide">
-          <div class="slide-media">
-            <div class="video-embed" data-vimeo="1220990729"></div>
-          </div>
-          <figcaption>
-            <h3 data-i18n="work.11.title">Natureza e trilhos</h3>
-            <p data-i18n="work.11.desc">De mochila às costas, entre montanhas e caminhos por descobrir.</p>
-          </figcaption>
-        </figure>
-
-        <!-- FOTOGRAFIA -->
-        <figure class="slide">
-          <div class="slide-media"><img src="assets/lifestyle/foto1.jpg" alt=""></div>
-          <figcaption>
-            <h3 data-i18n="work.1.title">Vida em Trânsito</h3>
-            <p data-i18n="work.1.desc">Uma série sobre viver fora da mala: estradas, fronteiras e viagens.</p>
-          </figcaption>
-        </figure>
-
-      </div>
-
-      <!-- ======== CASAMENTOS ======== -->
-      <!-- Ainda sem vídeo. Quando tiveres, substitui o comentário abaixo por:
-           <div class="video-embed" data-vimeo="O_TEU_NUMERO"></div> -->
-      <div class="swipe-track" data-cat="casamentos">
-
-        <figure class="slide">
-          <div class="slide-media"><!-- <div class="video-embed" data-vimeo="O_TEU_NUMERO"></div> --></div>
-          <figcaption>
-            <h3 data-i18n="work.2.title">Sim, Aceito</h3>
-            <p data-i18n="work.2.desc">Um casamento ao ar livre contado pelos detalhes: as mãos, o silêncio antes do "sim", o primeiro abraço.</p>
-          </figcaption>
-        </figure>
-
-        <figure class="slide">
-          <div class="slide-media"><!-- <img src="assets/casamentos/foto2.jpg" alt=""> --></div>
-        </figure>
-
-      </div>
-
-      <!-- ======== DESPORTO ======== -->
-      <div class="swipe-track" data-cat="desporto">
-
-        <!-- vimeo.com/1220990765 -->
-        <figure class="slide">
-          <div class="slide-media">
-            <div class="video-embed" data-vimeo="1220990765"></div>
-          </div>
-          <figcaption>
-            <h3 data-i18n="work.3.title">Desporto</h3>
-            <p data-i18n="work.3.desc">Os segundos finais de uma luta de Jiu-Jitsu — tensão, suor e a explosão de uma finalização.</p>
-          </figcaption>
-        </figure>
-
-        <!-- Para acrescentar outro vídeo, copia o bloco acima e troca o número do Vimeo -->
-        <figure class="slide">
-          <div class="slide-media"><!-- <img src="assets/desporto/foto2.jpg" alt=""> --></div>
-        </figure>
-
-      </div>
-
-      <!-- ======== IMOBILIÁRIA ======== -->
-      <div class="swipe-track" data-cat="imobiliaria">
-
-        <!-- vimeo.com/1220990571 -->
-        <figure class="slide">
-          <div class="slide-media">
-            <div class="video-embed" data-vimeo="1220990571"></div>
-          </div>
-          <figcaption>
-            <h3 data-i18n="work.6.title">Espaços que Vendem</h3>
-            <p data-i18n="work.6.desc">Fotografia e vídeo de imóveis pensados para destacar luz, amplitude e detalhe: imagens que aceleram a venda.</p>
-          </figcaption>
-        </figure>
-
-        <!-- Para acrescentar outro vídeo, copia o bloco acima e troca o número do Vimeo -->
-        <figure class="slide">
-          <div class="slide-media"><!-- <img src="assets/imobiliaria/foto2.jpg" alt=""> --></div>
-        </figure>
-
-      </div>
-
+      <figure class="stage" id="pf-stage">
+        <div class="stage-media" id="pf-media"></div>
+        <figcaption class="stage-caption" id="pf-caption">
+          <h3 id="pf-title"></h3>
+          <p id="pf-desc"></p>
+        </figcaption>
+      </figure>
     </div>
 
-    <button class="swipe-arrow swipe-next" aria-label="Seguinte">→</button>
+    <button class="swipe-arrow swipe-next" type="button" aria-label="Projeto seguinte">→</button>
   </div>
 
   <div class="swipe-dots" role="tablist"></div>
@@ -569,104 +446,270 @@
 </script>
 
 <!-- ===================================================== -->
-<!-- VÍDEOS DO VIMEO NO CARROSSEL                           -->
+<!-- PORTEFÓLIO — motor de projetos                          -->
 <!--                                                        -->
-<!-- Para meter um vídeo num slide, mete isto dentro do      -->
-<!-- <div class="slide-media">:                              -->
+<!-- PARA ADICIONAR UM PROJETO: acrescenta uma linha ao      -->
+<!-- array PROJETOS abaixo. Nada mais precisa de ser mexido. -->
 <!--                                                        -->
-<!--   <div class="video-embed" data-vimeo="123456789"></div>-->
+<!--   {                                                     -->
+<!--     id: "algo-unico",                                   -->
+<!--     categoria: "lifestyle",   // lifestyle | casamentos -->
+<!--                               // | desporto | imobiliaria -->
+<!--     vimeo: "123456789",       // número do Vimeo        -->
+<!--     vertical: true,           // só se for Reel/TikTok   -->
+<!--     titulo:    { pt: "...", en: "..." },                 -->
+<!--     descricao: { pt: "...", en: "..." }                  -->
+<!--   }                                                     -->
 <!--                                                        -->
-<!-- O 123456789 é o número do teu vídeo no Vimeo (está no   -->
-<!-- fim do link: vimeo.com/123456789).                      -->
-<!--                                                        -->
-<!-- A miniatura é buscada automaticamente ao Vimeo. Se      -->
-<!-- quiseres usar uma foto tua como capa, acrescenta:       -->
-<!--   data-poster="assets/lifestyle/capa1.jpg"              -->
+<!-- Em vez de vimeo, podes usar foto: "assets/x/foto.jpg"   -->
 <!-- ===================================================== -->
 <script>
 (function () {
-  if (window.__videosLigados) return;
 
-  function criarFacade(caixa) {
-    var id = caixa.getAttribute('data-vimeo');
-    if (!id) return;
-
-    var poster = caixa.getAttribute('data-poster');
-
-    caixa.innerHTML = '';
-    caixa.classList.remove('is-playing');
-
-    var img = document.createElement('img');
-    img.className = 'video-thumb';
-    img.alt = '';
-    img.loading = 'lazy';
-    caixa.appendChild(img);
-
-    var botao = document.createElement('button');
-    botao.type = 'button';
-    botao.className = 'video-play';
-    botao.setAttribute('aria-label', 'Reproduzir vídeo');
-    caixa.appendChild(botao);
-
-    // Miniatura: usa a tua foto se indicaste uma, senão vai buscar ao Vimeo
-    if (poster) {
-      img.src = poster;
-    } else {
-      fetch('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + id + '&width=1280')
-        .then(function (r) { return r.json(); })
-        .then(function (d) { if (d && d.thumbnail_url) img.src = d.thumbnail_url; })
-        .catch(function () { caixa.classList.add('sem-thumb'); });
+  /* ================= PROJETOS ================= */
+  var PROJETOS = [
+    {
+      id: "lifestyle-1",
+      categoria: "lifestyle",
+      vimeo: "1220962151",
+      titulo:    { pt: "Lifestyle em movimento", en: "Lifestyle in motion" },
+      descricao: { pt: "Um olhar sobre o dia a dia — pessoas, lugares e a luz certa no momento certo.",
+                   en: "A look at everyday life — people, places, and the right light at the right moment." }
+    },
+    {
+      id: "lifestyle-2",
+      categoria: "lifestyle",
+      vimeo: "1220990241",
+      titulo:    { pt: "Histórias do quotidiano", en: "Everyday stories" },
+      descricao: { pt: "Momentos simples filmados com atenção ao detalhe e ao ritmo.",
+                   en: "Simple moments filmed with an eye for detail and rhythm." }
+    },
+    {
+      id: "lifestyle-3",
+      categoria: "lifestyle",
+      vimeo: "1220990606",
+      titulo:    { pt: "Marca em movimento", en: "Brands in motion" },
+      descricao: { pt: "Conteúdo pensado para redes sociais — dinâmico, curto e com identidade.",
+                   en: "Content built for social media — short, dynamic and full of character." }
+    },
+    {
+      id: "viagem-1",
+      categoria: "lifestyle",
+      vimeo: "1220990861",
+      titulo:    { pt: "Diário de viagem", en: "Travel diary" },
+      descricao: { pt: "Estradas, paisagens e o que acontece pelo caminho.",
+                   en: "Roads, landscapes, and whatever happens along the way." }
+    },
+    {
+      id: "lifestyle-4",
+      categoria: "lifestyle",
+      vimeo: "1220990729",
+      titulo:    { pt: "Natureza e trilhos", en: "Nature and trails" },
+      descricao: { pt: "De mochila às costas, entre montanhas e caminhos por descobrir.",
+                   en: "Backpack on, between mountains and paths waiting to be found." }
+    },
+    {
+      id: "desporto-1",
+      categoria: "desporto",
+      vimeo: "1220990765",
+      titulo:    { pt: "Desporto", en: "Sport" },
+      descricao: { pt: "Tensão, suor e a explosão do momento decisivo.",
+                   en: "Tension, sweat, and the explosion of the decisive moment." }
+    },
+    {
+      id: "imobiliaria-1",
+      categoria: "imobiliaria",
+      vimeo: "1220990571",
+      titulo:    { pt: "Espaços que Vendem", en: "Spaces that Sell" },
+      descricao: { pt: "Imóveis filmados para destacar luz, amplitude e detalhe: imagens que aceleram a venda.",
+                   en: "Property filmed to highlight light, space and detail: images that speed up the sale." }
     }
+    /* Casamentos ainda sem projetos — assim que tiveres o vídeo,
+       acrescenta aqui com categoria: "casamentos" */
+  ];
 
-    botao.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      pararTodos();
-      reproduzir(caixa, id);
-    });
-  }
+  var EM_BREVE = {
+    pt: "Novos trabalhos desta categoria em breve.",
+    en: "New work in this category coming soon."
+  };
 
-  function reproduzir(caixa, id) {
-    var iframe = document.createElement('iframe');
-    iframe.src = 'https://player.vimeo.com/video/' + id +
-                 '?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
-    iframe.setAttribute('frameborder', '0');
-    iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.className = 'video-iframe';
-
-    caixa.innerHTML = '';
-    caixa.appendChild(iframe);
-    caixa.classList.add('is-playing');
-  }
-
-  // Volta a pôr a miniatura em todos os vídeos (para nenhum ficar a tocar
-  // em segundo plano quando se muda de slide ou de categoria)
-  function pararTodos() {
-    var todos = document.querySelectorAll('.video-embed.is-playing');
-    for (var i = 0; i < todos.length; i++) criarFacade(todos[i]);
-  }
-
+  /* ================= MOTOR ================= */
   function iniciar() {
-    var caixas = document.querySelectorAll('.video-embed[data-vimeo]');
-    console.log('[Vídeos] Vídeos encontrados no carrossel:', caixas.length);
+    if (window.__portfolioLigado) return;
 
-    for (var i = 0; i < caixas.length; i++) criarFacade(caixas[i]);
+    var seccao = document.querySelector('.portfolio');
+    var media = document.getElementById('pf-media');
+    var stage = document.getElementById('pf-stage');
+    var caption = document.getElementById('pf-caption');
+    var tituloEl = document.getElementById('pf-title');
+    var descEl = document.getElementById('pf-desc');
+    var dotsBox = seccao ? seccao.querySelector('.swipe-dots') : null;
+    var prevBtn = seccao ? seccao.querySelector('.swipe-prev') : null;
+    var nextBtn = seccao ? seccao.querySelector('.swipe-next') : null;
+    var pills = seccao ? seccao.querySelectorAll('.cat-pill') : [];
+    var catLinks = seccao ? seccao.querySelectorAll('.cat-link') : [];
+    var viewport = seccao ? seccao.querySelector('.swipe-viewport') : null;
 
-    // Ao navegar no carrossel, para o vídeo que estiver a tocar
-    var controlos = document.querySelectorAll('.cat-pill, .swipe-arrow, .swipe-dot');
-    for (var j = 0; j < controlos.length; j++) {
-      controlos[j].addEventListener('click', pararTodos);
+    if (!seccao || !media || !tituloEl) {
+      console.error('[Portefólio] Estrutura em falta — confirma que o index.html está atualizado.');
+      return;
     }
 
-    var viewport = document.querySelector('.swipe-viewport');
+    var categoria = seccao.dataset.active || 'lifestyle';
+    var indice = 0;
+
+    function lingua() { return localStorage.getItem('site-lang') || 'pt'; }
+    function daCategoria() {
+      return PROJETOS.filter(function (p) { return p.categoria === categoria; });
+    }
+
+    /* ---------- Mostrar um projeto (vídeo + título + descrição juntos) ---------- */
+    function mostrar(i, animar) {
+      var lista = daCategoria();
+
+      media.innerHTML = '';
+      media.className = 'stage-media';
+
+      if (!lista.length) {
+        caption.hidden = true;
+        stage.classList.add('vazio');
+        media.classList.add('stage-vazio');
+        media.textContent = EM_BREVE[lingua()];
+        atualizarControlos(0);
+        return;
+      }
+
+      stage.classList.remove('vazio');
+      caption.hidden = false;
+
+      // navegação cíclica
+      var n = lista.length;
+      indice = ((i % n) + n) % n;
+      var p = lista[indice];
+
+      if (p.vimeo) {
+        if (p.vertical) media.classList.add('vertical');
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://player.vimeo.com/video/' + p.vimeo +
+                     '?title=0&byline=0&portrait=0&dnt=1';
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.title = p.titulo[lingua()] || p.titulo.pt;
+        media.appendChild(iframe);
+      } else if (p.foto) {
+        var img = document.createElement('img');
+        img.src = p.foto;
+        img.alt = p.titulo[lingua()] || p.titulo.pt;
+        media.appendChild(img);
+      }
+
+      // título e descrição mudam SEMPRE com o vídeo
+      tituloEl.textContent = p.titulo[lingua()] || p.titulo.pt;
+      descEl.textContent = p.descricao[lingua()] || p.descricao.pt;
+
+      if (animar) {
+        stage.classList.remove('entrar');
+        void stage.offsetWidth;      // reinicia a animação
+        stage.classList.add('entrar');
+      }
+
+      atualizarControlos(n);
+    }
+
+    function atualizarControlos(n) {
+      // com navegação cíclica as setas nunca ficam desativadas
+      if (prevBtn) prevBtn.disabled = n <= 1;
+      if (nextBtn) nextBtn.disabled = n <= 1;
+
+      if (!dotsBox) return;
+      dotsBox.innerHTML = '';
+      if (n <= 1) return;
+      for (var i = 0; i < n; i++) {
+        (function (k) {
+          var d = document.createElement('button');
+          d.type = 'button';
+          d.className = 'swipe-dot' + (k === indice ? ' active' : '');
+          d.setAttribute('aria-label', 'Projeto ' + (k + 1));
+          d.addEventListener('click', function () { mostrar(k, true); });
+          dotsBox.appendChild(d);
+        })(i);
+      }
+    }
+
+    /* ---------- Categorias ---------- */
+    function mudarCategoria(cat) {
+      categoria = cat;
+      seccao.dataset.active = cat;
+
+      for (var i = 0; i < pills.length; i++) {
+        var on = pills[i].dataset.cat === cat;
+        pills[i].classList.toggle('active', on);
+        pills[i].setAttribute('aria-selected', on ? 'true' : 'false');
+      }
+      for (var k = 0; k < catLinks.length; k++) {
+        catLinks[k].hidden = catLinks[k].dataset.cat !== cat;
+      }
+
+      mostrar(0, true);   // sempre o PRIMEIRO projeto da categoria
+    }
+
+    for (var i = 0; i < pills.length; i++) {
+      (function (p) {
+        p.addEventListener('click', function () { mudarCategoria(p.dataset.cat); });
+      })(pills[i]);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { mostrar(indice - 1, true); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { mostrar(indice + 1, true); });
+
+    /* ---------- Swipe no telemóvel ---------- */
+    var inicioX = null;
     if (viewport) {
-      viewport.addEventListener('touchend', function () {
-        setTimeout(pararTodos, 100);
-      });
+      viewport.addEventListener('touchstart', function (e) {
+        inicioX = e.touches[0].clientX;
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', function (e) {
+        if (inicioX === null) return;
+        var delta = e.changedTouches[0].clientX - inicioX;
+        if (Math.abs(delta) > 50) mostrar(indice + (delta < 0 ? 1 : -1), true);
+        inicioX = null;
+      }, { passive: true });
     }
 
-    window.__videosLigados = true;
+    /* ---------- Teclado ---------- */
+    seccao.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') mostrar(indice - 1, true);
+      if (e.key === 'ArrowRight') mostrar(indice + 1, true);
+    });
+
+    /* ---------- Trocar PT/EN ----------
+       Envolve a função applyLanguage do i18n.js para que qualquer
+       mudança de idioma volte a desenhar o projeto atual. É mais fiável
+       do que ouvir o clique no botão (não depende da ordem dos listeners). */
+    var ligado = false;
+    if (typeof window.applyLanguage === 'function') {
+      var original = window.applyLanguage;
+      window.applyLanguage = function () {
+        original.apply(this, arguments);
+        mostrar(indice, false);
+      };
+      ligado = true;
+    }
+
+    if (!ligado) {
+      var langBtn = document.getElementById('lang-toggle');
+      if (langBtn) {
+        langBtn.addEventListener('click', function () {
+          setTimeout(function () { mostrar(indice, false); }, 0);
+        });
+      }
+    }
+
+    mostrar(0, false);
+    window.__portfolioLigado = true;
+    console.log('[Portefólio] Pronto ✓ —', PROJETOS.length, 'projetos');
   }
 
   if (document.readyState === 'loading') {
