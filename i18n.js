@@ -21,7 +21,7 @@ const translations = {
 
     "hero.eyebrow": "Fotografia & Vídeo — Lifestyle · Viagem · Casamentos · Desporto",
     "hero.title": "Cada instante<br>tem <em>um único</em><br>fotograma.",
-    "hero.sub": "Sou o Pedro. Passo a vida entre estradas, cerimónias e bancadas — a apanhar o momento que não se repete.",
+    "hero.sub": "Conteúdo pensado para marcas, empresas e pessoas que querem destacar-se através da imagem.",
     "hero.cta": "Ver trabalhos ↓",
 
     "portfolio.title": "Portefólio",
@@ -174,7 +174,7 @@ const translations = {
 
     "hero.eyebrow": "Photography & Video — Lifestyle · Travel · Weddings · Sport",
     "hero.title": "Every moment<br>has <em>one single</em><br>frame.",
-    "hero.sub": "I'm Pedro. I split my life between open roads, ceremonies and stadium stands — catching the moment that won't happen twice.",
+    "hero.sub": "Content built for brands, businesses and people who want to stand out through image.",
     "hero.cta": "See the work ↓",
 
     "portfolio.title": "Portfolio",
