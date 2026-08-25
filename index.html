@@ -81,20 +81,18 @@
     <button class="cat-pill" data-cat="imobiliaria" role="tab" aria-selected="false" data-i18n="tab.imobiliaria">Imobiliária</button>
   </div>
 
-  <div class="swiper">
-    <button class="swipe-arrow swipe-prev" type="button" aria-label="Projeto anterior">←</button>
+  <!-- O vídeo é o elemento dominante. Sem moldura, sem caixa à volta. -->
+  <div class="pf-stage" id="pf-stage">
+    <button class="pf-arrow pf-prev" type="button" aria-label="Projeto anterior">←</button>
+    <div class="pf-media" id="pf-media"></div>
+    <button class="pf-arrow pf-next" type="button" aria-label="Projeto seguinte">→</button>
+  </div>
 
-    <div class="swipe-viewport">
-      <figure class="stage" id="pf-stage">
-        <div class="stage-media" id="pf-media"></div>
-        <figcaption class="stage-caption" id="pf-caption">
-          <h3 id="pf-title"></h3>
-          <p id="pf-desc"></p>
-        </figcaption>
-      </figure>
-    </div>
+  <p class="pf-empty" id="pf-empty" hidden></p>
 
-    <button class="swipe-arrow swipe-next" type="button" aria-label="Projeto seguinte">→</button>
+  <div class="pf-info" id="pf-info">
+    <h3 id="pf-title"></h3>
+    <p id="pf-desc"></p>
   </div>
 
   <div class="swipe-dots" role="tablist"></div>
@@ -540,15 +538,16 @@
     var seccao = document.querySelector('.portfolio');
     var media = document.getElementById('pf-media');
     var stage = document.getElementById('pf-stage');
-    var caption = document.getElementById('pf-caption');
+    var info = document.getElementById('pf-info');
+    var vazioEl = document.getElementById('pf-empty');
     var tituloEl = document.getElementById('pf-title');
     var descEl = document.getElementById('pf-desc');
     var dotsBox = seccao ? seccao.querySelector('.swipe-dots') : null;
-    var prevBtn = seccao ? seccao.querySelector('.swipe-prev') : null;
-    var nextBtn = seccao ? seccao.querySelector('.swipe-next') : null;
+    var prevBtn = seccao ? seccao.querySelector('.pf-prev') : null;
+    var nextBtn = seccao ? seccao.querySelector('.pf-next') : null;
     var pills = seccao ? seccao.querySelectorAll('.cat-pill') : [];
     var catLinks = seccao ? seccao.querySelectorAll('.cat-link') : [];
-    var viewport = seccao ? seccao.querySelector('.swipe-viewport') : null;
+    var viewport = stage;
 
     if (!seccao || !media || !tituloEl) {
       console.error('[Portefólio] Estrutura em falta — confirma que o index.html está atualizado.');
@@ -568,19 +567,22 @@
       var lista = daCategoria();
 
       media.innerHTML = '';
-      media.className = 'stage-media';
+      media.className = 'pf-media';
 
+      // Categoria sem projetos: escondemos por completo o palco e a legenda.
+      // Nada de caixas nem alturas reservadas — só uma linha de texto.
       if (!lista.length) {
-        caption.hidden = true;
-        stage.classList.add('vazio');
-        media.classList.add('stage-vazio');
-        media.textContent = EM_BREVE[lingua()];
+        stage.hidden = true;
+        info.hidden = true;
+        vazioEl.hidden = false;
+        vazioEl.textContent = EM_BREVE[lingua()];
         atualizarControlos(0);
         return;
       }
 
-      stage.classList.remove('vazio');
-      caption.hidden = false;
+      stage.hidden = false;
+      info.hidden = false;
+      vazioEl.hidden = true;
 
       // navegação cíclica
       var n = lista.length;
@@ -595,11 +597,13 @@
         iframe.setAttribute('frameborder', '0');
         iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
         iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('loading', 'lazy');
         iframe.title = p.titulo[lingua()] || p.titulo.pt;
         media.appendChild(iframe);
       } else if (p.foto) {
         var img = document.createElement('img');
         img.src = p.foto;
+        img.loading = 'lazy';
         img.alt = p.titulo[lingua()] || p.titulo.pt;
         media.appendChild(img);
       }
@@ -609,9 +613,11 @@
       descEl.textContent = p.descricao[lingua()] || p.descricao.pt;
 
       if (animar) {
-        stage.classList.remove('entrar');
-        void stage.offsetWidth;      // reinicia a animação
-        stage.classList.add('entrar');
+        media.classList.remove('pf-anim');
+        info.classList.remove('pf-anim');
+        void media.offsetWidth;      // reinicia a animação
+        media.classList.add('pf-anim');
+        info.classList.add('pf-anim');
       }
 
       atualizarControlos(n);
