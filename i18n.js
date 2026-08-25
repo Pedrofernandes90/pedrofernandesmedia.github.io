@@ -63,8 +63,8 @@ const translations = {
     "tab.imobiliaria": "Imobiliária",
 
     "about.title": "Sobre mim",
-    "about.p1": "Chamo-me Pedro da Silva Fernandes. Divido o meu trabalho entre quatro mundos que, no fundo, são só um: pessoas em momentos que não voltam a acontecer — numa estrada, num altar, num campo, ou numa manhã qualquer em casa.",
-    "about.p2": "Gosto de trabalhar sem guião. Prefiro esperar pelo instante certo a montá-lo, e é essa procura que me leva de viagens de mochila às costas a casamentos ao ar livre e a bancadas cheias de gente a gritar por um golo.",
+    "about.p1": "Chamo-me Pedro, sou videógrafo e trabalho com marcas, empresas e pessoas para transformar ideias em conteúdo visual.",
+    "about.p2": "Crio vídeos de produto e publicidade, desporto, casamentos, imobiliário e projetos personalizados, adaptando cada produção ao que o cliente realmente precisa.",
 
     /* ---------- PACOTES / PREÇOS ---------- */
     "pricing.title": "Pacotes & Preços",
@@ -213,8 +213,8 @@ const translations = {
     "tab.imobiliaria": "Real Estate",
 
     "about.title": "About me",
-    "about.p1": "My name is Pedro da Silva Fernandes. I split my work between four worlds that are really just one: people in moments that won't happen again — on a road, at an altar, on a field, or on an ordinary morning at home.",
-    "about.p2": "I like working without a script. I'd rather wait for the right moment than stage it, and that search is what takes me from backpacking trips to outdoor weddings to stands full of people screaming for a goal.",
+    "about.p1": "I'm Pedro, a videographer working with brands, businesses and people to turn ideas into visual content.",
+    "about.p2": "I create product and advertising videos, sports, weddings, real estate and bespoke projects, shaping each production around what the client actually needs.",
 
     /* ---------- PACKAGES / PRICING ---------- */
     "pricing.title": "Packages & Pricing",
