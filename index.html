@@ -330,6 +330,18 @@
   </div>
 </section>
 
+<!-- ===================================================== -->
+<!-- MARCAS — carrossel contínuo                             -->
+<!-- Para editar as marcas, procura MARCAS no bloco <script> -->
+<!-- no fim deste ficheiro.                                  -->
+<!-- ===================================================== -->
+<section class="marcas" id="marcas" hidden>
+  <p class="marcas-title" data-i18n="marcas.title">Marcas e projetos com quem já trabalhei</p>
+  <div class="marquee">
+    <ul class="marquee-track" id="marcas-track"></ul>
+  </div>
+</section>
+
 <footer class="footer">
   <p data-i18n="footer.text">© 2026 Pedro Fernandes. Feito fotograma a fotograma.</p>
 </footer>
@@ -807,6 +819,97 @@
 
     window.__orcamentoLigado = true;
     console.log('[Orçamento] Envio sem sair da página ligado ✓');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciar);
+  } else {
+    iniciar();
+  }
+})();
+</script>
+\n
+<!-- ===================================================== -->
+<!-- CARROSSEL DE MARCAS                                    -->
+<!--                                                        -->
+<!-- EDITA AQUI a lista de marcas. Duas formas:              -->
+<!--   "Nome da Marca"                       -> texto        -->
+<!--   { nome: "Marca", logo: "assets/marcas/x.png" } -> logótipo -->
+<!--                                                        -->
+<!-- Para logótipos: PNG com fundo transparente, ~200px de   -->
+<!-- altura, na pasta assets/marcas/ do repositório.         -->
+<!-- Com a lista vazia [], a secção desaparece do site.      -->
+<!-- ===================================================== -->
+<script>
+(function () {
+  var MARCAS = [
+    "Marca 1",
+    "Marca 2",
+    "Marca 3",
+    "Marca 4",
+    "Marca 5",
+    "Marca 6"
+  ];
+
+  var VELOCIDADE = 40; // píxeis por segundo (mais alto = mais rápido)
+
+  function iniciar() {
+    if (window.__marcasLigado) return;
+
+    var seccao = document.getElementById('marcas');
+    var track = document.getElementById('marcas-track');
+    if (!seccao || !track) return;
+
+    if (!MARCAS.length) { seccao.hidden = true; return; }
+    seccao.hidden = false;
+
+    function criarItem(m, escondido) {
+      var li = document.createElement('li');
+      if (escondido) li.setAttribute('aria-hidden', 'true');
+      if (typeof m === 'string') {
+        li.textContent = m;
+      } else {
+        var img = document.createElement('img');
+        img.src = m.logo;
+        img.alt = m.nome || '';
+        img.loading = 'lazy';
+        li.appendChild(img);
+      }
+      return li;
+    }
+
+    function montar() {
+      track.innerHTML = '';
+
+      // 1ª cópia visível
+      for (var i = 0; i < MARCAS.length; i++) track.appendChild(criarItem(MARCAS[i], false));
+
+      // repete até meia pista cobrir a largura do ecrã (loop sem buracos)
+      var protecao = 0;
+      while (track.scrollWidth < seccao.clientWidth * 1.2 && protecao < 6) {
+        for (var j = 0; j < MARCAS.length; j++) track.appendChild(criarItem(MARCAS[j], true));
+        protecao++;
+      }
+
+      // 2ª metade idêntica — é ela que torna o loop invisível
+      var metade = track.innerHTML;
+      track.innerHTML = metade + metade.replace(/<li(?![^>]*aria-hidden)/g, '<li aria-hidden="true"');
+
+      // duração proporcional ao comprimento -> velocidade constante
+      var dur = (track.scrollWidth / 2) / VELOCIDADE;
+      track.style.animationDuration = Math.max(10, dur) + 's';
+    }
+
+    montar();
+
+    var timer = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(timer);
+      timer = setTimeout(montar, 250);
+    });
+
+    window.__marcasLigado = true;
+    console.log('[Marcas] Carrossel ligado ✓ —', MARCAS.length, 'marcas');
   }
 
   if (document.readyState === 'loading') {
