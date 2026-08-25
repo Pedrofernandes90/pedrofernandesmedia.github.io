@@ -445,7 +445,20 @@ section { padding: 110px 5%; }
 .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .about-text p { margin-top: 18px; font-size: 16.5px; opacity: 0.85; max-width: 640px; }
-.about-text p:first-of-type { margin-top: 26px; }
+.about-text p:first-of-type { margin-top: 26px; font-size: 18.5px; opacity: 1; }
+
+/* frase de remate — funciona como assinatura */
+.about-text .about-closer {
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(18px, 2.1vw, 22px);
+  line-height: 1.4;
+  color: var(--flare);
+  opacity: 1;
+}
 
 /* =====================================================
    PACOTES / PREÇOS
