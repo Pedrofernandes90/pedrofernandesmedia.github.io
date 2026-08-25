@@ -81,11 +81,13 @@
     <button class="cat-pill" data-cat="imobiliaria" role="tab" aria-selected="false" data-i18n="tab.imobiliaria">Imobiliária</button>
   </div>
 
-  <!-- O vídeo é o elemento dominante. Sem moldura, sem caixa à volta. -->
-  <div class="pf-stage" id="pf-stage">
-    <button class="pf-arrow pf-prev" type="button" aria-label="Projeto anterior">←</button>
-    <div class="pf-media" id="pf-media"></div>
-    <button class="pf-arrow pf-next" type="button" aria-label="Projeto seguinte">→</button>
+  <!-- pf-stage centra | pf-frame tem EXATAMENTE o tamanho do vídeo -->
+  <div class="pf-stage">
+    <div class="pf-frame" id="pf-frame">
+      <div class="pf-media" id="pf-media"></div>
+      <button class="pf-arrow pf-prev" type="button" aria-label="Projeto anterior">←</button>
+      <button class="pf-arrow pf-next" type="button" aria-label="Projeto seguinte">→</button>
+    </div>
   </div>
 
   <p class="pf-empty" id="pf-empty" hidden></p>
@@ -110,7 +112,10 @@
 <!-- ===================================================== -->
 <section id="sobre" class="about">
   <div class="about-photo">
-    <img src="assets/pedro.webp" alt="Pedro Fernandes">
+    <!-- Tenta primeiro assets/pedro.webp; se não existir aí, tenta na raiz.
+         Assim funciona independentemente da pasta onde ficou o upload. -->
+    <img src="assets/pedro.webp" alt="Pedro Fernandes"
+         onerror="if(!this.dataset.alt){this.dataset.alt=1;this.src='pedro.webp';}">
   </div>
   <div class="about-text">
     <h2 class="section-title" data-i18n="about.title">Sobre mim</h2>
@@ -537,7 +542,7 @@
 
     var seccao = document.querySelector('.portfolio');
     var media = document.getElementById('pf-media');
-    var stage = document.getElementById('pf-stage');
+    var stage = document.getElementById('pf-frame');
     var info = document.getElementById('pf-info');
     var vazioEl = document.getElementById('pf-empty');
     var tituloEl = document.getElementById('pf-title');
@@ -568,6 +573,7 @@
 
       media.innerHTML = '';
       media.className = 'pf-media';
+      stage.className = 'pf-frame';
 
       // Categoria sem projetos: escondemos por completo o palco e a legenda.
       // Nada de caixas nem alturas reservadas — só uma linha de texto.
@@ -590,7 +596,10 @@
       var p = lista[indice];
 
       if (p.vimeo) {
-        if (p.vertical) media.classList.add('vertical');
+        if (p.vertical) {
+          media.classList.add('vertical');
+          stage.classList.add('vertical');
+        }
         var iframe = document.createElement('iframe');
         iframe.src = 'https://player.vimeo.com/video/' + p.vimeo +
                      '?title=0&byline=0&portrait=0&dnt=1';
