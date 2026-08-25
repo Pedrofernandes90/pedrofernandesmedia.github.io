@@ -511,10 +511,15 @@
   // por um desfoque gaussiano separável (horizontal + vertical, 2 iterações)
   // feito no GPU. O resultado aparece num plano preso à câmara, sempre a
   // preencher exatamente o enquadramento — atrás do modelo 3D, que fica nítido.
-  const DESFOQUE = 2.4;          // intensidade do desfoque (sobe/desce à vontade)
+  // O desfoque é feito em CASCATA: desfoca a meia resolução, reduz para um
+  // quarto, desfoca outra vez. As amostras ficam sempre coladas umas às outras
+  // (nunca saltam píxeis), por isso o resultado é sedoso — sem quadriculado.
+  const PASSAGENS_FINAS = 2;     // iterações extra a 1/4 (sobe = mais desfocado)
   const DIST_FUNDO = 16;
 
-  let rtCena = null, rtA = null, rtB = null;
+  let rtCena = null, rtA = null, rtB = null, rtC = null, rtD = null;
+  const texelMeio = new THREE.Vector2();
+  const texelQuarto = new THREE.Vector2();
 
   const blurScene = new THREE.Scene();
   const blurCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -547,13 +552,18 @@
 
   function criarRTs(w, h) {
     const opts = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat };
-    if (rtCena) { rtCena.dispose(); rtA.dispose(); rtB.dispose(); }
-    rtCena = new THREE.WebGLRenderTarget(w, h, opts);
+    [rtCena, rtA, rtB, rtC, rtD].forEach(rt => rt && rt.dispose());
+    const qw = Math.max(2, Math.floor(w / 2));
+    const qh = Math.max(2, Math.floor(h / 2));
+    rtCena = new THREE.WebGLRenderTarget(w, h, opts);   // meia resolução
     rtA = new THREE.WebGLRenderTarget(w, h, opts);
     rtB = new THREE.WebGLRenderTarget(w, h, opts);
-    blurMat.uniforms.texel.value.set(DESFOQUE / w, DESFOQUE / h);
+    rtC = new THREE.WebGLRenderTarget(qw, qh, opts);    // um quarto
+    rtD = new THREE.WebGLRenderTarget(qw, qh, opts);
+    texelMeio.set(1 / w, 1 / h);
+    texelQuarto.set(1 / qw, 1 / qh);
   }
-  criarRTs(534, 300);
+  criarRTs(800, 450);
 
   // plano de apresentação, preso à câmara — preenche sempre o enquadramento
   scene.add(cam);
@@ -574,9 +584,10 @@
   }
   ajustarPlanoFundo();
 
-  function passeBlur(texturaEntrada, alvo, dx, dy) {
+  function passeBlur(texturaEntrada, alvo, dx, dy, texel) {
     blurMat.uniforms.tDiffuse.value = texturaEntrada;
     blurMat.uniforms.direcao.value.set(dx, dy);
+    blurMat.uniforms.texel.value.copy(texel);
     renderer.setRenderTarget(alvo);
     renderer.render(blurScene, blurCam);
   }
@@ -586,11 +597,20 @@
       renderer.setRenderTarget(rtCena);
       renderer.clear();
       renderer.render(backdropScene, cam);
-      passeBlur(rtCena.texture, rtA, 1, 0);
-      passeBlur(rtA.texture, rtB, 0, 1);
-      passeBlur(rtB.texture, rtA, 1, 0);
-      passeBlur(rtA.texture, rtB, 0, 1);
-      fundoMat.map = rtB.texture;
+
+      // 1ª fase: desfoque a meia resolução (amostras sempre contíguas)
+      passeBlur(rtCena.texture, rtA, 1, 0, texelMeio);
+      passeBlur(rtA.texture, rtB, 0, 1, texelMeio);
+
+      // reduz para 1/4 (a redução com filtro linear já desfoca por si)
+      passeBlur(rtB.texture, rtC, 0, 0, texelQuarto);
+
+      // 2ª fase: iterações finas a 1/4 — é aqui que fica sedoso
+      for (let p = 0; p < PASSAGENS_FINAS; p++) {
+        passeBlur(rtC.texture, rtD, 1, 0, texelQuarto);
+        passeBlur(rtD.texture, rtC, 0, 1, texelQuarto);
+      }
+      fundoMat.map = rtC.texture;
     }
     renderer.setRenderTarget(null);
     renderer.render(scene, cam);
@@ -932,7 +952,7 @@
     renderer.setSize(rect.width, rect.height, false);
     cam.aspect = rect.width / Math.max(rect.height, 1);
     cam.updateProjectionMatrix();
-    criarRTs(Math.max(2, Math.floor(rect.width / 3)), Math.max(2, Math.floor(rect.height / 3)));
+    criarRTs(Math.max(2, Math.floor(rect.width / 2)), Math.max(2, Math.floor(rect.height / 2)));
     ajustarPlanoFundo();
     const mobile = rect.width < 700;
     placeObject(cameraGroup, mobile);
