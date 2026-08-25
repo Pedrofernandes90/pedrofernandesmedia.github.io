@@ -843,11 +843,11 @@
 <script>
 (function () {
   var MARCAS = [
-    "Livecomp",
-    "Huoli Pilates",
-    "Beauty Place",
-    "Portaberta",
-    "Sente"
+    { nome: "Livecomp",      logo: "livecomp.png" },
+    { nome: "Huoli Pilates", logo: "huoli-pilates.png" },
+    { nome: "Beauty Place",  logo: "beauty-place.png" },
+    { nome: "Portaberta",    logo: "portaberta.png" },
+    { nome: "Sente",         logo: "sente.png" }
   ];
 
   var VELOCIDADE = 40; // píxeis por segundo (mais alto = mais rápido)
@@ -872,6 +872,8 @@
         img.src = m.logo;
         img.alt = m.nome || '';
         img.loading = 'lazy';
+        // se o ficheiro do logo falhar, mostra o nome escrito em vez de partir
+        img.setAttribute('onerror', "this.closest('li').textContent = this.alt;");
         li.appendChild(img);
       }
       return li;
