@@ -157,6 +157,7 @@ const translations = {
     "quote.error": "Algo correu mal. Tenta novamente ou escreve para pedrosilvasp458@gmail.com.",
     "quote.notConfigured": "O formulário ainda não está ligado ao teu email — segue o COMO-EDITAR.md para o ativar.",
 
+    "marcas.title": "Marcas e projetos com quem já trabalhei",
     "contact.title": "Vamos falar",
     "contact.sub": "Tens um projeto em mente? Conta-me a tua ideia.",
 
@@ -307,6 +308,7 @@ const translations = {
     "quote.error": "Something went wrong. Please try again or email pedrosilvasp458@gmail.com.",
     "quote.notConfigured": "The form isn't connected to your email yet — follow COMO-EDITAR.md to activate it.",
 
+    "marcas.title": "Brands and projects I've worked with",
     "contact.title": "Let's talk",
     "contact.sub": "Have a project in mind? Tell me your idea.",
 
