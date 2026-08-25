@@ -489,12 +489,12 @@
                    en: "A look at everyday life — people, places, and the right light at the right moment." }
     },
     {
-      id: "lifestyle-2",
+      id: "lifestyle-novo-1",
       categoria: "lifestyle",
-      vimeo: "1220990241",
-      titulo:    { pt: "Histórias do quotidiano", en: "Everyday stories" },
-      descricao: { pt: "Momentos simples filmados com atenção ao detalhe e ao ritmo.",
-                   en: "Simple moments filmed with an eye for detail and rhythm." }
+      vimeo: "1221192945",
+      titulo:    { pt: "Momentos com identidade", en: "Moments with character" },
+      descricao: { pt: "Conteúdo lifestyle criado para destacar pessoas e marcas.",
+                   en: "Lifestyle content made to put people and brands in the spotlight." }
     },
     {
       id: "lifestyle-3",
@@ -513,12 +513,12 @@
                    en: "Roads, landscapes, and whatever happens along the way." }
     },
     {
-      id: "lifestyle-4",
+      id: "lifestyle-novo-2",
       categoria: "lifestyle",
-      vimeo: "1220990729",
-      titulo:    { pt: "Natureza e trilhos", en: "Nature and trails" },
-      descricao: { pt: "De mochila às costas, entre montanhas e caminhos por descobrir.",
-                   en: "Backpack on, between mountains and paths waiting to be found." }
+      vimeo: "1220990660",
+      titulo:    { pt: "Do conceito à imagem", en: "From concept to image" },
+      descricao: { pt: "Pequenas histórias visuais, filmadas com intenção.",
+                   en: "Small visual stories, filmed with intent." }
     },
     {
       id: "desporto-1",
@@ -527,6 +527,14 @@
       titulo:    { pt: "Desporto", en: "Sport" },
       descricao: { pt: "Tensão, suor e a explosão do momento decisivo.",
                    en: "Tension, sweat, and the explosion of the decisive moment." }
+    },
+    {
+      id: "desporto-novo-1",
+      categoria: "desporto",
+      vimeo: "1221191708",
+      titulo:    { pt: "Intensidade em jogo", en: "Intensity in play" },
+      descricao: { pt: "A energia do desporto captada de perto.",
+                   en: "The energy of sport, captured up close." }
     },
     {
       id: "imobiliaria-1",
@@ -744,5 +752,69 @@
 })();
 </script>
 
-</body>
+
+<!-- ===================================================== -->
+<!-- ENVIO DO FORMULÁRIO DE ORÇAMENTO (Formspree, sem sair   -->
+<!-- da página). A mensagem de sucesso/erro aparece por      -->
+<!-- baixo do botão, em PT ou EN conforme o idioma ativo.    -->
+<!-- ===================================================== -->
+<script>
+(function () {
+  function iniciar() {
+    if (window.__orcamentoLigado) return;
+
+    var form = document.getElementById('quote-form');
+    var status = document.getElementById('quote-status');
+    var botao = form ? form.querySelector('.quote-submit') : null;
+    if (!form || !status || !botao) return;
+
+    function texto(chave) {
+      var lang = localStorage.getItem('site-lang') || 'pt';
+      try { return translations[lang][chave] || translations.pt[chave] || ''; }
+      catch (e) { return ''; }
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      status.textContent = texto('quote.sending');
+      status.className = 'quote-status';
+      botao.disabled = true;
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function (resp) {
+        if (resp.ok) {
+          status.textContent = texto('quote.success');
+          status.className = 'quote-status ok';
+          form.reset();
+        } else {
+          status.textContent = texto('quote.error');
+          status.className = 'quote-status erro';
+        }
+      })
+      .catch(function () {
+        status.textContent = texto('quote.error');
+        status.className = 'quote-status erro';
+      })
+      .then(function () {
+        botao.disabled = false;
+      });
+    });
+
+    window.__orcamentoLigado = true;
+    console.log('[Orçamento] Envio sem sair da página ligado ✓');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciar);
+  } else {
+    iniciar();
+  }
+})();
+</script>
+\n</body>
 </html>
