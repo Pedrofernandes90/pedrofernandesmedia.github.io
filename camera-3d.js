@@ -18,8 +18,13 @@
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;   // sombras de contornos suaves
 
   const scene = new THREE.Scene();
+  // nevoeiro: começa depois da câmara-modelo (que fica nítida) e adensa no
+  // cenário — dá profundidade atmosférica real, como ar de estúdio com pó
+  scene.fog = new THREE.Fog(0x0a0807, 10, 27);
   const cam = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
   cam.position.set(0.4, 0.35, 7.2);
   cam.lookAt(0, 0, 0);
@@ -201,125 +206,395 @@
     tex.needsUpdate = true;
     return tex;
   }
-  scene.environment = studioEnvironment();
+  const ambienteEstudio = studioEnvironment();
+  scene.environment = ambienteEstudio;
 
-  // ---------- CENÁRIO DE FUNDO (estúdio desfocado visível) ----------
-  function studioBackdropTexture() {
-    const W = 1600, H = 900;
-    const [c, ctx] = makeCanvas(W, H);
+  // ---------- CENÁRIO DE ESTÚDIO EM 3D ----------
+  // O cenário vive numa CENA PRÓPRIA: é renderizado à parte, desfocado
+  // no GPU (gaussiano em duas passagens) e só depois apresentado atrás
+  // da câmara — que fica perfeitamente nítida. Profundidade de campo real.
+  // Construído com geometria real (não é uma imagem pintada), por isso tem
+  // perspetiva verdadeira, profundidade e arestas suaves — o WebGL trata do
+  // antialiasing. Equipamento em silhueta contra softboxes acesas, com feixes
+  // de luz volumétrica e neblina, como num set real.
+  const backdropScene = new THREE.Scene();
+  backdropScene.fog = new THREE.Fog(0x0a0807, 10, 27);
+  backdropScene.environment = ambienteEstudio;
 
-    const wall = ctx.createRadialGradient(W * 0.45, H * 0.35, 80, W * 0.5, H * 0.5, W * 0.75);
-    wall.addColorStop(0, '#332b24');
-    wall.addColorStop(0.55, '#1c1713');
-    wall.addColorStop(1, '#0c0a08');
-    ctx.fillStyle = wall;
-    ctx.fillRect(0, 0, W, H);
+  const backdropGroup = new THREE.Group();
+  backdropScene.add(backdropGroup);
 
-    const floor = ctx.createLinearGradient(0, H * 0.72, 0, H);
-    floor.addColorStop(0, '#241e18');
-    floor.addColorStop(1, '#0e0b09');
-    ctx.fillStyle = floor;
-    ctx.fillRect(0, H * 0.72, W, H * 0.28);
-    ctx.strokeStyle = 'rgba(241,236,228,0.06)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(0, H * 0.72);
-    ctx.lineTo(W, H * 0.72);
-    ctx.stroke();
-
-    function softboxLight(x, y, w, h, tilt) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(tilt);
-      const halo = ctx.createRadialGradient(0, 0, 10, 0, 0, w * 1.8);
-      halo.addColorStop(0, 'rgba(255,248,235,0.55)');
-      halo.addColorStop(1, 'rgba(255,248,235,0)');
-      ctx.fillStyle = halo;
-      ctx.fillRect(-w * 2, -h * 2, w * 4, h * 4);
-      ctx.fillStyle = 'rgba(255,250,240,0.95)';
-      ctx.fillRect(-w / 2, -h / 2, w, h);
-      ctx.strokeStyle = '#0d0b0a';
-      ctx.lineWidth = 6;
-      ctx.strokeRect(-w / 2, -h / 2, w, h);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = 'rgba(13,11,10,0.35)';
-      ctx.beginPath();
-      ctx.moveTo(0, -h / 2); ctx.lineTo(0, h / 2);
-      ctx.moveTo(-w / 2, 0); ctx.lineTo(w / 2, 0);
-      ctx.stroke();
-      ctx.restore();
-      ctx.strokeStyle = '#171310';
-      ctx.lineWidth = 7;
-      ctx.beginPath();
-      ctx.moveTo(x, y + h / 2);
-      ctx.lineTo(x, H * 0.86);
-      ctx.stroke();
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.moveTo(x, H * 0.86); ctx.lineTo(x - 48, H * 0.93);
-      ctx.moveTo(x, H * 0.86); ctx.lineTo(x + 48, H * 0.93);
-      ctx.moveTo(x, H * 0.86); ctx.lineTo(x, H * 0.94);
-      ctx.stroke();
-    }
-
-    softboxLight(W * 0.16, H * 0.3, 150, 200, -0.12);
-    softboxLight(W * 0.86, H * 0.26, 130, 180, 0.14);
-
-    function tripod(x, baseY, height) {
-      ctx.strokeStyle = '#141110';
-      ctx.fillStyle = '#141110';
-      ctx.lineWidth = 9;
-      const headY = baseY - height;
-      ctx.beginPath();
-      ctx.moveTo(x, headY); ctx.lineTo(x - height * 0.34, baseY);
-      ctx.moveTo(x, headY); ctx.lineTo(x + height * 0.34, baseY);
-      ctx.moveTo(x, headY); ctx.lineTo(x + height * 0.05, baseY);
-      ctx.stroke();
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(x - height * 0.17, baseY - height * 0.45);
-      ctx.lineTo(x + height * 0.19, baseY - height * 0.45);
-      ctx.stroke();
-      ctx.fillRect(x - 26, headY - 26, 52, 30);
-      ctx.fillRect(x - 10, headY - 44, 20, 20);
-    }
-    tripod(W * 0.62, H * 0.84, 340);
-
-    for (let i = 0; i < 26; i++) {
-      const bx = Math.random() * W;
-      const by = Math.random() * H * 0.6;
-      const r = 6 + Math.random() * 16;
-      const warm = Math.random() > 0.6;
-      const g = ctx.createRadialGradient(bx, by, 1, bx, by, r);
-      g.addColorStop(0, warm ? 'rgba(232,150,80,0.5)' : 'rgba(255,250,240,0.4)');
-      g.addColorStop(1, 'rgba(255,250,240,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(bx, by, r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    const [small, sctx] = makeCanvas(200, 113);
-    sctx.drawImage(c, 0, 0, 200, 113);
-    const [small2, s2ctx] = makeCanvas(100, 56);
-    s2ctx.drawImage(small, 0, 0, 100, 56);
-    ctx.clearRect(0, 0, W, H);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(small2, 0, 0, W, H);
-
-    return new THREE.CanvasTexture(c);
+  // materiais e luzes do cenário guardados aqui para se esbaterem com o scroll
+  const backdropMats = [];
+  const backdropLuzes = [];
+  function registar(mat, opacidadeBase) {
+    mat.transparent = true;
+    mat.userData.baseOpacity = opacidadeBase;
+    mat.opacity = opacidadeBase;
+    backdropMats.push(mat);
+    return mat;
+  }
+  function registarLuz(luz) {
+    luz.userData.baseIntensity = luz.intensity;
+    backdropLuzes.push(luz);
+    return luz;
   }
 
-  const backdropMat = new THREE.MeshBasicMaterial({
-    map: studioBackdropTexture(),
-    transparent: true,
-    opacity: 1,
+  // ---- gradientes suaves usados como textura ----
+  function gradienteVertical(paradas) {
+    const [c, ctx] = makeCanvas(4, 256);
+    const g = ctx.createLinearGradient(0, 0, 0, 256);
+    paradas.forEach(p => g.addColorStop(p[0], p[1]));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 4, 256);
+    const t = new THREE.CanvasTexture(c);
+    t.minFilter = t.magFilter = THREE.LinearFilter;
+    t.generateMipmaps = false;
+    return t;
+  }
+
+  function manchaRadial(cor) {
+    const S = 256;
+    const [c, ctx] = makeCanvas(S, S);
+    const g = ctx.createRadialGradient(S/2, S/2, 0, S/2, S/2, S/2);
+    g.addColorStop(0,    `rgba(${cor},1)`);
+    g.addColorStop(0.35, `rgba(${cor},0.45)`);
+    g.addColorStop(1,    `rgba(${cor},0)`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, S, S);
+    const t = new THREE.CanvasTexture(c);
+    t.minFilter = t.magFilter = THREE.LinearFilter;
+    t.generateMipmaps = false;
+    return t;
+  }
+
+  // ---- 1. FUNDO: parede de estúdio (ciclorama) ----
+  // Material que REAGE à luz: o degradê na parede passa a ser produzido
+  // pelas próprias softboxes, com decaimento físico real — não pintado.
+  const parede = new THREE.Mesh(
+    new THREE.PlaneGeometry(52, 26),
+    registar(new THREE.MeshStandardMaterial({
+      color: 0x191410,
+      roughness: 0.94,
+      metalness: 0.0
+    }), 1)
+  );
+  parede.position.set(0, 1, -16);
+  parede.receiveShadow = true;
+  backdropGroup.add(parede);
+
+  // ---- 2. CHÃO ----
+  // Ligeiro brilho: apanha o reflexo difuso das softboxes e do ambiente
+  const chao = new THREE.Mesh(
+    new THREE.PlaneGeometry(52, 20),
+    registar(new THREE.MeshStandardMaterial({
+      color: 0x14100d,
+      roughness: 0.38,
+      metalness: 0.22,
+      envMapIntensity: 0.55
+    }), 1)
+  );
+  chao.rotation.x = -Math.PI / 2;
+  chao.position.set(0, -6, -8);
+  chao.receiveShadow = true;
+  backdropGroup.add(chao);
+
+  // ---- utilitário: tubo entre dois pontos (para pernas e mastros) ----
+  // Alumínio escuro: apanha realces das luzes, o que dá volume real aos tubos
+  const matTubo = registar(new THREE.MeshStandardMaterial({
+    color: 0x1c1a18,
+    metalness: 0.72,
+    roughness: 0.42,
+    envMapIntensity: 0.6
+  }), 1);
+
+  function tubo(x1, y1, z1, x2, y2, z2, raio) {
+    const a = new THREE.Vector3(x1, y1, z1);
+    const b = new THREE.Vector3(x2, y2, z2);
+    const dir = new THREE.Vector3().subVectors(b, a);
+    const comp = dir.length();
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(raio * 0.8, raio, comp, 18), matTubo);
+    m.position.copy(a).addScaledVector(dir, 0.5);
+    m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.clone().normalize());
+    m.castShadow = true;
+    return m;
+  }
+
+  // ---- 3. SOFTBOX (painel aceso + tripé de luz + feixe volumétrico) ----
+  const texFeixe = gradienteVertical([
+    [0,   'rgba(255,244,226,0.55)'],
+    [0.4, 'rgba(255,240,220,0.16)'],
+    [1,   'rgba(255,238,215,0)']
+  ]);
+
+  function softbox(x, y, z, largura, altura, inclinacao, corPainel, forca) {
+    const g = new THREE.Group();
+
+    // moldura escura
+    const moldura = new THREE.Mesh(
+      new THREE.BoxGeometry(largura + 0.18, altura + 0.18, 0.14),
+      matTubo
+    );
+    moldura.castShadow = true;
+    g.add(moldura);
+
+    // painel difusor aceso
+    const painel = new THREE.Mesh(
+      new THREE.PlaneGeometry(largura, altura),
+      registar(new THREE.MeshBasicMaterial({ color: corPainel, depthWrite: false, fog: false }), 0.92)
+    );
+    painel.position.z = 0.09;
+    g.add(painel);
+
+    // LUZ REAL: é isto que ilumina a parede, o chão e os tripés,
+    // criando o decaimento e os realces que se veem num estúdio a sério
+    const luz = registarLuz(new THREE.PointLight(corPainel, 1.7 * forca, 32, 2));
+    luz.position.set(0, 0, 1.4);
+    g.add(luz);
+
+    // halo à volta do painel
+    const halo = new THREE.Mesh(
+      new THREE.PlaneGeometry(largura * 3.4, altura * 2.8),
+      registar(new THREE.MeshBasicMaterial({
+        map: manchaRadial('255,240,218'),
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        fog: false
+      }), 0.42 * forca)
+    );
+    halo.position.z = 0.2;
+    g.add(halo);
+
+    // feixe volumétrico — cone aberto, aditivo, a abrir na direção da câmara
+    const feixe = new THREE.Mesh(
+      new THREE.ConeGeometry(largura * 2.6, 13, 22, 1, true),
+      registar(new THREE.MeshBasicMaterial({
+        map: texFeixe,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        fog: false
+      }), 0.20 * forca)
+    );
+    feixe.rotation.x = -Math.PI / 2;   // aponta para a frente (+z)
+    feixe.position.z = 6.4;
+    g.add(feixe);
+
+    // mastro e pernas do tripé de luz
+    const baseY = -6 - y;
+    g.add(tubo(0, -altura / 2, 0, 0, baseY + 1.6, 0, 0.075));
+    for (let i = 0; i < 3; i++) {
+      const a = (i / 3) * Math.PI * 2 + 0.5;
+      g.add(tubo(0, baseY + 1.6, 0, Math.cos(a) * 1.5, baseY, Math.sin(a) * 1.5, 0.055));
+    }
+
+    g.position.set(x, y, z);
+    g.rotation.y = inclinacao;
+    backdropGroup.add(g);
+    return g;
+  }
+
+  const keySoftbox  = softbox(-8.8,  2.6, -13.5, 3.0, 4.2,  0.42, 0xfff3e0, 1.0);
+  const fillSoftbox = softbox( 8.4,  3.4, -13.8, 2.4, 3.4, -0.46, 0xffe9d2, 0.75);
+
+  // SOMBRAS: a softbox principal projeta sombra suave dos tripés
+  // no chão e na parede — é o detalhe que mais "cola" o cenário
+  const spotSombra = registarLuz(new THREE.SpotLight(0xffe8cd, 1.35, 46, 0.62, 0.65, 1.7));
+  spotSombra.position.set(-8.2, 3.4, -12.6);
+  spotSombra.target.position.set(3.0, -6, -10);
+  spotSombra.castShadow = true;
+  spotSombra.shadow.mapSize.set(1024, 1024);
+  spotSombra.shadow.camera.near = 2;
+  spotSombra.shadow.camera.far = 46;
+  spotSombra.shadow.bias = -0.0006;
+  spotSombra.shadow.radius = 5;   // amacia o contorno da sombra
+  backdropGroup.add(spotSombra);
+  backdropGroup.add(spotSombra.target);
+
+  // luz de contraste com o laranja da marca, atrás à direita —
+  // agora é uma LUZ real, que tinge a parede e recorta os tripés
+  const rimLuz = registarLuz(new THREE.PointLight(0xe85a32, 1.5, 26, 2));
+  rimLuz.position.set(7.5, 0.5, -14.6);
+  backdropGroup.add(rimLuz);
+
+  const rimPanel = new THREE.Mesh(
+    new THREE.PlaneGeometry(9, 7),
+    registar(new THREE.MeshBasicMaterial({
+      map: manchaRadial('232,90,50'),
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      fog: false
+    }), 0.34)
+  );
+  rimPanel.position.set(7.5, 0.5, -15.4);
+  backdropGroup.add(rimPanel);
+
+  // ---- 4. TRIPÉ DE CÂMARA (geometria real, arestas suaves) ----
+  function tripeCamara(x, z, altura, escala) {
+    const g = new THREE.Group();
+    const topoY = altura;
+    const baseY = -6;
+    const abertura = 1.9 * escala;
+
+    // três pernas, abertas em 120°
+    for (let i = 0; i < 3; i++) {
+      const a = (i / 3) * Math.PI * 2 + Math.PI / 6;
+      const px = Math.cos(a) * abertura;
+      const pz = Math.sin(a) * abertura;
+      g.add(tubo(0, topoY - 0.35, 0, px, baseY, pz, 0.085 * escala));
+      // travessa de reforço a meio
+      const a2 = ((i + 1) % 3 / 3) * Math.PI * 2 + Math.PI / 6;
+      g.add(tubo(
+        px * 0.55, baseY + (topoY - baseY) * 0.42, pz * 0.55,
+        Math.cos(a2) * abertura * 0.55, baseY + (topoY - baseY) * 0.42, Math.sin(a2) * abertura * 0.55,
+        0.04 * escala
+      ));
+    }
+
+    // coluna central
+    g.add(tubo(0, topoY - 0.5, 0, 0, topoY + 0.55, 0, 0.075 * escala));
+
+    // cabeça fluida
+    const cabeca = new THREE.Mesh(
+      new THREE.BoxGeometry(0.75 * escala, 0.34 * escala, 0.62 * escala),
+      matTubo
+    );
+    cabeca.castShadow = true;
+    cabeca.position.y = topoY + 0.72;
+    g.add(cabeca);
+
+    // placa de encaixe
+    const placa = new THREE.Mesh(
+      new THREE.BoxGeometry(0.95 * escala, 0.1 * escala, 0.75 * escala),
+      matTubo
+    );
+    placa.castShadow = true;
+    placa.position.y = topoY + 0.94;
+    g.add(placa);
+
+    // braço de pan
+    g.add(tubo(0.3 * escala, topoY + 0.66, 0, 1.5 * escala, topoY - 0.15, 0.5 * escala, 0.045 * escala));
+
+    g.position.set(x, 0, z);
+    backdropGroup.add(g);
+    return g;
+  }
+
+  tripeCamara(5.9, -12.6, -0.9, 0.92);
+  tripeCamara(-5.8, -14.6, -1.5, 0.72);   // segundo tripé, mais atrás e menor
+
+  // ---- 5. NEBLINA DE AMBIENTE (volumetria) ----
+  const neblinas = [];
+  for (let i = 0; i < 5; i++) {
+    const n = new THREE.Mesh(
+      new THREE.PlaneGeometry(26, 15),
+      registar(new THREE.MeshBasicMaterial({
+        map: manchaRadial(i % 2 ? '255,232,205' : '210,150,110'),
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        fog: false
+      }), 0.07 + Math.random() * 0.05)
+    );
+    n.position.set(
+      -10 + Math.random() * 20,
+      -2 + Math.random() * 6,
+      -14 + i * 1.4
+    );
+    n.userData.driftX = n.position.x;
+    n.userData.fase = Math.random() * Math.PI * 2;
+    backdropGroup.add(n);
+    neblinas.push(n);
+  }
+
+  // ---------- DESFOQUE DO CENÁRIO (profundidade de campo) ----------
+  // O estúdio é renderizado para uma textura a 1/3 da resolução e passa
+  // por um desfoque gaussiano separável (horizontal + vertical, 2 iterações)
+  // feito no GPU. O resultado aparece num plano preso à câmara, sempre a
+  // preencher exatamente o enquadramento — atrás do modelo 3D, que fica nítido.
+  const DESFOQUE = 2.4;          // intensidade do desfoque (sobe/desce à vontade)
+  const DIST_FUNDO = 16;
+
+  let rtCena = null, rtA = null, rtB = null;
+
+  const blurScene = new THREE.Scene();
+  const blurCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const blurMat = new THREE.ShaderMaterial({
+    uniforms: {
+      tDiffuse: { value: null },
+      direcao: { value: new THREE.Vector2(1, 0) },
+      texel: { value: new THREE.Vector2(1 / 512, 1 / 288) }
+    },
+    vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    fragmentShader: [
+      'uniform sampler2D tDiffuse;',
+      'uniform vec2 direcao;',
+      'uniform vec2 texel;',
+      'varying vec2 vUv;',
+      'void main(){',
+      '  vec2 off = direcao * texel;',
+      '  vec4 c = texture2D(tDiffuse, vUv) * 0.227027;',
+      '  c += texture2D(tDiffuse, vUv + off * 1.3846) * 0.316216;',
+      '  c += texture2D(tDiffuse, vUv - off * 1.3846) * 0.316216;',
+      '  c += texture2D(tDiffuse, vUv + off * 3.2308) * 0.070270;',
+      '  c += texture2D(tDiffuse, vUv - off * 3.2308) * 0.070270;',
+      '  gl_FragColor = c;',
+      '}'
+    ].join('\n'),
+    depthTest: false,
     depthWrite: false
   });
-  const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(34, 19), backdropMat);
-  backdrop.position.set(0, 0.5, -9);
-  scene.add(backdrop);
+  blurScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), blurMat));
+
+  function criarRTs(w, h) {
+    const opts = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat };
+    if (rtCena) { rtCena.dispose(); rtA.dispose(); rtB.dispose(); }
+    rtCena = new THREE.WebGLRenderTarget(w, h, opts);
+    rtA = new THREE.WebGLRenderTarget(w, h, opts);
+    rtB = new THREE.WebGLRenderTarget(w, h, opts);
+    blurMat.uniforms.texel.value.set(DESFOQUE / w, DESFOQUE / h);
+  }
+  criarRTs(534, 300);
+
+  // plano de apresentação, preso à câmara — preenche sempre o enquadramento
+  scene.add(cam);
+  const fundoMat = new THREE.MeshBasicMaterial({
+    map: null,
+    color: 0xb2a99f,          // escurece ~30%: o desfoque espalha o brilho, isto repõe o mood
+    transparent: true,
+    depthWrite: false,
+    fog: false
+  });
+  const fundoPlano = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), fundoMat);
+  fundoPlano.position.set(0, 0, -DIST_FUNDO);
+  cam.add(fundoPlano);
+
+  function ajustarPlanoFundo() {
+    const h = 2 * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)) * DIST_FUNDO;
+    fundoPlano.scale.set(h * cam.aspect * 1.02, h * 1.02, 1);
+  }
+  ajustarPlanoFundo();
+
+  function passeBlur(texturaEntrada, alvo, dx, dy) {
+    blurMat.uniforms.tDiffuse.value = texturaEntrada;
+    blurMat.uniforms.direcao.value.set(dx, dy);
+    renderer.setRenderTarget(alvo);
+    renderer.render(blurScene, blurCam);
+  }
+
+  function desenhar() {
+    if (fundoMat.opacity > 0.02) {
+      renderer.setRenderTarget(rtCena);
+      renderer.clear();
+      renderer.render(backdropScene, cam);
+      passeBlur(rtCena.texture, rtA, 1, 0);
+      passeBlur(rtA.texture, rtB, 0, 1);
+      passeBlur(rtB.texture, rtA, 1, 0);
+      passeBlur(rtA.texture, rtB, 0, 1);
+      fundoMat.map = rtB.texture;
+    }
+    renderer.setRenderTarget(null);
+    renderer.render(scene, cam);
+  }
   // ---------- FOTO REAL DA CÂMARA (modo foto-realista) ----------
   let photoTiles = null;
 
@@ -657,6 +932,8 @@
     renderer.setSize(rect.width, rect.height, false);
     cam.aspect = rect.width / Math.max(rect.height, 1);
     cam.updateProjectionMatrix();
+    criarRTs(Math.max(2, Math.floor(rect.width / 3)), Math.max(2, Math.floor(rect.height / 3)));
+    ajustarPlanoFundo();
     const mobile = rect.width < 700;
     placeObject(cameraGroup, mobile);
     if (photoTiles) placeObject(photoTiles.group, mobile);
@@ -706,20 +983,30 @@
       }
     }
 
-    // fundo de estúdio: esbate enquanto desmontada, volta ao normal no fim
-    backdropMat.opacity = 1 - f * 0.8;
-    backdrop.position.x = -Math.sin(Date.now() * 0.00018) * 0.35;
+    // fundo: esbate enquanto a câmara está desmontada, volta ao normal no fim
+    // cenário de estúdio: esbate-se enquanto a câmara está desmontada
+    // (basta esbater o plano de apresentação — o cenário inteiro vai com ele)
+    fundoMat.opacity = 1 - f * 0.85;
+
+    // ligeiro movimento de paralaxe + neblina a derivar (dá vida ao ambiente)
+    const t = Date.now();
+    backdropGroup.position.x = -Math.sin(t * 0.00018) * 0.35;
+    for (let i = 0; i < neblinas.length; i++) {
+      const n = neblinas[i];
+      n.position.x = n.userData.driftX + Math.sin(t * 0.00006 + n.userData.fase) * 2.6;
+      n.position.y += Math.sin(t * 0.00009 + n.userData.fase) * 0.0016;
+    }
 
     if (!prefersReducedMotion) {
       cameraGroup.rotation.y = -0.55 + smooth * 1.35 + Math.sin(Date.now() * 0.00018) * 0.04;
       cameraGroup.rotation.x = -0.12 + Math.sin(Date.now() * 0.00013) * 0.02;
     }
 
-    renderer.render(scene, cam);
+    desenhar();
   }
 
   if (prefersReducedMotion) {
-    renderer.render(scene, cam);
+    desenhar();
   } else {
     animate();
   }
