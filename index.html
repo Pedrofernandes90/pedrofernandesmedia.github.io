@@ -108,7 +108,12 @@
           </figcaption>
         </figure>
         <figure class="slide">
-          <div class="slide-media"><!-- <img src="assets/lifestyle/foto4.jpg" alt=""> --></div>
+          <div class="slide-media">
+            <!-- EXEMPLO DE VÍDEO — tira os <!-- --> e mete o teu ID do Vimeo:
+            <div class="video-embed" data-vimeo="123456789"></div>
+            -->
+            <!-- <img src="assets/lifestyle/foto4.jpg" alt=""> -->
+          </div>
         </figure>
       </div>
 
@@ -515,6 +520,115 @@
     // Marca que os botões já estão ligados, para o script.js não os ligar
     // outra vez (o que faria cada clique disparar a dobrar).
     window.__pacotesLigados = true;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciar);
+  } else {
+    iniciar();
+  }
+})();
+</script>
+
+<!-- ===================================================== -->
+<!-- VÍDEOS DO VIMEO NO CARROSSEL                           -->
+<!--                                                        -->
+<!-- Para meter um vídeo num slide, mete isto dentro do      -->
+<!-- <div class="slide-media">:                              -->
+<!--                                                        -->
+<!--   <div class="video-embed" data-vimeo="123456789"></div>-->
+<!--                                                        -->
+<!-- O 123456789 é o número do teu vídeo no Vimeo (está no   -->
+<!-- fim do link: vimeo.com/123456789).                      -->
+<!--                                                        -->
+<!-- A miniatura é buscada automaticamente ao Vimeo. Se      -->
+<!-- quiseres usar uma foto tua como capa, acrescenta:       -->
+<!--   data-poster="assets/lifestyle/capa1.jpg"              -->
+<!-- ===================================================== -->
+<script>
+(function () {
+  if (window.__videosLigados) return;
+
+  function criarFacade(caixa) {
+    var id = caixa.getAttribute('data-vimeo');
+    if (!id) return;
+
+    var poster = caixa.getAttribute('data-poster');
+
+    caixa.innerHTML = '';
+    caixa.classList.remove('is-playing');
+
+    var img = document.createElement('img');
+    img.className = 'video-thumb';
+    img.alt = '';
+    img.loading = 'lazy';
+    caixa.appendChild(img);
+
+    var botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'video-play';
+    botao.setAttribute('aria-label', 'Reproduzir vídeo');
+    caixa.appendChild(botao);
+
+    // Miniatura: usa a tua foto se indicaste uma, senão vai buscar ao Vimeo
+    if (poster) {
+      img.src = poster;
+    } else {
+      fetch('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + id + '&width=1280')
+        .then(function (r) { return r.json(); })
+        .then(function (d) { if (d && d.thumbnail_url) img.src = d.thumbnail_url; })
+        .catch(function () { caixa.classList.add('sem-thumb'); });
+    }
+
+    botao.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      pararTodos();
+      reproduzir(caixa, id);
+    });
+  }
+
+  function reproduzir(caixa, id) {
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://player.vimeo.com/video/' + id +
+                 '?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.className = 'video-iframe';
+
+    caixa.innerHTML = '';
+    caixa.appendChild(iframe);
+    caixa.classList.add('is-playing');
+  }
+
+  // Volta a pôr a miniatura em todos os vídeos (para nenhum ficar a tocar
+  // em segundo plano quando se muda de slide ou de categoria)
+  function pararTodos() {
+    var todos = document.querySelectorAll('.video-embed.is-playing');
+    for (var i = 0; i < todos.length; i++) criarFacade(todos[i]);
+  }
+
+  function iniciar() {
+    var caixas = document.querySelectorAll('.video-embed[data-vimeo]');
+    console.log('[Vídeos] Vídeos encontrados no carrossel:', caixas.length);
+
+    for (var i = 0; i < caixas.length; i++) criarFacade(caixas[i]);
+
+    // Ao navegar no carrossel, para o vídeo que estiver a tocar
+    var controlos = document.querySelectorAll('.cat-pill, .swipe-arrow, .swipe-dot');
+    for (var j = 0; j < controlos.length; j++) {
+      controlos[j].addEventListener('click', pararTodos);
+    }
+
+    var viewport = document.querySelector('.swipe-viewport');
+    if (viewport) {
+      viewport.addEventListener('touchend', function () {
+        setTimeout(pararTodos, 100);
+      });
+    }
+
+    window.__videosLigados = true;
   }
 
   if (document.readyState === 'loading') {
