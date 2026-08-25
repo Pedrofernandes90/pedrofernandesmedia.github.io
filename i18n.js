@@ -63,8 +63,11 @@ const translations = {
     "tab.imobiliaria": "Imobiliária",
 
     "about.title": "Sobre mim",
-    "about.p1": "Chamo-me Pedro, sou videógrafo e trabalho com marcas, empresas e pessoas para transformar ideias em conteúdo visual.",
-    "about.p2": "Crio vídeos de produto e publicidade, desporto, casamentos, imobiliário e projetos personalizados, adaptando cada produção ao que o cliente realmente precisa.",
+    "about.p1": "O meu nome é Pedro Fernandes, videógrafo e filmmaker.",
+    "about.p2": "Gosto de transformar momentos, pessoas, marcas e ideias em imagens que fazem alguém parar para olhar. Comecei por explorar o vídeo através daquilo que me inspira — viagens, desporto, experiências e histórias do dia a dia — e foi dessa vontade de criar que nasceu o meu trabalho profissional.",
+    "about.p3": "Hoje trabalho com marcas, empresas e pessoas que querem mostrar aquilo que fazem de uma forma diferente. Desde vídeos de produto e conteúdo para redes sociais, a desporto, casamentos, imobiliário e projetos completamente personalizados, adapto cada produção àquilo que o cliente quer transmitir.",
+    "about.p4": "Não acredito que exista uma fórmula única para fazer um bom vídeo. Cada projeto tem a sua própria identidade, e o meu objetivo é encontrar a forma certa de a contar através da imagem.",
+    "about.p5": "Tu trazes a ideia. Eu trato de a transformar em vídeo.",
 
     /* ---------- PACOTES / PREÇOS ---------- */
     "pricing.title": "Pacotes & Preços",
@@ -213,8 +216,11 @@ const translations = {
     "tab.imobiliaria": "Real Estate",
 
     "about.title": "About me",
-    "about.p1": "I'm Pedro, a videographer working with brands, businesses and people to turn ideas into visual content.",
-    "about.p2": "I create product and advertising videos, sports, weddings, real estate and bespoke projects, shaping each production around what the client actually needs.",
+    "about.p1": "My name is Pedro Fernandes, videographer and filmmaker.",
+    "about.p2": "I like turning moments, people, brands and ideas into images that make someone stop and look. I started exploring video through what inspires me — travel, sport, experiences and everyday stories — and my professional work grew out of that urge to create.",
+    "about.p3": "Today I work with brands, businesses and people who want to show what they do in a different way. From product videos and social media content to sport, weddings, real estate and fully bespoke projects, I shape each production around what the client wants to say.",
+    "about.p4": "I don't believe there's a single formula for a good video. Every project has its own identity, and my job is to find the right way to tell it through images.",
+    "about.p5": "You bring the idea. I'll turn it into video.",
 
     /* ---------- PACKAGES / PRICING ---------- */
     "pricing.title": "Packages & Pricing",
