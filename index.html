@@ -479,13 +479,15 @@
 <!--     id: "algo-unico",                                   -->
 <!--     categoria: "lifestyle",   // lifestyle | casamentos -->
 <!--                               // | desporto | imobiliaria -->
-<!--     vimeo: "123456789",       // número do Vimeo        -->
-<!--     vertical: true,           // só se for Reel/TikTok   -->
+<!--     youtube: "ID_DO_VIDEO",   // ID do YouTube          -->
+<!--     vertical: true,           // só se for Short/vertical -->
 <!--     titulo:    { pt: "...", en: "..." },                 -->
 <!--     descricao: { pt: "...", en: "..." }                  -->
 <!--   }                                                     -->
 <!--                                                        -->
-<!-- Em vez de vimeo, podes usar foto: "assets/x/foto.jpg"   -->
+<!-- O ID do YouTube é a parte depois de "watch?v=" ou de    -->
+<!-- "youtu.be/". Ex: youtu.be/hsObBSt89XA  ->  "hsObBSt89XA" -->
+<!-- Em vez de youtube, podes usar foto: "assets/x/foto.jpg" -->
 <!-- ===================================================== -->
 <script>
 (function () {
@@ -495,55 +497,55 @@
     {
       id: "lifestyle-1",
       categoria: "lifestyle",
-      vimeo: "1220962151",
-      titulo:    { pt: "Lifestyle em movimento", en: "Lifestyle in motion" },
-      descricao: { pt: "Um olhar sobre o dia a dia — pessoas, lugares e a luz certa no momento certo.",
-                   en: "A look at everyday life — people, places, and the right light at the right moment." }
-    },
-    {
-      id: "lifestyle-novo-1",
-      categoria: "lifestyle",
-      vimeo: "1221192945",
-      titulo:    { pt: "Momentos com identidade", en: "Moments with character" },
-      descricao: { pt: "Conteúdo lifestyle criado para destacar pessoas e marcas.",
-                   en: "Lifestyle content made to put people and brands in the spotlight." }
-    },
-    {
-      id: "lifestyle-3",
-      categoria: "lifestyle",
-      vimeo: "1220990606",
+      youtube: "IL-B00VMHes",
       titulo:    { pt: "Marca em movimento", en: "Brands in motion" },
       descricao: { pt: "Conteúdo pensado para redes sociais — dinâmico, curto e com identidade.",
                    en: "Content built for social media — short, dynamic and full of character." }
     },
     {
-      id: "viagem-1",
+      id: "lifestyle-2",
       categoria: "lifestyle",
-      vimeo: "1220990861",
+      youtube: "0NVUoTMOME4",
+      titulo:    { pt: "Lifestyle em movimento", en: "Lifestyle in motion" },
+      descricao: { pt: "Um olhar sobre o dia a dia — pessoas, lugares e a luz certa no momento certo.",
+                   en: "A look at everyday life — people, places, and the right light at the right moment." }
+    },
+    {
+      id: "lifestyle-3",
+      categoria: "lifestyle",
+      youtube: "YqP0M1eMOe8",
+      titulo:    { pt: "Momentos com identidade", en: "Moments with character" },
+      descricao: { pt: "Conteúdo lifestyle criado para destacar pessoas e marcas.",
+                   en: "Lifestyle content made to put people and brands in the spotlight." }
+    },
+    {
+      id: "lifestyle-4",
+      categoria: "lifestyle",
+      youtube: "OCZV3ztuP2E",
       titulo:    { pt: "Diário de viagem", en: "Travel diary" },
       descricao: { pt: "Estradas, paisagens e o que acontece pelo caminho.",
                    en: "Roads, landscapes, and whatever happens along the way." }
     },
     {
-      id: "lifestyle-novo-2",
-      categoria: "lifestyle",
-      vimeo: "1220990660",
-      titulo:    { pt: "Do conceito à imagem", en: "From concept to image" },
-      descricao: { pt: "Pequenas histórias visuais, filmadas com intenção.",
-                   en: "Small visual stories, filmed with intent." }
+      id: "casamentos-1",
+      categoria: "casamentos",
+      youtube: "3DqylXd-R9U",
+      titulo:    { pt: "Sim, Aceito", en: "I Do" },
+      descricao: { pt: "Um casamento contado pelos detalhes: as mãos, o silêncio antes do \"sim\", o primeiro abraço.",
+                   en: "A wedding told through the details: hands, the silence before the \"I do\", the first embrace." }
     },
     {
       id: "desporto-1",
       categoria: "desporto",
-      vimeo: "1220990765",
+      youtube: "hsObBSt89XA",
       titulo:    { pt: "Desporto", en: "Sport" },
       descricao: { pt: "Tensão, suor e a explosão do momento decisivo.",
                    en: "Tension, sweat, and the explosion of the decisive moment." }
     },
     {
-      id: "desporto-novo-1",
+      id: "desporto-2",
       categoria: "desporto",
-      vimeo: "1221191708",
+      youtube: "RFnVS7gIUcI",
       titulo:    { pt: "Intensidade em jogo", en: "Intensity in play" },
       descricao: { pt: "A energia do desporto captada de perto.",
                    en: "The energy of sport, captured up close." }
@@ -551,13 +553,27 @@
     {
       id: "imobiliaria-1",
       categoria: "imobiliaria",
-      vimeo: "1220990571",
+      youtube: "yYtw45SXkcE",
       titulo:    { pt: "Espaços que Vendem", en: "Spaces that Sell" },
       descricao: { pt: "Imóveis filmados para destacar luz, amplitude e detalhe: imagens que aceleram a venda.",
                    en: "Property filmed to highlight light, space and detail: images that speed up the sale." }
+    },
+    {
+      id: "imobiliaria-2",
+      categoria: "imobiliaria",
+      youtube: "iabveQfnb_w",
+      titulo:    { pt: "A casa certa", en: "The right home" },
+      descricao: { pt: "Cada divisão filmada para valorizar o espaço e criar desejo.",
+                   en: "Every room filmed to enhance the space and create desire." }
+    },
+    {
+      id: "imobiliaria-3",
+      categoria: "imobiliaria",
+      youtube: "z32dY1qXmyU",
+      titulo:    { pt: "Visita guiada", en: "Guided tour" },
+      descricao: { pt: "Um percurso visual pelo imóvel, do exterior ao detalhe final.",
+                   en: "A visual journey through the property, from the exterior to the final detail." }
     }
-    /* Casamentos ainda sem projetos — assim que tiveres o vídeo,
-       acrescenta aqui com categoria: "casamentos" */
   ];
 
   var EM_BREVE = {
@@ -624,16 +640,16 @@
       indice = ((i % n) + n) % n;
       var p = lista[indice];
 
-      if (p.vimeo) {
+      if (p.youtube) {
         if (p.vertical) {
           media.classList.add('vertical');
           stage.classList.add('vertical');
         }
         var iframe = document.createElement('iframe');
-        iframe.src = 'https://player.vimeo.com/video/' + p.vimeo +
-                     '?title=0&byline=0&portrait=0&dnt=1';
+        iframe.src = 'https://www.youtube.com/embed/' + p.youtube +
+                     '?rel=0&modestbranding=1&playsinline=1';
         iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
         iframe.setAttribute('allowfullscreen', '');
         iframe.setAttribute('loading', 'lazy');
         iframe.title = p.titulo[lingua()] || p.titulo.pt;
