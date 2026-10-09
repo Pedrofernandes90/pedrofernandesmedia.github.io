@@ -1,233 +1,151 @@
-// =====================================================
-// CONFIRMAÇÃO DE CARREGAMENTO — se isto NÃO aparecer na
-// consola do browser (F12 → Console), o ficheiro script.js
-// não está a ser carregado pela página (nome/caminho errado,
-// upload incompleto, ou cache do browser/servidor).
-// =====================================================
-console.log('%c[Pedro Fernandes] script.js carregado ✓', 'color: #e8492a; font-weight: bold; font-size: 13px;');
+/* =========================================================
+   PF | PEDRO FERNANDES PHOTO & VIDEO — SCRIPT PRINCIPAL
+   =========================================================
+   Este ficheiro trata de:
+   1. Menu de telemóvel (abrir/fechar)
+   2. Cabeçalho que fica sólido ao rolar a página
+   3. Animação de "aparecer" ao rolar (fade-in)
+   4. Botão de troca de idioma PT/EN (e memoriza a escolha)
+   5. Formulário de contacto (abre o email pronto a enviar)
+   6. Ano automático no rodapé
+   Não precisas de entender tudo — só editar onde diz "EDITA AQUI".
+   ========================================================= */
 
-// =====================================================
-// PORTEFÓLIO — carrossel com swipe e categorias coloridas
-// =====================================================
-document.addEventListener('DOMContentLoaded', () => {
-  const section = document.querySelector('.portfolio');
-  if (!section) return;
+// Avisa o CSS que o JavaScript está ativo (as animações só correm assim)
+document.documentElement.classList.add("js");
 
-  const pills = section.querySelectorAll('.cat-pill');
-  const tracks = section.querySelectorAll('.swipe-track');
-  const viewport = section.querySelector('.swipe-viewport');
-  const prevBtn = section.querySelector('.swipe-prev');
-  const nextBtn = section.querySelector('.swipe-next');
-  const dotsBox = section.querySelector('.swipe-dots');
-  const catLinks = section.querySelectorAll('.cat-link');
+document.addEventListener("DOMContentLoaded", () => {
 
-  let activeTrack = section.querySelector('.swipe-track.active');
-  let index = 0;
+  /* ---------- 1. MENU DE TELEMÓVEL ---------- */
+  const burger = document.getElementById("burger");
+  const mainNav = document.getElementById("main-nav");
 
-  const slideCount = () => activeTrack.children.length;
-
-  function goTo(i) {
-    index = Math.max(0, Math.min(i, slideCount() - 1));
-    activeTrack.style.transform = `translateX(-${index * 100}%)`;
-    updateControls();
-  }
-
-  function updateControls() {
-    if (prevBtn) prevBtn.disabled = index === 0;
-    if (nextBtn) nextBtn.disabled = index === slideCount() - 1;
-    dotsBox.querySelectorAll('.swipe-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === index);
-    });
-  }
-
-  function buildDots() {
-    dotsBox.innerHTML = '';
-    for (let i = 0; i < slideCount(); i++) {
-      const dot = document.createElement('button');
-      dot.className = 'swipe-dot';
-      dot.setAttribute('aria-label', `Slide ${i + 1}`);
-      dot.addEventListener('click', () => goTo(i));
-      dotsBox.appendChild(dot);
-    }
-  }
-
-  function switchCategory(cat) {
-    section.dataset.active = cat; // muda a cor via CSS
-
-    pills.forEach(p => {
-      const on = p.dataset.cat === cat;
-      p.classList.toggle('active', on);
-      p.setAttribute('aria-selected', on);
+  if (burger && mainNav) {
+    burger.addEventListener("click", () => {
+      const isOpen = mainNav.classList.toggle("is-open");
+      burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
 
-    tracks.forEach(t => {
-      const on = t.dataset.cat === cat;
-      t.classList.toggle('active', on);
-      if (on) activeTrack = t;
-    });
-
-    catLinks.forEach(l => { l.hidden = l.dataset.cat !== cat; });
-
-    activeTrack.style.transition = 'none';
-    buildDots();
-    goTo(0);
-    requestAnimationFrame(() => { activeTrack.style.transition = ''; });
-  }
-
-  pills.forEach(p => p.addEventListener('click', () => switchCategory(p.dataset.cat)));
-
-  if (prevBtn) prevBtn.addEventListener('click', () => goTo(index - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => goTo(index + 1));
-
-  // ---------- Swipe (toque) e arrasto (rato) ----------
-  let startX = null;
-  let dragging = false;
-
-  function dragStart(x) { startX = x; dragging = true; }
-  function dragEnd(x) {
-    if (!dragging || startX === null) return;
-    const delta = x - startX;
-    if (Math.abs(delta) > 50) {
-      if (delta < 0) goTo(index + 1);
-      else goTo(index - 1);
-    }
-    startX = null;
-    dragging = false;
-  }
-
-  viewport.addEventListener('touchstart', e => dragStart(e.touches[0].clientX), { passive: true });
-  viewport.addEventListener('touchend', e => dragEnd(e.changedTouches[0].clientX), { passive: true });
-  viewport.addEventListener('mousedown', e => { e.preventDefault(); dragStart(e.clientX); });
-  window.addEventListener('mouseup', e => dragEnd(e.clientX));
-
-  // ---------- Teclado (acessibilidade) ----------
-  section.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') goTo(index - 1);
-    if (e.key === 'ArrowRight') goTo(index + 1);
-  });
-
-  // arranque
-  buildDots();
-  goTo(0);
-});
-
-// =====================================================
-// PACOTES / PREÇOS — botões "Escolher Basic", "Escolher Pro"
-// e "Pedir orçamento personalizado" (.price-cta[data-plan-select])
-//
-// Reutilizam o formulário "Pedido de orçamento" já existente
-// na página: ao clicar, fazem scroll suave diretamente até ao
-// campo "Pacote pretendido" (#plan-field) e selecionam
-// automaticamente a opção correta. Se o utilizador chegar ao
-// formulário sem clicar num pacote (ex.: link do menu), o campo
-// mantém-se em "Seleciona um pacote" — nada é pré-selecionado à força.
-// =====================================================
-document.addEventListener('DOMContentLoaded', () => {
-  // Se o bloco inline no index.html já ligou os botões, não fazer nada aqui
-  // (caso contrário cada clique disparava duas vezes).
-  if (window.__pacotesLigados) {
-    console.log('[Pacotes] Os botões já foram ligados pelo bloco no index.html — script.js não repete.');
-    return;
-  }
-
-  const planButtons = document.querySelectorAll('.price-cta[data-plan-select]');
-  const planSelect = document.getElementById('q-plan');
-  const planField = document.getElementById('plan-field');
-
-  console.log('[Pacotes] Botões de pacote encontrados na página:', planButtons.length);
-
-  if (!planButtons.length) {
-    console.warn(
-      '[Pacotes] Não encontrei nenhum botão ".price-cta[data-plan-select]" no HTML. ' +
-      'Os botões "Escolher Basic/Pro" e "Pedir orçamento personalizado" precisam da classe ' +
-      '"price-cta" e do atributo "data-plan-select" (basic/pro/custom) para funcionarem.'
-    );
-    return;
-  }
-
-  if (!planSelect || !planField) {
-    console.warn(
-      '[Pacotes] Não encontrei o campo "Pacote pretendido" (#plan-field / #q-plan) no HTML. ' +
-      'Os botões dos pacotes não vão conseguir selecionar o pacote — confirma que estás a usar ' +
-      'a versão mais recente do index.html, style.css, i18n.js e script.js em conjunto.'
-    );
-    return;
-  }
-
-  console.log('[Pacotes] Tudo encontrado — os botões estão prontos a funcionar. ✓');
-
-  planButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const plan = btn.dataset.planSelect; // "basic" | "pro" | "custom"
-      console.log('[Pacotes] Clique detetado no botão:', plan);
-
-      // 1. seleciona automaticamente a opção correta no <select> já existente
-      const optionExists = Array.from(planSelect.options).some(opt => opt.value === plan);
-      if (optionExists) {
-        planSelect.value = plan;
-        planSelect.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-
-      // 2. destaque visual para confirmar ao utilizador que o pacote ficou selecionado
-      planField.classList.add('field-flash');
-      window.setTimeout(() => planField.classList.remove('field-flash'), 1200);
-
-      // 3. scroll suave diretamente até ao campo "Pacote pretendido"
-      //    (scroll-margin-top no CSS evita que fique escondido atrás do cabeçalho fixo)
-      planField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-      // 4. foca o próprio campo já selecionado, assim que o scroll terminar
-      window.setTimeout(() => planSelect.focus({ preventScroll: true }), 500);
-    });
-  });
-});
-
-// =====================================================
-// ENVIO DO FORMULÁRIO DE PEDIDO DE ORÇAMENTO
-// Usa o Formspree, sem recarregar a página.
-// IMPORTANTE: substitui "YOUR_FORM_ID" no index.html pelo teu
-// ID do Formspree — instruções no COMO-EDITAR.md
-// =====================================================
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('quote-form');
-  const status = document.getElementById('quote-status');
-  if (!form) return;
-
-  const lang = () => localStorage.getItem('site-lang') || 'pt';
-  const t = (key) => (typeof translations !== 'undefined' && translations[lang()] && translations[lang()][key]) || key;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (form.action.includes('YOUR_FORM_ID')) {
-      status.textContent = t('quote.notConfigured');
-      status.classList.add('is-error');
-      return;
-    }
-
-    const submitBtn = form.querySelector('.quote-submit');
-    submitBtn.disabled = true;
-    status.classList.remove('is-error');
-    status.textContent = t('quote.sending');
-
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+    // Fecha o menu automaticamente ao clicar num link
+    mainNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mainNav.classList.remove("is-open");
+        burger.setAttribute("aria-expanded", "false");
       });
+    });
+  }
 
-      if (response.ok) {
-        status.textContent = t('quote.success');
-        form.reset();
-      } else {
-        throw new Error('Formspree error');
-      }
-    } catch (err) {
-      status.textContent = t('quote.error');
-      status.classList.add('is-error');
-    } finally {
-      submitBtn.disabled = false;
+  /* ---------- 2. CABEÇALHO SÓLIDO AO ROLAR ---------- */
+  const header = document.getElementById("site-header");
+  const onScroll = () => {
+    if (window.scrollY > 40) {
+      header.classList.add("is-scrolled");
+    } else {
+      header.classList.remove("is-scrolled");
     }
-  });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- 3. ANIMAÇÃO AO ROLAR (fade-in) ---------- */
+  const revealEls = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    revealEls.forEach((el) => observer.observe(el));
+  } else {
+    // Browsers muito antigos: mostra tudo logo
+    revealEls.forEach((el) => el.classList.add("is-visible"));
+  }
+
+  /* ---------- 4. TROCA DE IDIOMA (PT / EN) ---------- */
+  const langToggle = document.getElementById("lang-toggle");
+  const langOptions = document.querySelectorAll(".lang-opt");
+
+  function setLanguage(lang) {
+    if (lang === "en") {
+      document.body.classList.add("lang-en-active");
+      document.documentElement.setAttribute("lang", "en");
+    } else {
+      document.body.classList.remove("lang-en-active");
+      document.documentElement.setAttribute("lang", "pt");
+    }
+    langOptions.forEach((opt) => {
+      opt.setAttribute("data-active", opt.dataset.lang === lang ? "true" : "false");
+    });
+    // Guarda a escolha do visitante para a próxima visita
+    try { localStorage.setItem("pf-lang", lang); } catch (e) { /* ignora */ }
+  }
+
+  // Ao carregar a página, usa a última escolha do visitante (ou PT por defeito)
+  let savedLang = "pt";
+  try { savedLang = localStorage.getItem("pf-lang") || "pt"; } catch (e) { /* ignora */ }
+  setLanguage(savedLang);
+
+  if (langToggle) {
+    langToggle.addEventListener("click", () => {
+      const current = document.body.classList.contains("lang-en-active") ? "en" : "pt";
+      setLanguage(current === "en" ? "pt" : "en");
+    });
+  }
+
+  /* ---------- 5. FORMULÁRIO DE CONTACTO ---------- */
+  /* Como o site não tem servidor próprio, este formulário abre a
+     aplicação de email do visitante já com a mensagem preenchida.
+     Mais tarde, se quiseres receber os pedidos diretamente, podes ligar
+     o formulário a um serviço gratuito como o Web3Forms ou o Formspree. */
+  const form = document.getElementById("contact-form");
+
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Validação simples
+      if (!form.name.value.trim() || !form.email.value.trim() || !form.message.value.trim()) {
+        form.reportValidity();
+        return;
+      }
+      if (!form.email.checkValidity()) {
+        form.email.reportValidity();
+        return;
+      }
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const service = form.service.value;
+      const message = form.message.value.trim();
+
+      // EDITA AQUI: o email que vai receber os pedidos
+      const destinatario = "pedrofernandesmedia@gmail.com";
+
+      const assunto = `Pedido de orçamento — ${service}`;
+      const corpo =
+        `Nome: ${name}\n` +
+        `Email: ${email}\n` +
+        `Telefone: ${phone || "—"}\n` +
+        `Serviço: ${service}\n\n` +
+        `Mensagem:\n${message}`;
+
+      window.location.href =
+        `mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+    });
+  }
+
+  /* ---------- 6. ANO AUTOMÁTICO NO RODAPÉ ---------- */
+  const yearEl = document.getElementById("year");
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+
 });
