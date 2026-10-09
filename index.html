@@ -1,939 +1,417 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="meta.title">Pedro Fernandes — Fotografia & Vídeo</title>
-<meta name="description" content="Pedro Fernandes — fotografia e vídeo de imobiliária, Produtos, viagens, casamentos e desporto." data-i18n-attr="content" data-i18n="meta.description">
 
-<!-- Fontes: display expressiva para títulos, monoespaçada técnica para etiquetas/números, sem-serifa limpa para o corpo -->
+<!-- =======================================================
+     SEO — TÍTULO E DESCRIÇÃO
+     Isto é o que aparece no Google. Edita à vontade.
+======================================================= -->
+<title>PF | Pedro Fernandes Photo & Video — Fotografia e Vídeo Profissional</title>
+<meta name="description" content="PF — Pedro Fernandes Photo & Video. Fotografia e vídeo profissional para casamentos, retratos, marcas e eventos, em Portugal e para clientes internacionais.">
+<meta name="keywords" content="fotografia profissional, video profissional, fotografo casamentos, fotografo Portugal, fotografia corporativa">
+<meta name="author" content="Pedro Fernandes">
+<!-- EDITA AQUI: troca pelo teu domínio real (3 sítios: canonical, og:image, og:url) -->
+<link rel="canonical" href="https://pedrofernandesphoto.com/">
+
+<!-- Redes sociais (Open Graph) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="PF | Pedro Fernandes Photo & Video">
+<meta property="og:description" content="Fotografia e vídeo profissional para casamentos, retratos, marcas e eventos.">
+<meta property="og:image" content="https://pedrofernandesphoto.com/images/og-cover.jpg">
+<meta property="og:url" content="https://pedrofernandesphoto.com/">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Ícone do site (favicon) — substitui depois pelo teu logo -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230B0F0D%22/><text x=%2250%22 y=%2264%22 font-size=%2244%22 fill=%22%234FCB93%22 font-family=%22Georgia,serif%22 text-anchor=%22middle%22>PF</text></svg>">
+
+<!-- Tipografia (Google Fonts, gratuito) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ===================================================== -->
-<!-- CABEÇALHO -->
-<!-- ===================================================== -->
-<header class="topbar">
-  <span class="brand">PEDRO FERNANDES</span>
-  <nav>
-    <a href="#trabalhos" data-i18n="nav.portfolio">Portefólio</a>
-    <a href="#sobre" data-i18n="nav.about">Sobre</a>
-    <a href="#orcamento" data-i18n="nav.quote">Orçamento</a>
-    <a href="#contacto" data-i18n="nav.contact">Contacto</a>
-  </nav>
-  <button id="lang-toggle" class="lang-toggle" aria-label="Change language">
-    <span class="lang-opt active" data-lang="pt">PT</span>/<span class="lang-opt" data-lang="en">EN</span>
-  </button>
+<a class="skip-link" href="#main">Saltar para o conteúdo</a>
+
+<!-- =======================================================
+     CABEÇALHO
+======================================================= -->
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="logo">
+      <!-- LOGO: para usar o teu logo, troca a linha <span class="logo-mark">PF</span>
+           por: <img src="images/logo.svg" alt="PF" class="logo-img" width="40" height="40"> -->
+      <span class="logo-mark">PF</span>
+      <span class="logo-text">
+        Pedro Fernandes
+        <small>Photo & Video</small>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <a href="#sobre"><span class="lang-pt">Sobre</span><span class="lang-en">About</span></a>
+      <a href="#servicos"><span class="lang-pt">Serviços</span><span class="lang-en">Services</span></a>
+      <a href="#portfolio"><span class="lang-pt">Portefólio</span><span class="lang-en">Portfolio</span></a>
+      <a href="#depoimentos"><span class="lang-pt">Depoimentos</span><span class="lang-en">Testimonials</span></a>
+      <a href="#contacto" class="nav-cta"><span class="lang-pt">Contacto</span><span class="lang-en">Contact</span></a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="lang-toggle" id="lang-toggle" aria-label="Mudar idioma / Change language">
+        <span class="lang-opt" data-lang="pt">PT</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-opt" data-lang="en">EN</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
 </header>
 
-<!-- ===================================================== -->
-<!-- HERO — câmara 3D que se desconstrói/reconstrói com o scroll -->
-<!-- "hero-scroll" dá espaço de scroll extra; "hero" fica fixo (sticky) enquanto isso acontece -->
-<!-- Troca "assets/hero.mp4" por um vídeo teu, se quiseres um fundo em vídeo além da câmara 3D -->
-<!-- ===================================================== -->
-<div class="hero-scroll">
-  <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
-      <source src="assets/hero.mp4" type="video/mp4">
-    </video>
-    <div class="hero-veil"></div>
+<main id="main">
 
-    <!-- Canvas onde a câmara 3D é desenhada — ver camera-3d.js -->
-    <canvas id="camera-3d-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+  <!-- =======================================================
+       HERO
+  ======================================================= -->
+  <section class="hero" id="top">
+    <div class="hero-media" aria-hidden="true">
+      <!-- PLACEHOLDER DE IMAGEM DE FUNDO —
+           Substitui o bloco "placeholder-art" por: <img src="images/hero.jpg" alt="" class="hero-img">
+           Tamanho recomendado: 2400x1600px, .jpg otimizado -->
+      <div class="placeholder-art hero-placeholder">
+        <span class="placeholder-label">HERO.JPG · 2400×1600</span>
+      </div>
+      <div class="hero-overlay"></div>
+    </div>
 
-    <div class="hero-content">
-      <p class="hero-eyebrow" data-i18n="hero.eyebrow">Fotografia &amp; Vídeo — Lifestyle · Imóveis · Viagem · Casamentos · Desporto</p>
-      <h1 class="hero-title" data-i18n-html="hero.title">Cada instante<br>tem <em>um único</em><br>fotograma.</h1>
-      <p class="hero-sub" data-i18n="hero.sub">
-        Conteúdo pensado para marcas, empresas e pessoas que querem destacar-se através da imagem.
+    <div class="container hero-content">
+      <p class="eyebrow reveal">
+        <span class="lang-pt">Fotografia & Vídeo — Portugal</span>
+        <span class="lang-en">Photography & Video — Portugal</span>
       </p>
-      <a href="#trabalhos" class="hero-cta" data-i18n="hero.cta">Ver trabalhos ↓</a>
+      <h1 class="hero-title reveal">
+        <span class="lang-pt">Cada instante,<br>composto com precisão.</span>
+        <span class="lang-en">Every moment,<br>framed with precision.</span>
+      </h1>
+      <p class="hero-sub reveal">
+        <span class="lang-pt">Fotografia e vídeo profissional para casamentos, retratos, marcas e eventos — em Portugal e para clientes internacionais.</span>
+        <span class="lang-en">Professional photography and video for weddings, portraits, brands and events — based in Portugal, working internationally.</span>
+      </p>
+      <div class="hero-actions reveal">
+        <a href="#contacto" class="btn btn-primary">
+          <span class="lang-pt">Pedir orçamento</span>
+          <span class="lang-en">Request a quote</span>
+        </a>
+        <a href="#portfolio" class="btn btn-ghost">
+          <span class="lang-pt">Ver portefólio</span>
+          <span class="lang-en">View portfolio</span>
+        </a>
+      </div>
     </div>
 
-    <span class="hero-frame-tl"></span>
-    <span class="hero-frame-tr"></span>
-    <span class="hero-frame-bl"></span>
-    <span class="hero-frame-br"></span>
+    <div class="hero-scroll" aria-hidden="true"><span></span></div>
   </section>
-</div>
 
-<!-- ===================================================== -->
-<!-- PORTEFÓLIO                                             -->
-<!-- A lista de projetos está no bloco <script> no fim       -->
-<!-- deste ficheiro (const PROJETOS). Para adicionar um      -->
-<!-- projeto novo, acrescenta uma linha lá — não é preciso   -->
-<!-- mexer neste HTML.                                       -->
-<!-- ===================================================== -->
-<section id="trabalhos" class="portfolio" data-active="lifestyle">
-  <div class="section-head">
-    <h2 class="section-title" data-i18n="portfolio.title">Portefólio</h2>
-    <p class="section-note" data-i18n="portfolio.note">Desliza para explorar</p>
-  </div>
-
-  <div class="cat-pills" role="tablist">
-    <button class="cat-pill active" data-cat="lifestyle" role="tab" aria-selected="true" data-i18n="tab.lifestyle">Lifestyle &amp; Viagem</button>
-    <button class="cat-pill" data-cat="casamentos" role="tab" aria-selected="false" data-i18n="tab.casamentos">Casamentos</button>
-    <button class="cat-pill" data-cat="desporto" role="tab" aria-selected="false" data-i18n="tab.desporto">Desporto</button>
-    <button class="cat-pill" data-cat="imobiliaria" role="tab" aria-selected="false" data-i18n="tab.imobiliaria">Imobiliária</button>
-  </div>
-
-  <!-- pf-stage centra | pf-frame tem EXATAMENTE o tamanho do vídeo -->
-  <div class="pf-stage">
-    <div class="pf-frame" id="pf-frame">
-      <div class="pf-media" id="pf-media"></div>
-      <button class="pf-arrow pf-prev" type="button" aria-label="Projeto anterior">←</button>
-      <button class="pf-arrow pf-next" type="button" aria-label="Projeto seguinte">→</button>
-    </div>
-  </div>
-
-  <p class="pf-empty" id="pf-empty" hidden></p>
-
-  <div class="pf-info" id="pf-info">
-    <h3 id="pf-title"></h3>
-    <p id="pf-desc"></p>
-  </div>
-
-  <div class="swipe-dots" role="tablist"></div>
-
-  <div class="portfolio-cta">
-    <a class="cat-link" data-cat="lifestyle" href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener">@pedro_nomadic →</a>
-    <a class="cat-link" data-cat="casamentos" href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener" hidden>@promiseweddingsco →</a>
-    <a class="cat-link" data-cat="desporto" href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener" hidden>@vyraxmedia →</a>
-    <a class="cat-link" data-cat="imobiliaria" href="#orcamento" hidden data-i18n="cta.quote">Pedir orçamento →</a>
-  </div>
-</section>
-
-<!-- ===================================================== -->
-<!-- SOBRE -->
-<!-- ===================================================== -->
-<section id="sobre" class="about">
-  <div class="about-photo">
-    <!-- A foto está na raiz do repositório (ao lado do index.html) -->
-    <img src="pedro.webp" alt="Pedro Fernandes">
-  </div>
-  <div class="about-text">
-    <h2 class="section-title" data-i18n="about.title">Sobre mim</h2>
-    <p data-i18n="about.p1">
-      O meu nome é Pedro Fernandes, videógrafo e filmmaker.
-    </p>
-    <p data-i18n="about.p2">
-      Gosto de transformar momentos, pessoas, marcas e ideias em imagens que fazem
-      alguém parar para olhar. Comecei por explorar o vídeo através daquilo que me
-      inspira — viagens, desporto, experiências e histórias do dia a dia — e foi
-      dessa vontade de criar que nasceu o meu trabalho profissional.
-    </p>
-    <p data-i18n="about.p3">
-      Hoje trabalho com marcas, empresas e pessoas que querem mostrar aquilo que fazem
-      de uma forma diferente. Desde vídeos de produto e conteúdo para redes sociais,
-      a desporto, casamentos, imobiliário e projetos completamente personalizados,
-      adapto cada produção àquilo que o cliente quer transmitir.
-    </p>
-    <p data-i18n="about.p4">
-      Não acredito que exista uma fórmula única para fazer um bom vídeo. Cada projeto
-      tem a sua própria identidade, e o meu objetivo é encontrar a forma certa de a
-      contar através da imagem.
-    </p>
-    <p class="about-closer" data-i18n="about.p5">
-      Tu trazes a ideia. Eu trato de a transformar em vídeo.
-    </p>
-  </div>
-</section>
-
-<!-- ===================================================== -->
-<!-- PACOTES / PREÇOS + PEDIDO DE ORÇAMENTO -->
-<!-- Para mudar preços, horas, quantidades ou benefícios dos pacotes: edita as -->
-<!-- strings "plan.*" e "extras.*" no ficheiro i18n.js — não precisas de tocar aqui. -->
-<!-- ===================================================== -->
-<section id="orcamento" class="pricing">
-  <div class="pricing-inner">
-
-  <div class="section-head">
-    <h2 class="section-title" data-i18n="pricing.title">Pacotes &amp; Preços</h2>
-    <p class="section-note" data-i18n="pricing.note">Para empresas e marcas</p>
-  </div>
-
-  <p class="pricing-lead" data-i18n="pricing.lead">Planos mensais de fotografia e vídeo para redes sociais, pensados para empresas e marcas. Conteúdo novo todos os meses, sem contratos complicados.</p>
-
-  <div class="pricing-grid">
-
-    <!-- ---------- BASIC ---------- -->
-    <article class="price-card" data-plan="basic">
-      <div class="price-card-top">
-        <h3 class="price-name" data-i18n="plan.basic.name">Basic</h3>
-        <p class="price-tagline" data-i18n="plan.basic.tagline">Conteúdo essencial para pequenos negócios que querem começar a comunicar nas redes sociais.</p>
+  <!-- =======================================================
+       SOBRE
+  ======================================================= -->
+  <section class="section" id="sobre">
+    <div class="container about-grid">
+      <div class="about-media reveal">
+        <!-- PLACEHOLDER DE FOTO DE PERFIL —
+             Substitui o bloco "placeholder-art" por: <img src="images/pedro.jpg" alt="Pedro Fernandes">
+             Tamanho recomendado: 1000x1250px (retrato) -->
+        <div class="placeholder-art about-placeholder">
+          <span class="placeholder-label">PEDRO.JPG · 1000×1250</span>
+        </div>
+        <div class="about-frame-tag">
+          <span class="lang-pt">Nº 001 — O fotógrafo</span>
+          <span class="lang-en">Nº 001 — The photographer</span>
+        </div>
       </div>
-      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.basic.price">250</span><span class="price-period" data-i18n="plan.period">/mês</span></p>
-      <ul class="price-features">
-        <li data-i18n="plan.basic.f1">Até 2 horas de captação</li>
-        <li data-i18n="plan.basic.f2">15 fotografias profissionais editadas</li>
-        <li data-i18n="plan.basic.f3">1 vídeo vertical Instagram/TikTok</li>
-        <li data-i18n="plan.basic.f4">Vídeo até 30 segundos</li>
-        <li data-i18n="plan.basic.f5">Edição profissional</li>
-        <li data-i18n="plan.basic.f6">1 ronda de alterações</li>
-        <li data-i18n="plan.basic.f7">Entrega em 5–7 dias úteis</li>
-        <li data-i18n="plan.basic.f8">Formato otimizado para redes sociais</li>
-      </ul>
-      <button type="button" class="price-cta" data-plan-select="basic" data-i18n="plan.basic.cta">Escolher Basic</button>
-    </article>
 
-    <!-- ---------- PRO (destaque) ---------- -->
-    <article class="price-card price-card-featured" data-plan="pro">
-      <span class="price-badge" data-i18n="plan.pro.badge">Mais Popular</span>
-      <div class="price-card-top">
-        <h3 class="price-name" data-i18n="plan.pro.name">Pro</h3>
-        <p class="price-tagline" data-i18n="plan.pro.tagline">A melhor relação qualidade/preço para empresas que querem criar conteúdo com regularidade.</p>
-      </div>
-      <p class="price-amount"><span class="price-currency">€</span><span data-i18n="plan.pro.price">450</span><span class="price-period" data-i18n="plan.period">/mês</span></p>
-      <ul class="price-features">
-        <li data-i18n="plan.pro.f1">Até 4 horas de captação</li>
-        <li data-i18n="plan.pro.f2">30 fotografias profissionais editadas</li>
-        <li data-i18n="plan.pro.f3">3 vídeos verticais Instagram/TikTok</li>
-        <li data-i18n="plan.pro.f4">Vídeos até 45 segundos cada</li>
-        <li data-i18n="plan.pro.f5">Edição profissional</li>
-        <li data-i18n="plan.pro.f6">2 rondas de alterações</li>
-        <li data-i18n="plan.pro.f7">Entrega em 5–7 dias úteis</li>
-        <li data-i18n="plan.pro.f8">Formatos otimizados para redes sociais</li>
-      </ul>
-      <button type="button" class="price-cta" data-plan-select="pro" data-i18n="plan.pro.cta">Escolher Pro</button>
-    </article>
-
-    <!-- ---------- CUSTOM ---------- -->
-    <article class="price-card" data-plan="custom">
-      <div class="price-card-top">
-        <h3 class="price-name" data-i18n="plan.custom.name">Custom</h3>
-        <p class="price-tagline" data-i18n="plan.custom.tagline">Solução 100% personalizada para marcas, empresas e clientes com necessidades específicas.</p>
-      </div>
-      <p class="price-amount"><span class="price-from" data-i18n="plan.custom.from">Desde</span> <span class="price-currency">€</span><span data-i18n="plan.custom.price">600</span><span class="price-period" data-i18n="plan.period">/mês</span></p>
-      <p class="price-custom-intro" data-i18n="plan.custom.intro">Personaliza o que precisares:</p>
-      <ul class="price-chips">
-        <li data-i18n="plan.custom.c1">Horas de captação</li>
-        <li data-i18n="plan.custom.c2">Nº de fotografias</li>
-        <li data-i18n="plan.custom.c3">Nº de vídeos</li>
-        <li data-i18n="plan.custom.c4">Vertical ou horizontal</li>
-        <li data-i18n="plan.custom.c5">Conteúdo para anúncios</li>
-        <li data-i18n="plan.custom.c6">Fotografia de produto</li>
-        <li data-i18n="plan.custom.c7">Entrevistas</li>
-        <li data-i18n="plan.custom.c8">Campanhas de marca</li>
-        <li data-i18n="plan.custom.c9">Cobertura de eventos</li>
-      </ul>
-      <button type="button" class="price-cta price-cta-outline" data-plan-select="custom" data-i18n="plan.custom.cta">Pedir orçamento personalizado</button>
-    </article>
-
-  </div>
-
-  <!-- ---------- EXTRAS ---------- -->
-  <div class="extras">
-    <h3 class="extras-title" data-i18n="extras.title">Serviços adicionais</h3>
-    <ul class="extras-list">
-      <li><span data-i18n="extras.e1">Vídeo vertical adicional</span><span class="extras-price">€80</span></li>
-      <li><span data-i18n="extras.e2">Vídeo horizontal adicional</span><span class="extras-price">€120</span></li>
-      <li><span data-i18n="extras.e3">10 fotografias adicionais</span><span class="extras-price">€60</span></li>
-      <li><span data-i18n="extras.e4">Hora adicional de captação</span><span class="extras-price">€75</span></li>
-      <li><span data-i18n="extras.e5">Entrega urgente</span><span class="extras-price">+€100</span></li>
-      <li><span data-i18n="extras.e6">Fotografia de produto</span><span class="extras-price" data-i18n="extras.e6price">desde €100</span></li>
-      <li><span data-i18n="extras.e7">Vídeo publicitário / Ad</span><span class="extras-price" data-i18n="extras.e7price">desde €150</span></li>
-      <li><span data-i18n="extras.e8">Deslocações fora da zona habitual</span><span class="extras-price">€0,40/km</span></li>
-    </ul>
-  </div>
-
-  <p class="pricing-footnote" data-i18n="pricing.footnote">Escolhe um pacote e o formulário abaixo já aparece com o plano selecionado.</p>
-
-  </div>
-</section>
-
-<!-- ===================================================== -->
-<!-- PEDIDO DE ORÇAMENTO — formulário único, reutilizado -->
-<!-- pelos 3 botões de pacote acima (scroll + auto-seleção -->
-<!-- do campo "Pacote pretendido"). Ver script.js. -->
-<!-- ===================================================== -->
-<section id="pedido-orcamento" class="quote">
-  <div class="section-head">
-    <h2 class="section-title" data-i18n="quote.title">Pedido de orçamento</h2>
-    <p class="section-note" data-i18n="quote.note">Resposta em 48 horas</p>
-  </div>
-
-  <p class="quote-lead" data-i18n="quote.lead">Conta-me os detalhes do teu projeto e envio-te uma proposta personalizada por email.</p>
-
-  <form id="quote-form" class="quote-form" action="https://formspree.io/f/xbgrngwk" method="POST">
-    <div class="form-row">
-      <div class="form-field">
-        <label for="q-name" data-i18n="quote.name">Nome completo</label>
-        <input type="text" id="q-name" name="name" required>
-      </div>
-      <div class="form-field">
-        <label for="q-email" data-i18n="quote.email">Email</label>
-        <input type="email" id="q-email" name="email" required>
+      <div class="about-text reveal">
+        <p class="section-eyebrow"><span class="lang-pt">Sobre</span><span class="lang-en">About</span></p>
+        <h2 class="section-title">
+          <span class="lang-pt">Olá, sou o Pedro.</span>
+          <span class="lang-en">Hi, I'm Pedro.</span>
+        </h2>
+        <!-- EDITA AQUI: confirma/ajusta o texto e os números abaixo (anos, projetos, países) -->
+        <p>
+          <span class="lang-pt">Captar histórias reais através da lente é o meu trabalho. Trabalho com casais, marcas e famílias que querem memórias que resistem ao tempo — com um olhar cuidado para a luz, a composição e o momento certo.</span>
+          <span class="lang-en">Capturing real stories through the lens is what I do. I work with couples, brands and families who want memories that stand the test of time — with a careful eye for light, composition and the right moment.</span>
+        </p>
+        <p>
+          <span class="lang-pt">Baseado em Portugal e disponível para viajar, trabalho em todo o país e com clientes internacionais que confiam o seu dia mais importante ao meu trabalho.</span>
+          <span class="lang-en">Based in Portugal and available to travel, I work across the country and with international clients who trust me with their most important day.</span>
+        </p>
+        <ul class="about-stats">
+          <li><strong>10+</strong><span><span class="lang-pt">anos de experiência</span><span class="lang-en">years of experience</span></span></li>
+          <li><strong>150+</strong><span><span class="lang-pt">projetos entregues</span><span class="lang-en">projects delivered</span></span></li>
+          <li><strong>3</strong><span><span class="lang-pt">países visitados a trabalho</span><span class="lang-en">countries visited for work</span></span></li>
+        </ul>
       </div>
     </div>
+  </section>
 
-    <div class="form-row">
-      <div class="form-field">
-        <label for="q-phone" data-i18n="quote.phone">Telefone (opcional)</label>
-        <input type="tel" id="q-phone" name="phone">
+  <!-- =======================================================
+       SERVIÇOS
+  ======================================================= -->
+  <section class="section section-alt" id="servicos">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-eyebrow"><span class="lang-pt">Serviços</span><span class="lang-en">Services</span></p>
+        <h2 class="section-title">
+          <span class="lang-pt">O que posso fazer por ti</span>
+          <span class="lang-en">What I can do for you</span>
+        </h2>
       </div>
-      <div class="form-field" id="plan-field">
-        <label for="q-plan" data-i18n="quote.plan">Pacote pretendido</label>
-        <select id="q-plan" name="plan" required>
-          <option value="" data-i18n="quote.plan.placeholder" selected>Seleciona um pacote</option>
-          <option value="basic" data-i18n="quote.plan.basic">Basic — €250</option>
-          <option value="pro" data-i18n="quote.plan.pro">Pro — €450</option>
-          <option value="custom" data-i18n="quote.plan.custom">Custom — Desde €600</option>
-        </select>
+
+      <div class="services-grid">
+
+        <article class="service-card reveal">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M8 16h6l3-5h14l3 5h6a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="27" r="8" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3><span class="lang-pt">Casamentos & Eventos</span><span class="lang-en">Weddings & Events</span></h3>
+          <p>
+            <span class="lang-pt">Cobertura completa do grande dia, do preparo à festa, com um olhar discreto e documental.</span>
+            <span class="lang-en">Full coverage of the big day, from getting-ready to the party, with a discreet, documentary eye.</span>
+          </p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="18" r="7" stroke="currentColor" stroke-width="2"/><path d="M10 40c0-8 6-13 14-13s14 5 14 13" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3><span class="lang-pt">Retratos</span><span class="lang-en">Portraits</span></h3>
+          <p>
+            <span class="lang-pt">Sessões individuais, de família ou de gravidez, em estúdio ou em exterior.</span>
+            <span class="lang-en">Individual, family or maternity sessions, in studio or on location.</span>
+          </p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="7" y="10" width="34" height="28" rx="2" stroke="currentColor" stroke-width="2"/><path d="M15 38l6-8 5 6 7-9 6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3><span class="lang-pt">Corporate & Produto</span><span class="lang-en">Corporate & Product</span></h3>
+          <p>
+            <span class="lang-pt">Fotografia para marcas, catálogos, equipas e espaços, com direção de arte cuidada.</span>
+            <span class="lang-en">Photography for brands, catalogs, teams and spaces, with careful art direction.</span>
+          </p>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="6" y="12" width="26" height="24" rx="2" stroke="currentColor" stroke-width="2"/><path d="M32 20l10-6v20l-10-6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <h3><span class="lang-pt">Vídeo & Institucional</span><span class="lang-en">Video & Corporate Films</span></h3>
+          <p>
+            <span class="lang-pt">Vídeos de casamento, promocionais e institucionais, do guião à edição final.</span>
+            <span class="lang-en">Wedding films, promotional and corporate videos, from script to final edit.</span>
+          </p>
+        </article>
+
       </div>
     </div>
+  </section>
 
-    <div class="form-row">
-      <div class="form-field">
-        <label for="q-type" data-i18n="quote.type">Tipo de projeto</label>
-        <select id="q-type" name="project_type">
-          <option data-i18n="tag.lifestyle">Lifestyle</option>
-          <option data-i18n="tag.viagem">Viagem</option>
-          <option data-i18n="tag.casamento">Casamento</option>
-          <option data-i18n="tag.desporto">Desporto</option>
-          <option data-i18n="tab.imobiliaria">Imobiliária</option>
-          <option data-i18n="quote.other">Outro</option>
-        </select>
+  <!-- =======================================================
+       PORTEFÓLIO — "folha de contactos"
+  ======================================================= -->
+  <section class="section" id="portfolio">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-eyebrow"><span class="lang-pt">Portefólio</span><span class="lang-en">Portfolio</span></p>
+        <h2 class="section-title">
+          <span class="lang-pt">Folha de contactos</span>
+          <span class="lang-en">Contact sheet</span>
+        </h2>
+        <p class="section-desc">
+          <span class="lang-pt">Uma seleção de trabalhos recentes.</span>
+          <span class="lang-en">A selection of recent work.</span>
+        </p>
       </div>
-      <div class="form-field">
-        <label for="q-date" data-i18n="quote.date">Data prevista do evento (opcional)</label>
-        <input type="date" id="q-date" name="event_date">
+
+      <!-- PLACEHOLDERS DE PORTEFÓLIO —
+           Cada <figure class="frame"> é uma foto. Para trocar:
+           1) Substitui a <div class="placeholder-art ..."> por <img src="images/trabalho-01.jpg" alt="Descrição da foto" loading="lazy">
+           2) Edita ou apaga o texto dentro de <figcaption> (os dados "50mm · f/1.8" são só decorativos) -->
+      <div class="contact-sheet">
+        <figure class="frame reveal">
+          <div class="placeholder-art frame-placeholder"><span class="placeholder-label">01</span></div>
+          <figcaption class="frame-caption"><span>Nº 001</span><span class="frame-exif">50mm · f/1.8 · ISO 200</span></figcaption>
+        </figure>
+        <figure class="frame reveal">
+          <div class="placeholder-art frame-placeholder"><span class="placeholder-label">02</span></div>
+          <figcaption class="frame-caption"><span>Nº 002</span><span class="frame-exif">85mm · f/2.2 · ISO 100</span></figcaption>
+        </figure>
+        <figure class="frame reveal">
+          <div class="placeholder-art frame-placeholder"><span class="placeholder-label">03</span></div>
+          <figcaption class="frame-caption"><span>Nº 003</span><span class="frame-exif">35mm · f/4 · ISO 400</span></figcaption>
+        </figure>
+        <figure class="frame reveal">
+          <div class="placeholder-art frame-placeholder"><span class="placeholder-label">04</span></div>
+          <figcaption class="frame-caption"><span>Nº 004</span><span class="frame-exif">24mm · f/5.6 · ISO 100</span></figcaption>
+        </figure>
+        <figure class="frame reveal">
+          <div class="placeholder-art frame-placeholder"><span class="placeholder-label">05</span></div>
+          <figcaption class="frame-caption"><span>Nº 005</span><span class="frame-exif">70mm · f/2.8 · ISO 320</span></figcaption>
+        </figure>
+        <figure class="frame reveal">
+          <div class="placeholder-art frame-placeholder"><span class="placeholder-label">06</span></div>
+          <figcaption class="frame-caption"><span>Nº 006</span><span class="frame-exif">50mm · f/1.4 · ISO 160</span></figcaption>
+        </figure>
       </div>
     </div>
+  </section>
 
-    <div class="form-field form-field-full">
-      <label for="q-message" data-i18n="quote.message">Conta-me sobre o projeto</label>
-      <textarea id="q-message" name="message" rows="5" required></textarea>
+  <!-- =======================================================
+       DEPOIMENTOS
+       IMPORTANTE: estes textos são EXEMPLOS. Substitui por
+       depoimentos reais de clientes teus (com autorização deles)
+       antes de publicar, ou apaga esta secção.
+  ======================================================= -->
+  <section class="section section-alt" id="depoimentos">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="section-eyebrow"><span class="lang-pt">Depoimentos</span><span class="lang-en">Testimonials</span></p>
+        <h2 class="section-title">
+          <span class="lang-pt">O que dizem os clientes</span>
+          <span class="lang-en">What clients say</span>
+        </h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <blockquote class="testimonial reveal">
+          <p>
+            <span class="lang-pt">"Texto de exemplo: aqui entra o depoimento de um cliente de casamento."</span>
+            <span class="lang-en">"Sample text: a wedding client's testimonial goes here."</span>
+          </p>
+          <footer>— <span class="lang-pt">Nome do cliente, Cidade</span><span class="lang-en">Client name, City</span></footer>
+        </blockquote>
+        <blockquote class="testimonial reveal">
+          <p>
+            <span class="lang-pt">"Texto de exemplo: aqui entra o depoimento de uma marca ou empresa."</span>
+            <span class="lang-en">"Sample text: a brand or company testimonial goes here."</span>
+          </p>
+          <footer>— <span class="lang-pt">Nome, Empresa</span><span class="lang-en">Name, Company</span></footer>
+        </blockquote>
+        <blockquote class="testimonial reveal">
+          <p>
+            <span class="lang-pt">"Texto de exemplo: aqui entra o depoimento de um cliente internacional."</span>
+            <span class="lang-en">"Sample text: an international client's testimonial goes here."</span>
+          </p>
+          <footer>— <span class="lang-pt">Nome, País</span><span class="lang-en">Name, Country</span></footer>
+        </blockquote>
+      </div>
     </div>
+  </section>
 
-    <button type="submit" class="quote-submit" data-i18n="quote.submit">Enviar pedido</button>
+  <!-- =======================================================
+       CONTACTO
+  ======================================================= -->
+  <section class="section" id="contacto">
+    <div class="container contact-grid">
+      <div class="contact-info reveal">
+        <p class="section-eyebrow"><span class="lang-pt">Contacto</span><span class="lang-en">Contact</span></p>
+        <h2 class="section-title">
+          <span class="lang-pt">Vamos falar sobre o teu projeto</span>
+          <span class="lang-en">Let's talk about your project</span>
+        </h2>
+        <p>
+          <span class="lang-pt">Preenche o formulário com os detalhes do teu evento ou projeto e respondo o mais depressa possível.</span>
+          <span class="lang-en">Fill in the form with your event or project details and I'll get back to you as soon as possible.</span>
+        </p>
 
-    <p class="quote-status" id="quote-status" role="status"></p>
-  </form>
-</section>
+        <ul class="contact-list">
+          <li>
+            <span class="contact-label">Email</span>
+            <a href="mailto:pedrofernandesmedia@gmail.com">pedrofernandesmedia@gmail.com</a>
+          </li>
+          <li>
+            <span class="contact-label"><span class="lang-pt">Localização</span><span class="lang-en">Location</span></span>
+            <span><span class="lang-pt">Portugal · disponível para viajar</span><span class="lang-en">Portugal · available to travel</span></span>
+          </li>
+          <li>
+            <span class="contact-label"><span class="lang-pt">Redes sociais</span><span class="lang-en">Social</span></span>
+            <span class="social-links">
+              <!-- EDITA AQUI: troca "#" pelos teus links reais (ou apaga a linha) -->
+              <a href="#" aria-label="Instagram">Instagram</a>
+              <a href="#" aria-label="Facebook">Facebook</a>
+            </span>
+          </li>
+        </ul>
+      </div>
 
-<!-- ===================================================== -->
-<!-- CONTACTO -->
-<!-- ===================================================== -->
-<section id="contacto" class="contact">
-  <h2 class="section-title" data-i18n="contact.title">Vamos falar</h2>
-  <p data-i18n="contact.sub">Tens um projeto em mente? Conta-me a tua ideia.</p>
-  <a href="mailto:pedrosilvasp458@gmail.com" class="contact-email">pedrosilvasp458@gmail.com</a>
+      <form class="contact-form reveal" id="contact-form" novalidate>
+        <div class="form-row">
+          <label for="name"><span class="lang-pt">Nome</span><span class="lang-en">Name</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="form-row">
+          <label for="phone"><span class="lang-pt">Telefone (opcional)</span><span class="lang-en">Phone (optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel">
+        </div>
+        <div class="form-row">
+          <label for="service"><span class="lang-pt">Tipo de serviço</span><span class="lang-en">Service type</span></label>
+          <select id="service" name="service">
+            <option value="Casamentos & Eventos">Casamentos & Eventos / Weddings & Events</option>
+            <option value="Retratos">Retratos / Portraits</option>
+            <option value="Corporate & Produto">Corporate & Produto / Corporate & Product</option>
+            <option value="Vídeo">Vídeo / Video</option>
+            <option value="Outro">Outro / Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message"><span class="lang-pt">Mensagem</span><span class="lang-en">Message</span></label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          <span class="lang-pt">Enviar mensagem</span>
+          <span class="lang-en">Send message</span>
+        </button>
+        <p class="form-note">
+          <span class="lang-pt">Ao enviar, a tua aplicação de email abre com a mensagem pronta a enviar.</span>
+          <span class="lang-en">On submit, your email app opens with the message ready to send.</span>
+        </p>
+      </form>
+    </div>
+  </section>
 
-  <div class="socials">
-    <a href="https://www.instagram.com/pedro_nomadic/" target="_blank" rel="noopener">@pedro_nomadic</a>
-    <a href="https://www.instagram.com/vyraxmedia/" target="_blank" rel="noopener">@vyraxmedia</a>
-    <a href="https://www.instagram.com/promiseweddingsco/" target="_blank" rel="noopener">@promiseweddingsco</a>
+</main>
+
+<!-- =======================================================
+     RODAPÉ
+======================================================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark">PF</span>
+      <span class="logo-text">Pedro Fernandes <small>Photo & Video</small></span>
+    </a>
+    <nav class="footer-nav">
+      <a href="#sobre"><span class="lang-pt">Sobre</span><span class="lang-en">About</span></a>
+      <a href="#servicos"><span class="lang-pt">Serviços</span><span class="lang-en">Services</span></a>
+      <a href="#portfolio"><span class="lang-pt">Portefólio</span><span class="lang-en">Portfolio</span></a>
+      <a href="#contacto"><span class="lang-pt">Contacto</span><span class="lang-en">Contact</span></a>
+    </nav>
+    <p class="footer-copy">
+      © <span id="year"></span> Pedro Fernandes Photo & Video. <span class="lang-pt">Todos os direitos reservados.</span><span class="lang-en">All rights reserved.</span>
+    </p>
   </div>
-</section>
-
-<!-- ===================================================== -->
-<!-- MARCAS — carrossel contínuo                             -->
-<!-- Para editar as marcas, procura MARCAS no bloco <script> -->
-<!-- no fim deste ficheiro.                                  -->
-<!-- ===================================================== -->
-<section class="marcas" id="marcas" hidden>
-  <p class="marcas-title" data-i18n="marcas.title">Marcas e projetos com quem já trabalhei</p>
-  <div class="marquee">
-    <ul class="marquee-track" id="marcas-track"></ul>
-  </div>
-</section>
-
-<footer class="footer">
-  <p data-i18n="footer.text">© 2026 Pedro Fernandes. Feito fotograma a fotograma.</p>
 </footer>
 
-<script src="i18n.js"></script>
 <script src="script.js"></script>
-<!-- Three.js: motor 3D usado para desenhar e animar a câmara no hero -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="camera-3d.js?v=4"></script>
-
-<!-- ===================================================== -->
-<!-- BOTÕES DOS PACOTES → FORMULÁRIO                        -->
-<!-- Colar mesmo antes de </body> no index.html.            -->
-<!-- Funciona sozinho, sem depender do script.js.           -->
-<!-- ===================================================== -->
-<script>
-(function () {
-  function iniciar() {
-    // Só corre uma vez, mesmo que este bloco apareça repetido na página
-    if (window.__pacotesLigados) return;
-
-    // 1. Encontrar o campo "Pacote pretendido"
-    var selectPacote = document.getElementById('q-plan')
-                    || document.querySelector('select[name="plan"]');
-
-    if (!selectPacote) {
-      console.error('[Pacotes] ERRO: não encontrei o campo "Pacote pretendido" na página.');
-      return;
-    }
-
-    // 2. Encontrar os 3 botões dos pacotes
-    var botoes = document.querySelectorAll('[data-plan-select]');
-
-    // Se não tiverem o atributo data-plan-select, procura pelo texto do botão
-    if (!botoes.length) {
-      var todos = document.querySelectorAll('button, a');
-      var encontrados = [];
-      for (var i = 0; i < todos.length; i++) {
-        var texto = (todos[i].textContent || '').toLowerCase();
-        if (texto.indexOf('escolher basic') !== -1) { todos[i].setAttribute('data-plan-select', 'basic'); encontrados.push(todos[i]); }
-        else if (texto.indexOf('escolher pro') !== -1) { todos[i].setAttribute('data-plan-select', 'pro'); encontrados.push(todos[i]); }
-        else if (texto.indexOf('orçamento personalizado') !== -1 || texto.indexOf('personalizar projeto') !== -1) { todos[i].setAttribute('data-plan-select', 'custom'); encontrados.push(todos[i]); }
-      }
-      botoes = encontrados;
-    }
-
-    console.log('[Pacotes] Botões encontrados:', botoes.length);
-
-    if (!botoes.length) {
-      console.error('[Pacotes] ERRO: não encontrei os botões dos pacotes.');
-      return;
-    }
-
-    // 3. Ligar o clique de cada botão
-    for (var j = 0; j < botoes.length; j++) {
-      (function (botao) {
-        botao.addEventListener('click', function (e) {
-          e.preventDefault();
-
-          var pacote = botao.getAttribute('data-plan-select'); // basic | pro | custom
-          console.log('[Pacotes] Clicaste em:', pacote);
-
-          // Seleciona a opção correspondente
-          var selecionou = false;
-          for (var k = 0; k < selectPacote.options.length; k++) {
-            if (selectPacote.options[k].value === pacote) {
-              selectPacote.selectedIndex = k;
-              selecionou = true;
-              break;
-            }
-          }
-
-          // Se os values não corresponderem, tenta pelo texto visível
-          if (!selecionou) {
-            var procura = { basic: 'basic', pro: 'pro', custom: 'custom' }[pacote];
-            for (var m = 0; m < selectPacote.options.length; m++) {
-              if ((selectPacote.options[m].text || '').toLowerCase().indexOf(procura) !== -1) {
-                selectPacote.selectedIndex = m;
-                selecionou = true;
-                break;
-              }
-            }
-          }
-
-          console.log('[Pacotes] Pacote selecionado:', selectPacote.value || selectPacote.options[selectPacote.selectedIndex].text);
-
-          // Avisa outros scripts de que o valor mudou
-          selectPacote.dispatchEvent(new Event('change', { bubbles: true }));
-
-          // 4. Scroll suave até ao campo
-          var alvo = selectPacote.closest ? selectPacote.closest('.form-field') : null;
-          if (!alvo) alvo = selectPacote.parentNode;
-          alvo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-          // 5. Destaque visual temporário
-          var corOriginal = selectPacote.style.borderColor;
-          var sombraOriginal = selectPacote.style.boxShadow;
-          selectPacote.style.borderColor = '#e8492a';
-          selectPacote.style.boxShadow = '0 0 0 3px rgba(232,73,42,0.25)';
-          setTimeout(function () {
-            selectPacote.style.borderColor = corOriginal;
-            selectPacote.style.boxShadow = sombraOriginal;
-          }, 1500);
-
-          // 6. Foca o campo
-          setTimeout(function () {
-            selectPacote.focus({ preventScroll: true });
-          }, 600);
-        });
-      })(botoes[j]);
-    }
-
-    console.log('[Pacotes] Tudo pronto! Os botões estão a funcionar. ✓');
-
-    // Marca que os botões já estão ligados, para o script.js não os ligar
-    // outra vez (o que faria cada clique disparar a dobrar).
-    window.__pacotesLigados = true;
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar);
-  } else {
-    iniciar();
-  }
-})();
-</script>
-
-<!-- ===================================================== -->
-<!-- PORTEFÓLIO — motor de projetos                          -->
-<!--                                                        -->
-<!-- PARA ADICIONAR UM PROJETO: acrescenta uma linha ao      -->
-<!-- array PROJETOS abaixo. Nada mais precisa de ser mexido. -->
-<!--                                                        -->
-<!--   {                                                     -->
-<!--     id: "algo-unico",                                   -->
-<!--     categoria: "lifestyle",   // lifestyle | casamentos -->
-<!--                               // | desporto | imobiliaria -->
-<!--     youtube: "ID_DO_VIDEO",   // ID do YouTube          -->
-<!--     vertical: true,           // só se for Short/vertical -->
-<!--     titulo:    { pt: "...", en: "..." },                 -->
-<!--     descricao: { pt: "...", en: "..." }                  -->
-<!--   }                                                     -->
-<!--                                                        -->
-<!-- O ID do YouTube é a parte depois de "watch?v=" ou de    -->
-<!-- "youtu.be/". Ex: youtu.be/hsObBSt89XA  ->  "hsObBSt89XA" -->
-<!-- Em vez de youtube, podes usar foto: "assets/x/foto.jpg" -->
-<!-- ===================================================== -->
-<script>
-(function () {
-
-  /* ================= PROJETOS ================= */
-  var PROJETOS = [
-    {
-      id: "lifestyle-1",
-      categoria: "lifestyle",
-      youtube: "IL-B00VMHes",
-      titulo:    { pt: "Marca em movimento", en: "Brands in motion" },
-      descricao: { pt: "Conteúdo pensado para redes sociais — dinâmico, curto e com identidade.",
-                   en: "Content built for social media — short, dynamic and full of character." }
-    },
-    {
-      id: "lifestyle-2",
-      categoria: "lifestyle",
-      youtube: "0NVUoTMOME4",
-      titulo:    { pt: "Lifestyle em movimento", en: "Lifestyle in motion" },
-      descricao: { pt: "Um olhar sobre o dia a dia — pessoas, lugares e a luz certa no momento certo.",
-                   en: "A look at everyday life — people, places, and the right light at the right moment." }
-    },
-    {
-      id: "lifestyle-3",
-      categoria: "lifestyle",
-      youtube: "YqP0M1eMOe8",
-      titulo:    { pt: "Momentos com identidade", en: "Moments with character" },
-      descricao: { pt: "Conteúdo lifestyle criado para destacar pessoas e marcas.",
-                   en: "Lifestyle content made to put people and brands in the spotlight." }
-    },
-    {
-      id: "lifestyle-4",
-      categoria: "lifestyle",
-      youtube: "OCZV3ztuP2E",
-      titulo:    { pt: "Diário de viagem", en: "Travel diary" },
-      descricao: { pt: "Estradas, paisagens e o que acontece pelo caminho.",
-                   en: "Roads, landscapes, and whatever happens along the way." }
-    },
-    {
-      id: "casamentos-1",
-      categoria: "casamentos",
-      youtube: "3DqylXd-R9U",
-      titulo:    { pt: "Sim, Aceito", en: "I Do" },
-      descricao: { pt: "Um casamento contado pelos detalhes: as mãos, o silêncio antes do \"sim\", o primeiro abraço.",
-                   en: "A wedding told through the details: hands, the silence before the \"I do\", the first embrace." }
-    },
-    {
-      id: "desporto-1",
-      categoria: "desporto",
-      youtube: "hsObBSt89XA",
-      titulo:    { pt: "Desporto", en: "Sport" },
-      descricao: { pt: "Tensão, suor e a explosão do momento decisivo.",
-                   en: "Tension, sweat, and the explosion of the decisive moment." }
-    },
-    {
-      id: "desporto-2",
-      categoria: "desporto",
-      youtube: "RFnVS7gIUcI",
-      titulo:    { pt: "Intensidade em jogo", en: "Intensity in play" },
-      descricao: { pt: "A energia do desporto captada de perto.",
-                   en: "The energy of sport, captured up close." }
-    },
-    {
-      id: "imobiliaria-1",
-      categoria: "imobiliaria",
-      youtube: "yYtw45SXkcE",
-      titulo:    { pt: "Espaços que Vendem", en: "Spaces that Sell" },
-      descricao: { pt: "Imóveis filmados para destacar luz, amplitude e detalhe: imagens que aceleram a venda.",
-                   en: "Property filmed to highlight light, space and detail: images that speed up the sale." }
-    },
-    {
-      id: "imobiliaria-2",
-      categoria: "imobiliaria",
-      youtube: "iabveQfnb_w",
-      titulo:    { pt: "A casa certa", en: "The right home" },
-      descricao: { pt: "Cada divisão filmada para valorizar o espaço e criar desejo.",
-                   en: "Every room filmed to enhance the space and create desire." }
-    },
-    {
-      id: "imobiliaria-3",
-      categoria: "imobiliaria",
-      youtube: "z32dY1qXmyU",
-      titulo:    { pt: "Visita guiada", en: "Guided tour" },
-      descricao: { pt: "Um percurso visual pelo imóvel, do exterior ao detalhe final.",
-                   en: "A visual journey through the property, from the exterior to the final detail." }
-    }
-  ];
-
-  var EM_BREVE = {
-    pt: "Novos trabalhos desta categoria em breve.",
-    en: "New work in this category coming soon."
-  };
-
-  /* ================= MOTOR ================= */
-  function iniciar() {
-    if (window.__portfolioLigado) return;
-
-    var seccao = document.querySelector('.portfolio');
-    var media = document.getElementById('pf-media');
-    var stage = document.getElementById('pf-frame');
-    var info = document.getElementById('pf-info');
-    var vazioEl = document.getElementById('pf-empty');
-    var tituloEl = document.getElementById('pf-title');
-    var descEl = document.getElementById('pf-desc');
-    var dotsBox = seccao ? seccao.querySelector('.swipe-dots') : null;
-    var prevBtn = seccao ? seccao.querySelector('.pf-prev') : null;
-    var nextBtn = seccao ? seccao.querySelector('.pf-next') : null;
-    var pills = seccao ? seccao.querySelectorAll('.cat-pill') : [];
-    var catLinks = seccao ? seccao.querySelectorAll('.cat-link') : [];
-    var viewport = stage;
-
-    if (!seccao || !media || !tituloEl) {
-      console.error('[Portefólio] Estrutura em falta — confirma que o index.html está atualizado.');
-      return;
-    }
-
-    var categoria = seccao.dataset.active || 'lifestyle';
-    var indice = 0;
-
-    function lingua() { return localStorage.getItem('site-lang') || 'pt'; }
-    function daCategoria() {
-      return PROJETOS.filter(function (p) { return p.categoria === categoria; });
-    }
-
-    /* ---------- Mostrar um projeto (vídeo + título + descrição juntos) ---------- */
-    function mostrar(i, animar) {
-      var lista = daCategoria();
-
-      media.innerHTML = '';
-      media.className = 'pf-media';
-      stage.className = 'pf-frame';
-
-      // Categoria sem projetos: escondemos por completo o palco e a legenda.
-      // Nada de caixas nem alturas reservadas — só uma linha de texto.
-      if (!lista.length) {
-        stage.hidden = true;
-        info.hidden = true;
-        vazioEl.hidden = false;
-        vazioEl.textContent = EM_BREVE[lingua()];
-        atualizarControlos(0);
-        return;
-      }
-
-      stage.hidden = false;
-      info.hidden = false;
-      vazioEl.hidden = true;
-
-      // navegação cíclica
-      var n = lista.length;
-      indice = ((i % n) + n) % n;
-      var p = lista[indice];
-
-      if (p.youtube) {
-        if (p.vertical) {
-          media.classList.add('vertical');
-          stage.classList.add('vertical');
-        }
-        var iframe = document.createElement('iframe');
-        iframe.src = 'https://www.youtube.com/embed/' + p.youtube +
-                     '?rel=0&modestbranding=1&playsinline=1';
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-        iframe.setAttribute('allowfullscreen', '');
-        iframe.setAttribute('loading', 'lazy');
-        iframe.title = p.titulo[lingua()] || p.titulo.pt;
-        media.appendChild(iframe);
-      } else if (p.foto) {
-        var img = document.createElement('img');
-        img.src = p.foto;
-        img.loading = 'lazy';
-        img.alt = p.titulo[lingua()] || p.titulo.pt;
-        media.appendChild(img);
-      }
-
-      // título e descrição mudam SEMPRE com o vídeo
-      tituloEl.textContent = p.titulo[lingua()] || p.titulo.pt;
-      descEl.textContent = p.descricao[lingua()] || p.descricao.pt;
-
-      if (animar) {
-        media.classList.remove('pf-anim');
-        info.classList.remove('pf-anim');
-        void media.offsetWidth;      // reinicia a animação
-        media.classList.add('pf-anim');
-        info.classList.add('pf-anim');
-      }
-
-      atualizarControlos(n);
-    }
-
-    function atualizarControlos(n) {
-      // com navegação cíclica as setas nunca ficam desativadas
-      if (prevBtn) prevBtn.disabled = n <= 1;
-      if (nextBtn) nextBtn.disabled = n <= 1;
-
-      if (!dotsBox) return;
-      dotsBox.innerHTML = '';
-      if (n <= 1) return;
-      for (var i = 0; i < n; i++) {
-        (function (k) {
-          var d = document.createElement('button');
-          d.type = 'button';
-          d.className = 'swipe-dot' + (k === indice ? ' active' : '');
-          d.setAttribute('aria-label', 'Projeto ' + (k + 1));
-          d.addEventListener('click', function () { mostrar(k, true); });
-          dotsBox.appendChild(d);
-        })(i);
-      }
-    }
-
-    /* ---------- Categorias ---------- */
-    function mudarCategoria(cat) {
-      categoria = cat;
-      seccao.dataset.active = cat;
-
-      for (var i = 0; i < pills.length; i++) {
-        var on = pills[i].dataset.cat === cat;
-        pills[i].classList.toggle('active', on);
-        pills[i].setAttribute('aria-selected', on ? 'true' : 'false');
-      }
-      for (var k = 0; k < catLinks.length; k++) {
-        catLinks[k].hidden = catLinks[k].dataset.cat !== cat;
-      }
-
-      mostrar(0, true);   // sempre o PRIMEIRO projeto da categoria
-    }
-
-    for (var i = 0; i < pills.length; i++) {
-      (function (p) {
-        p.addEventListener('click', function () { mudarCategoria(p.dataset.cat); });
-      })(pills[i]);
-    }
-
-    if (prevBtn) prevBtn.addEventListener('click', function () { mostrar(indice - 1, true); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { mostrar(indice + 1, true); });
-
-    /* ---------- Swipe no telemóvel ---------- */
-    var inicioX = null;
-    if (viewport) {
-      viewport.addEventListener('touchstart', function (e) {
-        inicioX = e.touches[0].clientX;
-      }, { passive: true });
-
-      viewport.addEventListener('touchend', function (e) {
-        if (inicioX === null) return;
-        var delta = e.changedTouches[0].clientX - inicioX;
-        if (Math.abs(delta) > 50) mostrar(indice + (delta < 0 ? 1 : -1), true);
-        inicioX = null;
-      }, { passive: true });
-    }
-
-    /* ---------- Teclado ---------- */
-    seccao.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') mostrar(indice - 1, true);
-      if (e.key === 'ArrowRight') mostrar(indice + 1, true);
-    });
-
-    /* ---------- Trocar PT/EN ----------
-       Envolve a função applyLanguage do i18n.js para que qualquer
-       mudança de idioma volte a desenhar o projeto atual. É mais fiável
-       do que ouvir o clique no botão (não depende da ordem dos listeners). */
-    var ligado = false;
-    if (typeof window.applyLanguage === 'function') {
-      var original = window.applyLanguage;
-      window.applyLanguage = function () {
-        original.apply(this, arguments);
-        mostrar(indice, false);
-      };
-      ligado = true;
-    }
-
-    if (!ligado) {
-      var langBtn = document.getElementById('lang-toggle');
-      if (langBtn) {
-        langBtn.addEventListener('click', function () {
-          setTimeout(function () { mostrar(indice, false); }, 0);
-        });
-      }
-    }
-
-    mostrar(0, false);
-    window.__portfolioLigado = true;
-    console.log('[Portefólio] Pronto ✓ —', PROJETOS.length, 'projetos');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar);
-  } else {
-    iniciar();
-  }
-})();
-</script>
-
-
-<!-- ===================================================== -->
-<!-- ENVIO DO FORMULÁRIO DE ORÇAMENTO (Formspree, sem sair   -->
-<!-- da página). A mensagem de sucesso/erro aparece por      -->
-<!-- baixo do botão, em PT ou EN conforme o idioma ativo.    -->
-<!-- ===================================================== -->
-<script>
-(function () {
-  function iniciar() {
-    if (window.__orcamentoLigado) return;
-
-    var form = document.getElementById('quote-form');
-    var status = document.getElementById('quote-status');
-    var botao = form ? form.querySelector('.quote-submit') : null;
-    if (!form || !status || !botao) return;
-
-    function texto(chave) {
-      var lang = localStorage.getItem('site-lang') || 'pt';
-      try { return translations[lang][chave] || translations.pt[chave] || ''; }
-      catch (e) { return ''; }
-    }
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      status.textContent = texto('quote.sending');
-      status.className = 'quote-status';
-      botao.disabled = true;
-
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(function (resp) {
-        if (resp.ok) {
-          status.textContent = texto('quote.success');
-          status.className = 'quote-status ok';
-          form.reset();
-        } else {
-          status.textContent = texto('quote.error');
-          status.className = 'quote-status erro';
-        }
-      })
-      .catch(function () {
-        status.textContent = texto('quote.error');
-        status.className = 'quote-status erro';
-      })
-      .then(function () {
-        botao.disabled = false;
-      });
-    });
-
-    window.__orcamentoLigado = true;
-    console.log('[Orçamento] Envio sem sair da página ligado ✓');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar);
-  } else {
-    iniciar();
-  }
-})();
-</script>
-<!-- ===================================================== -->
-<!-- CARROSSEL DE MARCAS                                    -->
-<!--                                                        -->
-<!-- EDITA AQUI a lista de marcas. Duas formas:              -->
-<!--   "Nome da Marca"                       -> texto        -->
-<!--   { nome: "Marca", logo: "assets/marcas/x.png" } -> logótipo -->
-<!--                                                        -->
-<!-- Para logótipos: PNG com fundo transparente, ~200px de   -->
-<!-- altura, na pasta assets/marcas/ do repositório.         -->
-<!-- Com a lista vazia [], a secção desaparece do site.      -->
-<!-- ===================================================== -->
-<script>
-(function () {
-  var MARCAS = [
-    { nome: "Livecomp",      logo: "livecomp.png" },
-    { nome: "Huoli Pilates", logo: "huoli-pilates.png" },
-    { nome: "Beauty Place",  logo: "beauty-place.png" },
-    { nome: "Portaberta",    logo: "portaberta.png" },
-    { nome: "Sente",         logo: "sente.png" }
-  ];
-
-  var VELOCIDADE = 40; // píxeis por segundo (mais alto = mais rápido)
-
-  function iniciar() {
-    if (window.__marcasLigado) return;
-
-    var seccao = document.getElementById('marcas');
-    var track = document.getElementById('marcas-track');
-    if (!seccao || !track) return;
-
-    if (!MARCAS.length) { seccao.hidden = true; return; }
-    seccao.hidden = false;
-
-    function criarItem(m, escondido) {
-      var li = document.createElement('li');
-      if (escondido) li.setAttribute('aria-hidden', 'true');
-      if (typeof m === 'string') {
-        li.textContent = m;
-      } else {
-        var img = document.createElement('img');
-        img.src = m.logo;
-        img.alt = m.nome || '';
-        img.loading = 'lazy';
-        // se o ficheiro do logo falhar, mostra o nome escrito em vez de partir
-        img.setAttribute('onerror', "this.closest('li').textContent = this.alt;");
-        li.appendChild(img);
-      }
-      return li;
-    }
-
-    function montar() {
-      track.innerHTML = '';
-
-      // 1ª cópia visível
-      for (var i = 0; i < MARCAS.length; i++) track.appendChild(criarItem(MARCAS[i], false));
-
-      // repete até meia pista cobrir a largura do ecrã (loop sem buracos)
-      var protecao = 0;
-      while (track.scrollWidth < seccao.clientWidth * 1.2 && protecao < 6) {
-        for (var j = 0; j < MARCAS.length; j++) track.appendChild(criarItem(MARCAS[j], true));
-        protecao++;
-      }
-
-      // 2ª metade idêntica — é ela que torna o loop invisível
-      var metade = track.innerHTML;
-      track.innerHTML = metade + metade.replace(/<li(?![^>]*aria-hidden)/g, '<li aria-hidden="true"');
-
-      // duração proporcional ao comprimento -> velocidade constante
-      var dur = (track.scrollWidth / 2) / VELOCIDADE;
-      track.style.animationDuration = Math.max(10, dur) + 's';
-    }
-
-    montar();
-
-    var timer = null;
-    window.addEventListener('resize', function () {
-      clearTimeout(timer);
-      timer = setTimeout(montar, 250);
-    });
-
-    window.__marcasLigado = true;
-    console.log('[Marcas] Carrossel ligado ✓ —', MARCAS.length, 'marcas');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciar);
-  } else {
-    iniciar();
-  }
-})();
-</script>
 </body>
 </html>
